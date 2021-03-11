@@ -1,0 +1,18 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteRule ^webmail https://tarata.naja7host.com:2096/cpsess9740586541/webmail/paper_lantern/index.html?mailclient=roundcube [QSA]
+#RewriteRule ^profil profiles.php [QSA]
+
+
+RewriteRule ^profil/(.*) mon-profil.php?nm=$1 [QSA]
+RewriteRule ^page/(.*) index.php?soudom=$1&org=metier [QSA]
+RewriteRule ^quartier/(.*) index.php?soudom=$1&org=quartier [QSA]
+RewriteRule ^etablissement/(.*) index.php?soudom=$1&org=etablissement [QSA]
+RewriteRule ^ipost/(.*) post.php?pid=$1 [QSA]
+RewriteRule ^post/(.*) post.php?nom=$1 [QSA]
+RewriteRule ^monde/(.*) index.php?f=i&org=signin [QSA]
+RewriteRule ^v/(.*) index.php?soudom=$1&f=v&org=ville [QSA]

@@ -1,0 +1,89 @@
+[23-Jan-2021 14:22:13 UTC] PHP Fatal error:  Uncaught RuntimeException: A facade root has not been set. in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php:258
+Stack trace:
+#0 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(18): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#1 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(564): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#2 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(545): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#3 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(456): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#4 /home/ixiircom/public_html/vendor/laravel/framework/src/Il in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 258
+[23-Jan-2021 14:24:38 UTC] PHP Fatal error:  Uncaught RuntimeException: A facade root has not been set. in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php:258
+Stack trace:
+#0 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(18): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#1 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(564): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#2 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(545): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#3 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(456): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#4 /home/ixiircom/public_html/vendor/laravel/framework/src/Il in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 258
+[23-Jan-2021 14:26:42 UTC] PHP Fatal error:  Uncaught RuntimeException: A facade root has not been set. in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php:258
+Stack trace:
+#0 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(18): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#1 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(564): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#2 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(545): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#3 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(456): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#4 /home/ixiircom/public_html/vendor/laravel/framework/src/Il in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 258
+[09-Feb-2021 19:55:33 UTC] PHP Fatal error:  Uncaught ReflectionException: Class view does not exist in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php:809
+Stack trace:
+#0 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(809): ReflectionClass->__construct('view')
+#1 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(691): Illuminate\Container\Container->build('view')
+#2 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(796): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(637): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(781): Illuminate\Container\Container->make('view', Array)
+#5 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(128 in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 811
+[09-Feb-2021 19:55:45 UTC] PHP Fatal error:  Uncaught ReflectionException: Class view does not exist in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php:809
+Stack trace:
+#0 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(809): ReflectionClass->__construct('view')
+#1 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(691): Illuminate\Container\Container->build('view')
+#2 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(796): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(637): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(781): Illuminate\Container\Container->make('view', Array)
+#5 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(128 in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 811
+[12-Feb-2021 19:20:32 UTC] PHP Fatal error:  Uncaught ReflectionException: Class view does not exist in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php:809
+Stack trace:
+#0 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(809): ReflectionClass->__construct('view')
+#1 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(691): Illuminate\Container\Container->build('view')
+#2 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(796): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(637): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(781): Illuminate\Container\Container->make('view', Array)
+#5 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(128 in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 811
+[12-Feb-2021 19:20:39 UTC] PHP Fatal error:  Uncaught ReflectionException: Class view does not exist in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php:809
+Stack trace:
+#0 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(809): ReflectionClass->__construct('view')
+#1 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(691): Illuminate\Container\Container->build('view')
+#2 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(796): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(637): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(781): Illuminate\Container\Container->make('view', Array)
+#5 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(128 in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 811
+[12-Feb-2021 19:20:46 UTC] PHP Fatal error:  Uncaught ReflectionException: Class view does not exist in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php:809
+Stack trace:
+#0 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(809): ReflectionClass->__construct('view')
+#1 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(691): Illuminate\Container\Container->build('view')
+#2 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(796): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(637): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(781): Illuminate\Container\Container->make('view', Array)
+#5 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(128 in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 811
+[12-Feb-2021 19:20:52 UTC] PHP Fatal error:  Uncaught ReflectionException: Class view does not exist in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php:809
+Stack trace:
+#0 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(809): ReflectionClass->__construct('view')
+#1 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(691): Illuminate\Container\Container->build('view')
+#2 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(796): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(637): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(781): Illuminate\Container\Container->make('view', Array)
+#5 /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(128 in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 811
+[03-Mar-2021 21:18:06 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:21:40 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:22:26 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:23:19 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:24:23 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:25:38 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:25:56 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:26:42 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:27:22 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:27:25 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:28:03 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:28:48 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 21:30:37 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 22:09:19 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 22:09:53 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 22:10:41 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 22:14:46 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 22:15:13 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 22:15:16 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338
+[03-Mar-2021 22:15:43 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/ixiircom/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 338

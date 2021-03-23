@@ -41,6 +41,8 @@ Route::get('/hottopic', 'App\Http\Controllers\HomeController@hotTopics')->name('
 Route::get('/hottopic/{topic}', 'App\Http\Controllers\HomeController@hottopicDetail')->name('hottopicDetail');
 Route::get('/getTopics', 'App\Http\Controllers\HomeController@getTopics')->name('getTopics');
 Route::get('/hashPass', 'App\Http\Controllers\GlobalController@hashPass')->name('hashPass');
+Route::get('/room', [App\Http\Controllers\HomeController::class, 'room']);
+Route::get('/post/show/{id}', [App\Http\Controllers\PostController::class, 'show'])->name('showPost');
 /*authentication*/
 Auth::routes();
 Route::get('/forgetPass', 'App\Http\Controllers\SignInController@forgetPass')->name('forgetPass');

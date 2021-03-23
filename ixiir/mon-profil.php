@@ -181,7 +181,7 @@ function sumTrophy($pdo,$user){
 													$specialite=get_specialite($user["specialite"], $pdo);
 													echo /*$metier["NOMLBL"]." - ".*/$specialite["NOMLBL"];
 													get_btn_suivi($user["id"], $pdo);
-													get_user_statique($user["id"],$pdo, $user["pays"],$income);
+													get_user_statique($user["id"],getcon(), $user["pays"],$income);
 												?>
 											</span>
 										</div>

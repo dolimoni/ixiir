@@ -58,17 +58,17 @@
             <a href='https://www.ixiir.com/concurrence' target="_blank"><img src="{{asset('images/me5.jpg')}}" width='32' height='40' style='float: right;'></a>
             @endif
         </div>
-        <div dir="rtl" lang="ar" class='job_descp' style="text-align: right;">
+        <div dir="rtl" lang="ar" class='job_descp'>
             @if(!empty($post['tag']))
             <a href="{{route('hottopicDetail',['topic'=>$post['tag']['tag']])}}"><i class="fa fa-fire"></i>{{$post['tag']['tag']}}</a>
             @endif
             @if(strlen(htmlspecialchars($post['detail']))>250)
             <p id="p_resumer_{{$post['post_id']}}" onclick="show('p_detail_{{$post['post_id']}}');hide('p_resumer_{{$post['post_id']}}');@if(Auth::check() && $post['userDetails']['id']!=Auth::user()->id && App\Models\Post::postsVueUser($post['post_id'],Auth::user()->id)<=0)set_vue({{$post['post_id']}})@endif">{{substr(htmlspecialchars($post['detail']), 0, strlen($post['detail'])>300?strpos($post['detail'], ' ', 300):-1)}}... <span class='pl' style='color: #fd8222;' onclick="@if(Auth::check() && $post['userDetails']['id']!=Auth::user()->id)set_vue({{$post['post_id']}})@endif">{{config('lang.plus')[empty(session('lang'))?0:session('lang')]}}</span></p>
-            <p dir="rtl" lang="ar" id="p_detail_{{$post['post_id']}}" style='display:none;'>
+            <p id="p_detail_{{$post['post_id']}}" style='display:none;'>
                 {!! html_entity_decode(nl2br(e($post['detail']))) !!}
             </p>
             @else 
-            <p dir="rtl" lang="ar" id="p_detail_{{$post['post_id']}}">
+            <p id="p_detail_{{$post['post_id']}}">
                 {!! html_entity_decode(nl2br(e($post['detail']))) !!}
             </p>
             @endif 
@@ -78,27 +78,25 @@
             @if(!empty($post['youtube']))
             <iframe style='width:100%;height:400px;border:none;' src="{{$post['youtube']}}" name='iframe1' frameborder='0'  allow='autoplay; encrypted-media' allowfullscreen></iframe>
             @endif
-            <div id="cacher_share_{{$post['post_id']}}" class="pull-right margin_top_30">
+            <div class="cacher" id="cacher_share_{{$post['post_id']}}">
 
-                <?php $shareLink = "https://www.facebook.com/sharer/sharer.php?u=".route('showPost',['id'=>$post['post_id']]) ?>
-                <button data-link= "{{$shareLink}}"
-                        data-post= "{{route('showPost',['id'=>$post['post_id']])}}"
-                        data-content="{{$post['detail']}}"
-                        @if(!empty($post['image'])) data-img="{{asset($post['image'])}}"
-                        @else data-img="{{asset('images/ixiir_en.jpeg')}}" data-img="{{asset($post['image'])}}"
-                        @endif
-                        class="btnShare btn_share btn_facebook shareFb" >
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{route('templatePost',['id'=>$post['post_id']])}}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="btnShare btn_share btn_facebook" >
 
                     <i class='fa fa-facebook' ></i> {{config('lang.lbl_partager')[empty(session('lang'))?0:session('lang')]}}
 
-                </button>
-                    <a
-                       target="_blank"
-                       href="https://twitter.com/share?url={{route('showPost',['id'=>$post['post_id']])}}&text={{$post['detail']}}"
-                       class="twitter-share-button btnShare btn_share btn_twitter"
-                       data-show-count="false">
-                        <i class='la la-twitter' ></i> {{config('lang.lbl_teweet')[empty(session('lang'))?0:session('lang')]}}
-                    </a>
+                </a>
+
+                <a href="https://plus.google.com/share?url={{route('templatePost',['id'=>$post['post_id']])}}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="btnShare btn_share btn_google" >
+
+                    <i class='fa fa-google-plus' ></i> {{config('lang.lbl_partager')[empty(session('lang'))?0:session('lang')]}}
+
+                </a>
+
+                <div id="dv_btnurlshare_{{$post['post_id']}}" class="btn_share" onclick="show('b_urlshare_{{$post['post_id']}}');hide('dv_btnurlshare_{{$post['post_id']}}');$('#b_urlshare_{{$post['post_id']}}').focus().select();" >
+
+                    <i class='fa fa-url' ></i> {{config('lang.lbl_copylien')[empty(session('lang'))?0:session('lang')]}}
+
+                </div>
 
             </div>
         </div>
@@ -244,5 +242,3 @@
 					</div>
     </div>
 </div>
-
-

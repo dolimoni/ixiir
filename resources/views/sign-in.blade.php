@@ -9,11 +9,13 @@
 
 		<div class="row">
 
-			<div class="col-lg-8 bg-light" id="dv_postlogin" >
+			<div class="col-lg-8 order-lg-first order-md-last order-last bg-light" id="dv_postlogin" >
 
 				<div class="pt-3">
 
 					<div class="text-right" style='margin-bottom:0px;' >
+
+
 
 						<div>
 						    @if(empty(session('lang')) || session('lang')==0)
@@ -65,13 +67,13 @@
                 <div class='clearfix' ></div>
                 <div class='mb-4 p-2 text-center' style='font-size:15pt;background:#fd8222;color:#fff;' >{{config('lang.lbl_connectToView')[empty(session('lang'))?0:session('lang')]}}</div>
 			</div>
-			<div class="col-lg-4" id="dv_formlogin" >
+			<div class="col-lg-4 order-lg-last order-md-first order-first"  id="dv_formlogin" >
 	          <div class="login-sec">
 			  	<ul class="sign-control">
 
-				  <li data-tab="tab-1" class="current"><a href="#" title="">{{config('lang.lbl_login')[empty(session('lang'))?0:session('lang')]}}</a></li>				
+				  <li data-tab="tab-1" class="current"><a href="#" title="">{{config('lang.lbl_login')[empty(session('lang'))?0:session('lang')]}}</a></li>
 
-				  <li data-tab="tab-2"><a href="#" title="">{{config('lang.lbl_sinscrit')[empty(session('lang'))?0:session('lang')]}}</a></li>				
+				  <li data-tab="tab-2"><a href="#" title="">{{config('lang.lbl_sinscrit')[empty(session('lang'))?0:session('lang')]}}</a></li>
 
 				</ul>
 				<div class="sign_in_sec current" id="tab-1">
@@ -85,11 +87,11 @@
 
 							<li><a href="{{ url('/login/facebook') }}" title="" class="fb"><i class="fa fa-facebook"></i>{{config('lang.lbl_connexion_facebook')[empty(session('lang'))?0:session('lang')]}}</a></li>
 
-						
 
-							<li><a href="{{ url('/login/google') }}" title="" class="gp"><i class="fa fa-google-plus"></i>{{config('lang.lbl_connexion_googleplus')[empty(session('lang'))?0:session('lang')]}}</a></li> 
 
-							
+							<li><a href="{{ url('/login/google') }}" title="" class="gp"><i class="fa fa-google"></i>{{config('lang.lbl_connexion_googleplus')[empty(session('lang'))?0:session('lang')]}}</a></li>
+
+
 
 						</ul>
 

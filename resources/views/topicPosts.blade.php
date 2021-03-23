@@ -1,9 +1,9 @@
-@extends('header-meta2')    
+@extends('header-meta2')
 @section('body')
-    
+
 	<div class="wrapper">
         @include('header-menu')
-       
+
 		<main>
 
 			<div class="main-section" id="dv_mainlistpost" >
@@ -36,15 +36,15 @@
                     						<li><a href="{{route('qui-sommes-nous')}}">{{config('lang.lbl_quisomenous')[empty(session('lang'))?0:session('lang')]}}</a></li>
 
 						                    <li><a href="{{route('conditions')}}">{{config('lang.lbl_condition_utilisation')[empty(session('lang'))?0:session('lang')]}}</a></li>
-                    
+
                     						<li><a href="mailto:ixiirpress@gmail.com" >ixiirpress@gmail.com</a></li>
-                    
+
                     						<li><a href="{{route('setLang','fr')}}" >Français</a></li>
-                    
+
                     						<li><a href="{{route('setLang','ar')}}" >العربية</a></li>
-                    
+
                     						<li><a href="{{route('setLang','en')}}" >English</a></li>
-                    
+
                     			        </ul>
 										<div class="cp-sec">
                                             {{str_replace("[[PARAM2]]",'IXIIR',str_replace("[[PARAM1]]", Carbon\Carbon::now()->year,config('lang.lbl_copyright')[empty(session('lang'))?0:session('lang')]))}}
@@ -59,6 +59,7 @@
 							<div class="col-lg-9 pd-right-none no-pd">
 
 								<div class="main-ws-sec">
+
                                     <div class="company-title row" style="background:#fff;padding:0px;">
 
 											<div class="col-md-12 dv_btnfilter"><i class="fa fa-fire"></i> {{$topic}}</div>
@@ -66,6 +67,10 @@
 											<div class="clearfix"></div>
 
 									</div>
+
+									@include('addPostForm')
+
+
 									<div class="posts-section">
                                         <div id="hottopics">
                                              <div class='col-md-6 no-padding-colmd posts-div no-padding-left'>
@@ -80,7 +85,7 @@
                                             </div>
                                         </div>
 									</div>
-                                    
+
 								</div><!--main-ws-sec end-->
 
 							</div>
@@ -89,7 +94,7 @@
 
 					</div>
 
-				</div> 
+				</div>
 
 			</div>
 

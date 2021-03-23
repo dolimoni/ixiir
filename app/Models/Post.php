@@ -146,13 +146,21 @@ class Post extends Model
     
     public static function showPosts($login,$user_id=null,$attr=null,$value=null){
         $posts=self::with('tag','postsComment','postsJaime')
-               ->get();      
+                ->limit(50)
+                ->orderBy('date_ajout','desc')
+               ->get();
+
+
+
+
         $posts->map(function($post){
             $post['userDetails']=$post->userDetails($post->par);
             $post['all']=true;
             $post['postsComment']=count($post->postsComment);
             $post['postsJaime']=count($post->postsJaime);
             $post['postsVue']=self::countPostVues($post->post_id);
+
+
             
             if(strpos($post->youtube,"watch?v=")>0){$post['youtube']=str_replace("watch?v=", "embed/", $post->youtube);}
             
@@ -162,11 +170,16 @@ class Post extends Model
 
 			elseif(strpos($post->youtube, "youtu.be")>0){$post['youtube']=str_replace("youtu.be","youtube.com/embed", $post->youtube);}
 
+
 			if(strpos($post->youtube, "m.youtube")>0){$post['youtube']=str_replace("m.youtube", "youtube",$post->youtube);}
 
 			elseif(strpos($post->youtube, "m.youtu")>0){$post['youtube']=str_replace("m.youtu","youtube", $post->youtube);}
             return $post;
         });
+
+
+
+
         $postsLast=$posts->where('date_ajout','>=',Carbon::now()->subDays(3));
         $postsLast->map(function($post){
             $post['postsInter']=$post['postsVue']+($post['postsJaime']*2)+($post['postsComment']*3);
@@ -197,6 +210,8 @@ class Post extends Model
                 return $post;
             });
         }
+
+
         
         $posts=$posts->sortByDesc('date_ajout')->take(26*(!empty($request->numPosts)?$request->numPosts:1));
         if(!empty($user_id)){
@@ -221,6 +236,7 @@ class Post extends Model
         $postsTopTwo_even=array_filter(array_values($postsTopTwo->toArray()), function($k) {
                     return $k%2 == 0;
         }, ARRAY_FILTER_USE_KEY);
+
         return array('posts_odd'=>$posts_odd,'posts_even'=>$posts_even,'postsInteractive_odd'=>$postsInteractive_odd,'postsInteractive_even'=>$postsInteractive_even,'postsTopFive_odd'=>$postsTopTwo_odd,'postsTopFive_even'=>$postsTopTwo_even);
     }
     

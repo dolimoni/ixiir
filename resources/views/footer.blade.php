@@ -25,6 +25,39 @@
 		.frm_postupdt{display:block !important;}
 		</style>
 		<script>
+			$( document ).ready(function() {
+				var i = 0;
+				$('.shareFb').on('click',function (e){
+					var content = $(this).attr('data-content');
+					var link = $(this).attr('data-link');
+					var img = $(this).attr('data-img');
+					var post = $(this).attr('data-post');
+					$("#ogurl").attr("content", post);
+					$("#ogtitle").attr("content", content);
+					$("#ogdescription").attr("content", content);
+					$("#ogimage").attr("content", img);
+					window.open(link, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+				});
+				function get_short_url(long_url, login, api_key, func)
+				{
+					$.getJSON(
+							"http://api.bitly.com/v3/shorten?callback=?",
+							{
+								"format": "json",
+								"apiKey": api_key,
+								"login": login,
+								"longUrl": long_url
+							},
+							function(response)
+							{
+								func(response.data.url);
+							}
+					);
+				}
+			});
+		</script>
+
+		<script>
     			var $disabledResults = $(".js-example-disabled-results");
     	        $disabledResults.select2({
     	        	placeholder: 'Enter the actuality',
@@ -206,6 +239,10 @@
 				}
 				function set_comnt(post_id)
 				{
+					var lt = /</g,
+							gt = />/g,
+							ap = /'/g,
+							ic = /"/g;
 					if($('#txt_comentaire_'+post_id).val()!="")
 					{
 						$('#txt_comentaire_'+post_id).css("border-color","#efefef");
@@ -219,6 +256,7 @@
 								$('#txt_comentaire_'+post_id).attr('value','');
 								$('#b_nbrcmntr_'+post_id).html((parseInt($('#b_nbrcmntr_'+post_id).html())+1));
 								var postsComment=JSON.parse(xhrcmnt.response).postsComment;
+								var content = $('#txt_comentaire_'+post_id).val().toString().replace(lt, "&lt;").replace(gt, "&gt;").replace(ap, "&#39;").replace(ic, "&#34;");
 								var user=JSON.parse(xhrcmnt.response).user;
 								var comment='<li id="li_cmentaire_"'+post_id+'"_'+postsComment.id+'">\
 												<div class="comment-list">\
@@ -228,12 +266,12 @@
 												<div class="comment">\
 												<h3><a>'+user.prenom+' '+user.nom+'</a></h3>\
 												<span><img src="images/clock.png" alt=""> <?php echo date("d/m/Y H:i"); ?></span>\
-												<p>'+$('#txt_comentaire_'+post_id).val()+'</p>\
+												<p>'+content+'</p>\
 												<b class="btn_delcmnt" onclick="deleteComment('+post_id+', '+postsComment.id+')" >Supprimer</b>\
 												</div>\
 												</div>\
 												</li>';
-								$('#ul_cmentaire_'+post_id).append(comment);				
+								$('#ul_cmentaire_'+post_id).append(comment);
 							}
 							else{show_loading();}
 						}

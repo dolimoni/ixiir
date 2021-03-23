@@ -1599,6 +1599,11 @@ main {
 	width: 100%;
 	padding-left: 10px;
 }
+
+.comment p{
+	text-align: right;
+	padding-right: 10px;
+}
 .comment h3 {
 	color: #000000;
 	font-size: 14px !important;
@@ -1912,16 +1917,16 @@ main {
 	color: #fff;
 } 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #b2b2b2;
+  color: #5b5353;
 }
 ::-moz-placeholder { /* Firefox 19+ */
-  color: #b2b2b2;
+  color: #5b5353;
 }
 :-ms-input-placeholder { /* IE 10+ */
-  color: #b2b2b2;
+  color: #5b5353;
 }
 :-moz-placeholder { /* Firefox 18- */
-  color: #b2b2b2;
+  color: #5b5353;
 }
 
 .price-sec {
@@ -5482,12 +5487,12 @@ a:hover {
 
 .i_btncancelpost{background:#ffcfcf !important;padding: 10px;border-radius: 5px;color: #fff;}
 
-.btn_share{background: #f68121;color: #fff;font-size: 8pt;padding: 5px 10px;border-radius: 3px; display:inline-block;cursor:pointer;}
+.btn_share{background: #f68121;color: #fff;font-size: 8pt;padding: 5px 10px;border-radius: 3px; display:inline-block;cursor:pointer; min-width: 70px;min-height: 15px;border: none;text-align: center}
 .btn_share:hover{color: #eee;}
 .btn_facebook{background: #395498;}
 .btn_google{background: #ec5a21;}
 .btn_twitter{background: #18ade2;}
-.dv_btnfilter{text-align:center;font-size:11pt;padding:10px 0px;border-bottom:2px solid #a349a4;cursor:pointer;color:#333;font-weight:bold;}
+.dv_btnfilter{text-align:center;font-size:11pt;padding:10px 0px;border-top:2px solid #a349a4;cursor:pointer;color:#333;font-weight:bold;}
 .dv_btnfilter i{font-weight:bold !important;}
 .dv_filteractive{background:#a349a4;color:#fff;}
 .btn_unfollow, .dv_folow{background: #aaa;padding:8px 15px;font-size:11pt;cursor:pointer;margin-top:20px;}
@@ -5595,4 +5600,20 @@ a:hover {
   .posts-div .col-md-12{
 	padding:0;
   }
+}
+
+
+.hidden{
+	display: none;
+}
+
+.who-we-are-content-ar{
+	font-size: 16px;
+	text-align: right;
+}
+.who-we-are-content-fr{
+	font-size: 16px;
+}
+.margin_top_30{
+	margin-top: 30px;
 }

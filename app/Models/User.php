@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use App\Pays;
 use App\Ville;
 
@@ -75,5 +76,146 @@ class User extends Authenticatable
 
     public static function abonnesUser($user_id,$user_vue){
         return count(self::with('abonnes')->find($user_id)->abonnes->where('user_id', $user_id)->where('user_vue', $user_vue)->where('abonne_del', 0));
+    }
+
+
+
+    function getCityRank($userId,$city)
+
+    {
+        $req = "SELECT *
+
+					FROM (
+
+						SELECT @rank := @rank + 1 AS ranking, tbl.*
+
+						FROM(
+
+							SELECT p.par
+
+									, SUM(COALESCE((SELECT COUNT(*) FROM posts_vue pv WHERE pv.post_id=p.post_id), 0)
+
+										  + (COALESCE((SELECT COUNT(*) FROM posts_comment pc WHERE pc.post_id=p.post_id), 0)*3)
+
+										  + (COALESCE((SELECT COUNT(*) FROM posts_jaime pj WHERE pj.post_id=p.post_id), 0)*2)) AS NBRJAIME
+
+							FROM posts p
+
+							JOIN users u ON u.id=p.par
+
+							WHERE u.ville=?
+
+							GROUP BY p.par
+
+							ORDER BY NBRJAIME DESC
+
+						) tbl
+
+					) tbl2
+
+					WHERE tbl2.par=?";
+
+        DB::statement("SET @rank=0;");
+        $result = DB::selectOne($req,array($city,$userId));
+
+        if(!isset($result->ranking)){
+            $cityRank = "NA";
+        }else{
+            $cityRank = $result->ranking;
+        }
+        return $cityRank;
+
+    }
+
+    function getCountryRank($userId,$country)
+
+    {
+
+        $countryRank = "0";
+        $req = "SELECT *
+
+					FROM (
+
+						SELECT @rank := @rank + 1 AS ranking, tbl.*
+
+						FROM(
+
+							SELECT p.par
+
+									, SUM(COALESCE((SELECT COUNT(*) FROM posts_vue pv WHERE pv.post_id=p.post_id), 0)
+
+										  + (COALESCE((SELECT COUNT(*) FROM posts_comment pc WHERE pc.post_id=p.post_id), 0)*3)
+
+										  + (COALESCE((SELECT COUNT(*) FROM posts_jaime pj WHERE pj.post_id=p.post_id), 0)*2)) AS NBRJAIME
+
+							FROM posts p
+
+							JOIN users u ON u.id=p.par
+
+							WHERE u.pays=?
+
+							GROUP BY p.par
+
+							ORDER BY NBRJAIME DESC
+
+						) tbl
+
+					) tbl2
+
+					WHERE tbl2.par=?";
+
+        DB::statement("SET @rank=0;");
+        $result = DB::selectOne($req,array($country,$userId));
+
+        if(!isset($result->ranking)){
+            $countryRank = "NA";
+        }else{
+            $countryRank = $result->ranking;
+        }
+        return $countryRank;
+
+    }
+
+    function getWordRank($userId){
+
+        $wordRank = 0;
+        $req = "SELECT *
+
+				FROM (
+
+					SELECT @rank := @rank + 1 AS ranking, tbl.*
+
+					FROM(
+
+						SELECT p.par
+
+								, SUM(COALESCE((SELECT COUNT(*) FROM posts_vue pv WHERE pv.post_id=p.post_id), 0)
+
+									  + (COALESCE((SELECT COUNT(*) FROM posts_comment pc WHERE pc.post_id=p.post_id), 0)*3)
+
+									  + (COALESCE((SELECT COUNT(*) FROM posts_jaime pj WHERE pj.post_id=p.post_id), 0)*2)) AS NBRJAIME
+
+						FROM posts p
+
+						GROUP BY p.par
+
+						ORDER BY NBRJAIME DESC
+
+					) tbl
+
+				) tbl2
+
+				WHERE tbl2.par=?";
+
+        DB::statement("SET @rank=0;");
+        $result = DB::selectOne($req,array($userId));
+
+        if(!isset($result->ranking)){
+            $wordRank = "NA";
+        }else{
+            $wordRank = $result->ranking;
+        }
+        return $wordRank;
+
     }
 }

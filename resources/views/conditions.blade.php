@@ -9,8 +9,12 @@
 				</div>
 				<div class="companies-list">
 					<div class="row">
+						<div dir="rtl" lang="ar"  class="col-md-12" style="background:#fff;padding:20px;">
+							<p class="who-we-are-content-ar">{!! html_entity_decode(nl2br(e(ARABIC_CONDITIONS))) !!}</p>
+						</div>
+
 						<div class="col-md-12" style="background:#fff;padding:20px;">
-							<iframe src="/upload/conditions.pdf" style="width:100%;height:3500px;" ></iframe>
+							<p class="who-we-are-content-fr">{!! html_entity_decode(nl2br(e(FRENCH_CONDITIONS))) !!}</p>
 						</div>
 					</div>
 				</div><!--companies-list end-->

@@ -18,6 +18,20 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <meta id="ogurl" property="og:url"                content="{{route('showPost',['id'=>$post['post_id']])}}" />
+    <meta property="fb:app_id"               content="289587106105936" />
+    <meta property="og:type"               content="article" />
+    <meta id="ogtitle" property="og:title"              content="Article ixiir" />
+    <meta id="ogdescription" property="og:description"        content="{{htmlspecialchars($post['detail'])}}" />
+    @if(!empty($post['image']))
+        <meta id="ogimage" property="og:image" content="{{asset($post['image'])}}" />
+        <meta name="twitter:image" content="{{asset($post['image'])}}">
+    @else
+        <meta id="ogimage" property="og:image" content="{{asset('images/ixiir_en.jpeg')}}" />
+        <meta name="twitter:image" content="{{asset('images/ixiir_en.jpeg')}}">
+    @endif
+
+
 	<link rel="shortcut icon" href="images/icon.png">
 
 	

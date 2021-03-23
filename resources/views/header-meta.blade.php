@@ -24,7 +24,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="{{asset('css/animate.css')}}" />
 
-	<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap2.min.css')}}" />
 
 	<link rel="stylesheet" type="text/css" href="{{asset('css/line-awesome.css')}}" />
 
@@ -100,6 +100,13 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
+
+	<meta id="ogurl" property="og:url"                content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
+	<meta property="fb:app_id"               content="289587106105936" />
+	<meta property="og:type"               content="article" />
+	<meta id="ogtitle" property="og:title"              content="ixiir" />
+	<meta id="ogdescription" property="og:description"        content="ixiir" />
+	<meta id="ogimage" property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
 	
 
 </head>

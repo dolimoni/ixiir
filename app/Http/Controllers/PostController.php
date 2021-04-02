@@ -47,16 +47,13 @@ class PostController extends Controller
         $specialites=MetierSpecialite::get();
 
 
-
-
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
         $posts=Post::showPosts(false,$request->user()->id);
         $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))->get();
         $params = array(
-            'showComments' => false
+            'showComments' => false,
+            'isHotTopic' => false
         );
-
-
 
 
         $posts_odd=$posts['posts_odd'];
@@ -81,12 +78,47 @@ class PostController extends Controller
     }
 
     public function show($id){
+        $pays=Pays::get();
+        $villes=Pays::with('villes')->find(1)->villes;
+        $metiers=Metier::get();
+        $specialites=MetierSpecialite::get();
         $post=Post::find($id);
         if(!empty($post)){
             $post['userDetails']=$post->userDetails($post->par);
-            return view('templatePostShared',['post'=>$post]);
+            return view('templatePostShared',compact('pays','villes','metiers','specialites','post'));
         }
 
+    }
+
+
+    public function updatePost(Request $request){
+        $postId = $request->txt_updpost_id;
+        $post=Post::find($postId);
+        if(is_null($post)){
+            return false;
+        }
+        $post->detail=$request->detail;
+        $post->youtube=$request->txt_youtube;
+        if(!empty($request->image)){
+            $filename = "ixiir-post-".$request->user()->id."-".time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move('upload/posts', $filename);
+            $post->image='/upload/posts/'.$filename;
+        }
+
+        if(!empty($request->txt_hashModal)){
+            $tag=Tag::where('id',$request->txt_hashModal)->first();
+            if(empty($tag)){
+                $tag=new Tag();
+                $tag->tag=$request->txt_hashModal;
+                $tag->created_at=Carbon::now();
+                $tag->save();
+            }
+            $post->tag_id=$tag->id;
+        }else if(!empty($request->txt_hash_selectModal)){
+            $post->tag_id=$request->txt_hash_selectModal;
+        }
+        $post->save();
+        return redirect('/');
     }
 
 

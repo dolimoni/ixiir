@@ -163,7 +163,7 @@
                             
                             			<div class="user-specs">
                             
-                            				<h3>{{ $user->prenom }} {{ $user->nom }}</h3>
+                            				<h3 title="{{$user->prenom}} {{$user->nom}}"> {{\Illuminate\Support\Str::limit($user->prenom.' '. $user->nom , $limit = 250, $end = '..')}}</h3>
                                             
                             				<span>
                                               <hr>
@@ -277,9 +277,9 @@
 												<div class="cpp-fiel">
 													<select name="specialite" id="specialiteProfil" required>
 														<option value='' >{{config('lang.lbl_specialite')[empty(session('lang'))?0:session('lang')]}}</option>
-                                                        @foreach($specialites as $specialite)
-                                                         <option value="{{$specialite->id}}" {{$specialite->id==$user['metierSpecialite']['id']?'selected':''}}>{{$specialite->nom_en}}</option>
-                                                        @endforeach
+															@foreach($specialites as $specialite)
+																<option value="{{$specialite->id}}" {{$specialite->id==$user['metierSpecialite']['id']?'selected':''}}>{{$specialite->nom_en}}</option>
+															@endforeach
 													</select>
 													<i class="la la-tags"></i>
 												</div>
@@ -450,28 +450,29 @@
 												</div>
 											</div>-->
 											<?php //} ?>
-											<div class='col-md-3' style="padding:0px;" >
-											    @foreach($profiles as $key=>$profile)
-											      <div id='dv_msgprofile_{{$key}}' class='notfication-details' style='cursor:pointer;' onclick='select_lstmsg({{$key}});' >
-													<div class='usr-pic-profil' style="background-image:url({{$profile['user']['image']}});" ></div>
-													<div class='notification-info' style='position:relative;' >
-														<h3>{{$profile['user']['prenom'].' '.$profile['user']['nom']}}</h3>
-														<a href="{{route('getProfil',['user_id'=>$profile['user']['id']])}}" class='dv_btn dv_btn_profil_msg' ><i class='fa fa-user' ></i> {{config('lang.lbl_profil')[empty(session('lang'))?0:session('lang')]}}</a>
-														
-													</div>
+
+										  @foreach($messages as $key => $message)
+										  <div class='col-md-3' style="padding:0px;" >
+												  <div id='dv_msgprofile_aaa'
+													   class='notfication-details' style='cursor:pointer;' onclick='' >
+													  <div class='usr-pic-profil' style="aa" ></div>
+													  <div class='notification-info' style='position:relative;' >
+														  <h3>A corriger</h3>
+														  <a href="a" class='dv_btn dv_btn_profil_msg' ><i class='fa fa-user' ></i> {{config('lang.lbl_profil')[empty(session('lang'))?0:session('lang')]}}</a>
+
+													  </div>
 												  </div>
-												  <div class='clearfix' ></div>
-											    @endforeach
-											</div>
+											  <div class='clearfix' ></div>
+										  </div>
 											<div class='col-md-9' style="padding:0px;" >
-											    @foreach($messages as $message)
+
 											      <div  style="max-width:80%;border-radius:3px;margin-bottom:10px;padding:10px;@if(Auth::user()->id==$message['msg_du'])background:#a349a4;@endif" >
 													<span style="font-size:8pt;" >{{$message["date_ajout"]}}</span>
 													<br />
 													<b>{{$message["message"]}}</b>
 												  </div>
-											    @endforeach
 											</div>
+										  @endforeach
 							  			</div><!--notifications-list end-->
 							  		</div><!--acc-setting end-->
 							  	</div>
@@ -507,7 +508,7 @@
 								<div class="tab-pane fade" id="nav-newmsg" role="tabpanel" aria-labelledby="nav-newmsg-tab">
 							  		<div class="acc-setting">
 										<h3>Envoyer message</h3>
-										<form action="" method="POST" >
+										<form action="{{route('sendMessage')}}" method="POST" >
 										    @csrf
 											<!--<div class="cp-field">
 												<h5>A</h5>
@@ -559,4 +560,5 @@
 				</div><!--account-tabs-setting end-->
 			</div>
 		</section>
+	@include('includes.modalUpdatePost');
 @endsection

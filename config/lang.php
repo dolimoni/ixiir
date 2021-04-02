@@ -265,7 +265,9 @@ return [
 
     "lbl_langue"=>array("Language", "لغة", "Langue"),
 
-    "lbl_exprimez_vous"=>array("What’s your word on this topic?","ما هي كلمتك في هذا الموضوع؟","Quel est votre mot sur ce sujet?"),
+    "lbl_your_word"=>array("What’s your word on this topic?","ما هي كلمتك في هذا الموضوع؟","Quel est votre mot sur ce sujet?"),
+
+    "lbl_exprimez_vous"=>array("Only one post every 12 hours","منشور واحد فقط كل 12 ساعة","Un seul poste toutes les 12 heures"),
 
     "lbl_mot_cle"=>array("Word", "كلمة البحت", "Mot clé"),
 

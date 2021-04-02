@@ -2,7 +2,15 @@
     @csrf
     <div class="post-topbar">
 
-        <textarea name="detail" id="txt_post" class='put_post' placeholder="{{config('lang.lbl_exprimez_vous')[empty(session('lang'))?0:session('lang')]}}" required ></textarea>
+        <?php
+            if($params['isHotTopic']){
+                $txtPostPlaceHolder = config('lang.lbl_your_word')[empty(session('lang'))?0:session('lang')];
+            }else{
+                $txtPostPlaceHolder = config('lang.lbl_exprimez_vous')[empty(session('lang'))?0:session('lang')];
+            }
+        ?>
+
+        <textarea name="detail" id="txt_post" class='put_post' placeholder="<?php echo $txtPostPlaceHolder ?>" required ></textarea>
 
         <input type='hidden' name="txt_updpost_id" id="txt_updpost_id" />
 

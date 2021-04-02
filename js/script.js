@@ -31,10 +31,19 @@ $(window).on("load", function() {
 
     //  ============= SIGNIN CONTROL FUNCTION =========
 
-    $('.sign-control li').on("click", function(){
+    $('#homeLogin .sign-control li').on("click", function(){
         var tab_id = $(this).attr('data-tab');
-        $('.sign-control li').removeClass('current');
-        $('.sign_in_sec').removeClass('current');
+        $('#homeLogin .sign-control li').removeClass('current');
+        $('#homeLogin .sign_in_sec').removeClass('current');
+        $(this).addClass('current animated fadeIn');
+        $("#"+tab_id).addClass('current animated fadeIn');
+        return false;
+    });
+
+    $('#modalLogin .sign-control li').on("click", function(){
+        var tab_id = $(this).attr('data-tab');
+        $('#modalLogin .sign-control li').removeClass('current');
+        $('#modalLogin .sign_in_sec').removeClass('current');
         $(this).addClass('current animated fadeIn');
         $("#"+tab_id).addClass('current animated fadeIn');
         return false;

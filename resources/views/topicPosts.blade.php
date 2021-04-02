@@ -103,4 +103,5 @@
 
 
 	</div><!--theme-layout end-->
+	@include('includes.modalUpdatePost');
     @endsection

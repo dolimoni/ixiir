@@ -44,17 +44,22 @@ class HomeController extends Controller
         $villes=Pays::with('villes')->find(1)->villes;
         $metiers=Metier::get();
 
-        $specialites=MetierSpecialite::get();
 
-
+        $lang = $request->session()->get('lang');
+        $langCode = $this->getLangCode($lang);
+        $specialites=MetierSpecialite::orderBy('nom_en', 'ASC')->get();
 
 
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
         $posts=Post::showPosts(false,$request->user()->id);
-        $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))->get();
+        $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
+            ->where('tags.visible',1)
+            ->get();
         $params = array(
-            'showComments' => false
+            'showComments' => false,
+            'isHotTopic' => false
         );
+
 
 
 
@@ -66,7 +71,10 @@ class HomeController extends Controller
         $postsTopFive_odd=$posts['postsTopFive_odd'];
         $postsTopFive_even=$posts['postsTopFive_even'];
         Post::updatePosition();
-        $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
+        $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))
+            ->where('tags.created_at','>=',Carbon::now()->subDays(10))
+            ->join('posts','tags.id','=','posts.tag_id')
+            ->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
         return view('index',compact('user','topTopics','topics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','params'));
     }
 
@@ -244,7 +252,11 @@ class HomeController extends Controller
     public function getProfil($user_id,Request $request){
         $pays=Pays::get();
         $metiers=Metier::get();
-        $specialites=MetierSpecialite::get();
+
+        $lang = $request->session()->get('lang');
+        $langCode = $this->getLangCode($lang);
+        $specialites=MetierSpecialite::orderBy('nom_en', 'ASC')->get();
+
         $user=User::with('country','city','metierSpecialite')->find($user_id);
         $country=empty($user['country']['id'])?1:$user['country']['id'];
         $villes=Pays::with('villes')->find($country)->villes;
@@ -254,8 +266,13 @@ class HomeController extends Controller
             return $post;
         });
         $params = array(
-            'showComments' => false
+            'showComments' => false,
+            'isHotTopic' => false
         );
+        $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
+            ->where('tags.visible',1)
+            ->get();
+
         $posts_even=array_filter(array_values($posts->toArray()), function($k) {
             return $k%2 == 0;
         }, ARRAY_FILTER_USE_KEY);
@@ -266,10 +283,19 @@ class HomeController extends Controller
         $messagesAu=[];
         $messages=[];
         if($request->user()->id==$user_id){
-            $messages=Message::where('msg_du',$user_id)->orWhere('msg_au',$user_id)->get()->sortBy('date_ajout');
+            $messages=Message::with('user')->where('msg_du',$user_id)->orWhere('msg_au',$user_id)->get()->sortBy('date_ajout');
         }
+
+        echo "<pre>";
+        //print_r($messages[0]->user());
+        echo "</pre>";
+
+        //die();
+
+
         $profiles=Message::with('user')->select('msg_du')->where('msg_au',$request->user()->id)->distinct('msg_du')->get()->sortBy('date_ajout,lu DESC');
-        return view('profil',compact('user','pays','villes','metiers','specialites','user','posts_even','posts_odd','messages','messagesAu','messagesDu','profiles','params'));
+
+        return view('profil',compact('user','pays','villes','metiers','specialites','user','posts_even','posts_odd','messages','messagesAu','messagesDu','profiles','params','topics'));
     }
 
     public function updateProfil(Request $request){
@@ -305,8 +331,17 @@ class HomeController extends Controller
         $postsTopFive_even=$posts['postsTopFive_even'];
         $topics=Tag::get();
         $_SESSION['page']='country';
+        $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
+        $params = array(
+            'showComments' => true,
+            'isHotTopic' => false
+        );
+        $topicEntity=Tag::where('tag','')->first();
+        $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
+            ->where('tags.visible',1)
+            ->get();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even'));
+        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity'));
     }
 
     public function postsCity(Request $request,$city)
@@ -326,8 +361,17 @@ class HomeController extends Controller
         $postsTopFive_even=$posts['postsTopFive_even'];
         $topics=Tag::get();
         $_SESSION['page']='city';
+        $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
+        $params = array(
+            'showComments' => true,
+            'isHotTopic' => false
+        );
+        $topicEntity=Tag::where('tag','')->first();
+        $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
+            ->where('tags.visible',1)
+            ->get();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even'));
+        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity'));
     }
 
     public function postsMetier(Request $request,$metier)
@@ -335,6 +379,9 @@ class HomeController extends Controller
 
         $pays=Pays::get();
         $villes=Pays::with('villes')->find(1)->villes;
+
+
+
         $metiers=Metier::get();
         $specialites=MetierSpecialite::get();
         $posts=Post::showPosts(false,$request->user()->id,'specialite',$metier);
@@ -345,10 +392,18 @@ class HomeController extends Controller
         $postsInteractive_even=$posts['postsInteractive_even'];
         $postsTopFive_odd=$posts['postsTopFive_odd'];
         $postsTopFive_even=$posts['postsTopFive_even'];
-        $topics=Tag::get();
         $_SESSION['page']='metier';
+        $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
+        $params = array(
+            'showComments' => true,
+            'isHotTopic' => false
+        );
+        $topicEntity=Tag::where('tag','')->first();
+        $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
+            ->where('tags.visible',1)
+            ->get();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even'));
+        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity'));
     }
 
     public function deletePost($id){
@@ -412,9 +467,15 @@ class HomeController extends Controller
         $topicPosts_even=[];
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
         $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))->get();
+
+
         $params = array(
-            'showComments' => true
+            'showComments' => true,
+            'isHotTopic' => true
         );
+        $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
+            ->where('tags.visible',1)
+            ->get();
         if(!empty($topicPosts)){
 
             $topicPosts=$topicPosts->posts->map(function($post){

@@ -24,6 +24,7 @@
 		.like-com li a, .like-com .sp_cmntlik {width:auto;}
 		.frm_postupdt{display:block !important;}
 		</style>
+		<script src="{{asset('publicAsset/js/index.js')}}" ></script>
 		<script>
 			$( document ).ready(function() {
 				var i = 0;
@@ -346,12 +347,24 @@
                     $('#txt_hash_select').show();
                     $('#txt_hash').hide();
                 });
+
+				$('#hashtagModal').click(function(){
+                    $('#dv_hashtagModal').toggle()
+                });
                 $('#dv_hashtag .la-times').click(function(){
                     $('#dv_hashtag').hide();
                     $('#txt_hash').val("");
                     $("#txt_hash_select[value='']").prop("selected",true);
                     $('#txt_hash_select').prop("required",true);
                     $('#txt_hash').prop("required",false);
+                });
+
+                $('#dv_hashtagModal .la-times').click(function(){
+                    $('#dv_hashtagModal').hide();
+                    $('#txt_hashModal').val("");
+                    $("#txt_hash_selectModal[value='']").prop("selected",true);
+                    $('#txt_hash_selectModal').prop("required",true);
+                    $('#txt_hashModal').prop("required",false);
                 });
                 $('#dv_hashtag .la-plus-circle').click(function(){
                     $('#txt_hash_select').hide();
@@ -362,14 +375,24 @@
                     $('#txt_hash').prop("required",true);
                     $('#txt_hash_select').prop("required",false);
                 });
-                $('#dv_hashtag .select').click(function(){
-                    $('#txt_hash_select').show();
-                    $('#txt_hash').hide();
-                    $('#dv_hashtag .la-plus-circle').show();
+
+                $('#dv_hashtagModal .la-plus-circle').click(function(){
+                    $('#txt_hash_selectModal').hide();
+                    $('#txt_hashModal').show();
+                    $('#dv_hashtagModal .select').show();
                     $(this).hide();
-                    $('#txt_hash').val("");
-                    $('#txt_hash_select').prop("required",true);
-                    $('#txt_hash').prop("required",false);
+                    $("#txt_hash_selectModal[value='']").prop("selected",true);
+                    $('#txt_hashModal').prop("required",true);
+                    $('#txt_hash_selectModal').prop("required",false);
+                });
+                $('#dv_hashtagModal .select').click(function(){
+                    $('#txt_hash_selectModal').show();
+                    $('#txt_hashModal').hide();
+                    $('#dv_hashtagModal .la-plus-circle').show();
+                    $(this).hide();
+                    $('#txt_hashModal').val("");
+                    $('#txt_hash_selectModal').prop("required",true);
+                    $('#txt_hashModal').prop("required",false);
                     
                 });
                 $('.submitPost').click(function(){

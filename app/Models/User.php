@@ -33,6 +33,7 @@ class User extends Authenticatable
         'password',
     ];
 
+
     public function country(){
         return $this->belongsTo('App\Models\Pays','pays');
     }
@@ -49,8 +50,12 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\MetierSpecialite','specialite');
     }
 
+    public function getId(){
+        return $this->fillable['id'];
+    }
+
     public static function posts($user_id){
-        $posts=Post::with('postsVue','postsJaime','postsComment')->where('par',$user_id)->get();
+        $posts=Post::with('postsVue','postsJaime','postsComment','tag')->where('par',$user_id)->get();
         $posts->map(function($post) use ($user_id){
             $post['userDetails']=$post->userDetails($user_id);
             $post['postsJaimeUser']=count($post->postsJaime->where('user_id', $user_id));

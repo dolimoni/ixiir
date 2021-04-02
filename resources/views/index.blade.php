@@ -1,9 +1,9 @@
-@extends('header-meta2')    
+@extends('header-meta2')
 @section('body')
-    
+
 	<div class="wrapper">
         @include('header-menu')
-       
+
 		<main>
 
 			<div class="main-section" id="dv_mainlistpost" >
@@ -36,15 +36,15 @@
                     						<li><a href="{{route('qui-sommes-nous')}}">{{config('lang.lbl_quisomenous')[empty(session('lang'))?0:session('lang')]}}</a></li>
 
 						                    <li><a href="{{route('conditions')}}">{{config('lang.lbl_condition_utilisation')[empty(session('lang'))?0:session('lang')]}}</a></li>
-                    
+
                     						<li><a href="mailto:ixiirpress@gmail.com" >ixiirpress@gmail.com</a></li>
-                    
+
                     						<li><a href="{{route('setLang','fr')}}" >Français</a></li>
-                    
+
                     						<li><a href="{{route('setLang','ar')}}" >العربية</a></li>
-                    
+
                     						<li><a href="{{route('setLang','en')}}" >English</a></li>
-                    
+
                     			        </ul>
 										<div class="cp-sec">
                                             {{str_replace("[[PARAM2]]",'IXIIR',str_replace("[[PARAM1]]", Carbon\Carbon::now()->year,config('lang.lbl_copyright')[empty(session('lang'))?0:session('lang')]))}}
@@ -72,7 +72,7 @@
                                         @include('templatePost')
                                     @endforeach
                                     </div>
-                                    
+
 									<div class="posts-section">
 
 										<div class='company-title row' style='background:#fff;padding:0px;' >
@@ -108,15 +108,15 @@
                                                     @endforeach
                                             </div>
                                         </div>
-										<div id="btn_loadplus" > 
-                                    
+										<div id="btn_loadplus" >
+
                         					<div class='dv_cntnbtnplus' onclick="loadPosts(2)">{{config('lang.lbl_chargerplus')[empty(session('lang'))?0:session('lang')]}}</div>
-                        
+
                         				</div>
-                                        
+
 
 									</div>
-                                    
+
 								</div><!--main-ws-sec end-->
 
 							</div>
@@ -125,7 +125,7 @@
 
 					</div>
 
-				</div> 
+				</div>
 
 			</div>
 
@@ -134,4 +134,6 @@
 
 
 	</div><!--theme-layout end-->
+	@include('includes.modalUpdatePost');
     @endsection
+

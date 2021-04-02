@@ -269,6 +269,7 @@ header {
 .header-data {
 	float: left;
 	width: 100%;
+	min-height: 60px;
 }
 .logo {
 	float: left;
@@ -353,6 +354,7 @@ header {
 	float: left;
 	width: 280px;
 	margin-top: 9px;
+	margin-left: 40px;
 }
 .search-bar form {
 	float: left;
@@ -5600,6 +5602,31 @@ a:hover {
   .posts-div .col-md-12{
 	padding:0;
   }
+	.sign_in_sec{
+		padding-right: 0;
+		padding-left: 0;
+	}
+
+
+}
+
+@media screen and (max-width: 991px) {
+	.show-in-large{
+		display: none;
+	}
+
+	#dv_formlogin{
+		border-bottom: whitesmoke solid 40px;
+	}
+}
+
+@media screen and (min-width: 992px) {
+  .show-in-large{
+	  display: block;
+  }
+	.hide-in-large{
+		display: none;
+	}
 }
 
 
@@ -5616,4 +5643,26 @@ a:hover {
 }
 .margin_top_30{
 	margin-top: 30px;
+}
+
+
+.modal .login-sec{
+	padding-top: 0;
+}
+.modal .sign-control{
+	margin-bottom: 10;
+	text-align: center;
+}
+
+.modal .sign-control li{
+	width: 40%;
+}
+.modal .sign-control li a{
+	width: 100%;
+	padding-bottom: 10px;
+	padding-top: 10px;
+
+}
+.autosize {
+	overflow: hidden;
 }

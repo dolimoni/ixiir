@@ -20,9 +20,9 @@
                   <br>{{config('lang.lbl_abonne_fidele')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\User::countAbonnes(Auth::user()->id) }}</b>
                   <br>{{config('lang.lbl_les_posts')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\User::posts(Auth::user()->id)->count() }}</b>
                   <br>{{config('lang.lbl_nbrvueposts')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\User::posts(Auth::user()->id)->sum('postsVue')}}</b>
-				  <br>{{config('lang.lbl_ratepagecity')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{$user->getCityRank($user->id,$user->city->id) }}</b>
-                  <br>{{config('lang.lbl_ratepagepays')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{$user->getCountryRank($user->id,$user->country->id) }}</b>
-                  <br>{{config('lang.lbl_ratepageworld')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{$user->getWordRank($user->id) }}</b>
+				  <br>{{config('lang.lbl_ratepagecity')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{!empty(Auth::user()->city->id)?Auth::user()->getCityRank(Auth::user()->id,Auth::user()->city->id):'NA' }}</b>
+                  <br>{{config('lang.lbl_ratepagepays')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{!empty(Auth::user()->country->id)?Auth::user()->getCountryRank(Auth::user()->id,Auth::user()->country->id):'NA' }}</b>
+                  <br>{{config('lang.lbl_ratepageworld')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{Auth::user()->getWordRank(Auth::user()->id) }}</b>
                   <br>{{config('lang.lbl_income')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\Post::sumTrophy(Auth::user())}} $</b>
 				</span>
 

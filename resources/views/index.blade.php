@@ -99,12 +99,12 @@
                                         <div id="interactive" style="display:none;">
                                              <div class='col-md-6 no-padding-colmd posts-div no-padding-left'>
                                                 @foreach($postsInteractive_even as $key=>$post)
-                                                    @include('templatePost')
+                                                    @include('templatePostInteract')
                                                 @endforeach
                                             </div>
                                             <div class='col-md-6 no-padding-colmd posts-div no-padding-right'>
                                                     @foreach($postsInteractive_odd as $key=>$post)
-                                                        @include('templatePost')
+                                                        @include('templatePostInteract')
                                                     @endforeach
                                             </div>
                                         </div>

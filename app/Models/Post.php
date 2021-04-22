@@ -144,6 +144,24 @@ class Post extends Model
         return count(self::with('postsVue')->find($post_id)->postsVue->where('user_id', $user_id));
     }
 
+    public static function searchPosts($searchWord){
+        $posts=self::with('tag','postsComment','postsJaime')
+            ->where('detail','like','%'.$searchWord.'%')
+            ->limit(50)
+            ->orderBy('date_ajout','desc')
+            ->get();
+
+        $posts->map(function($post) {
+            $post['userDetails'] = $post->userDetails($post->par);
+            $post['all'] = true;
+            $post['postsComment'] = count($post->postsComment);
+            $post['postsJaime'] = count($post->postsJaime);
+            $post['postsVue'] = self::countPostVues($post->post_id);
+        });
+
+        return $posts;
+    }
+
     public static function showPosts($login,$user_id=null,$attr=null,$value=null){
         $posts=self::with('tag','postsComment','postsJaime')
             ->limit(50)

@@ -8,7 +8,7 @@
 
 			<div class="main-section" id="dv_mainlistpost" >
 
-				<div class="container">
+				<div style="width:96%;margin: auto;">
 
 					<div class="main-section-data">
 
@@ -62,20 +62,24 @@
 
 								   @include('addPostForm')
                                    @include('hotTopicsTemplate')
+									@if(count($postsTopFive_even))
 									<div class='col-md-6 no-padding-colmd posts-div no-padding-left'>
                                     @foreach($postsTopFive_even as $key=>$post)
                                         @include('templatePost')
                                     @endforeach
                                     </div>
+									@endif
+									@if(count($postsTopFive_odd))
                                     <div class='col-md-6 no-padding-colmd posts-div no-padding-right'>
                                     @foreach($postsTopFive_odd as $key=>$post)
                                         @include('templatePost')
                                     @endforeach
                                     </div>
+									@endif
 
 									<div class="posts-section">
 
-										<div class='company-title row' style='background:#fff;padding:0px;' >
+										<div class='company-title row' style='background:#fff;padding:0px; margin-bottom: 0; margin-top: 10px;' >
 
 											<div class='col-md-6 dv_btnfilter btn_latest dv_filteractive' onclick="show('latest');hide('interactive');activePosts('btn_latest');"><i class="la la-clock-o"></i> {{config('lang.lbl_lastpost')[empty(session('lang'))?0:session('lang')]}}</div>
 
@@ -85,28 +89,36 @@
 
 									    </div>
                                         <div id="latest">
+											@if(count($posts_even))
                                              <div class='col-md-6 no-padding-colmd posts-div no-padding-left'>
                                                 @foreach($posts_even as $key=>$post)
                                                     @include('templatePost')
                                                 @endforeach
                                             </div>
+											@endif
+											@if(count($posts_odd))
                                             <div class='col-md-6 no-padding-colmd posts-div no-padding-right'>
                                                     @foreach($posts_odd as $key=>$post)
                                                         @include('templatePost')
                                                     @endforeach
                                             </div>
+											@endif
                                         </div>
                                         <div id="interactive" style="display:none;">
+											@if(count($postsInteractive_even))
                                              <div class='col-md-6 no-padding-colmd posts-div no-padding-left'>
                                                 @foreach($postsInteractive_even as $key=>$post)
-                                                    @include('templatePost')
+                                                    @include('templatePostInteract')
                                                 @endforeach
                                             </div>
+											@endif
+											@if(count($postsInteractive_odd))
                                             <div class='col-md-6 no-padding-colmd posts-div no-padding-right'>
                                                     @foreach($postsInteractive_odd as $key=>$post)
-                                                        @include('templatePost')
+                                                        @include('templatePostInteract')
                                                     @endforeach
                                             </div>
+											@endif
                                         </div>
 										<div id="btn_loadplus" >
 

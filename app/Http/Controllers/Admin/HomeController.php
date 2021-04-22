@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 
@@ -27,7 +28,7 @@ class HomeController extends Controller
     public function showTopic(Request $request){
         $topicId = $request->get('topicId');
         Tag::where('id', $topicId)
-            ->update(['visible' => 1]);
+            ->update(['visible' => 1,'created_at' => Carbon::now()]);
         $topics = Tag::orderByDesc('created_at')->get();
         return view('admin.topics',compact('topics'));
     }

@@ -60,34 +60,32 @@
 
 								<div class="main-ws-sec">
 
-                                    <div class="company-title row" style="background:#fff;padding:0px;">
-
-											<div class="col-md-12 dv_btnfilter"><i class="fa fa-fire"></i> {{$topic}}</div>
-
-											<div class="clearfix"></div>
-
+									<div class="text-right">
+										<div>{{config('lang.lbl_best_result')[empty(session('lang'))?0:session('lang')]}} :
+											<span style="font-weight: bold;">{{$searchWord}}</span>
+										</div>
 									</div>
 
-									@include('addPostForm')
+
+									<div class="posts-section margin_top_30">
+									<div class="text-right" style="font-weight: bold;font-size: 15px; !important;">{{config('lang.lbl_persons')[empty(session('lang'))?0:session('lang')]}}</div>
+										<div>
+											<div class='col-md-12 no-padding-colmd posts-div no-padding-right'>
+												@foreach($users as $user)
+												@include('profileResult')
+												@endforeach
+											</div>
+										</div>
+									</div>
 
 
 									<div class="posts-section">
-                                        <div id="hottopics">
-											@if(count($topicPosts_even))
-                                             <div class='col-md-6 no-padding-colmd posts-div no-padding-left'>
-                                                @foreach($topicPosts_even as $key=>$post)
-                                                    @include('templatePost')
-                                                @endforeach
-                                            </div>
-											@endif
-											@if(count($topicPosts_odd))
-                                            <div class='col-md-6 no-padding-colmd posts-div no-padding-right'>
-                                                    @foreach($topicPosts_odd as $key=>$post)
-                                                        @include('templatePost')
-                                                    @endforeach
-                                            </div>
-											@endif
-                                        </div>
+										<div class="text-right" style="font-weight: bold;font-size: 15px; !important;">{{config('lang.lbl_posts')[empty(session('lang'))?0:session('lang')]}}</div>
+										<div class='col-md-12 no-padding-colmd posts-div no-padding-right'>
+											@foreach($posts_odd as $key=>$post)
+												@include('templatePost')
+											@endforeach
+										</div>
 									</div>
 
 								</div><!--main-ws-sec end-->
@@ -109,3 +107,4 @@
 	</div><!--theme-layout end-->
 	@include('includes.modalUpdatePost');
     @endsection
+

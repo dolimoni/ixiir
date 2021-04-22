@@ -24,10 +24,23 @@
                             </a>
                         @endif
                     </h3>
-                    <span>{{$post['date_ajout']}}</span>
+                    <span>
+                        <?php
+                        $lang = 'en';
+                        if(isset(Config::get('constants.LANG')[session('lang')])){
+                            $lang = \Carbon\Carbon::setLocale(Config::get('constants.LANG')[session('lang')]);
+                        }
+                        echo \Carbon\Carbon::createFromTimeStamp(strtotime($post['date_ajout']))->diffForHumans()
+                        ?>
+                    </span>
                     <div>
                       @if(!empty($post['userDetails']['city']))
-                      <b style='color:#A3A3A3;font-size: 14px;'>{{$post['userDetails']['city'][empty(session('lang')) || session('lang')==0?'nom_en':(session('lang')==1?'nom_ar':'nom_fr')]}}</b>
+                            <?php
+                            $city = $post['userDetails']['city'][empty(session('lang')) || session('lang')==0?'nom_en':(session('lang')==1?'nom_ar':'nom_fr')];
+                            ?>
+                      <b title="{{$city}}" style='color:#A3A3A3;font-size: 14px;'>
+                          {{\Illuminate\Support\Str::limit($city , $limit = 13, $end = '..')}}
+                      </b>
                       @endif
                       @if(!empty($post['userDetails']['country']) && !empty($post['userDetails']['city']))
                       <span>
@@ -112,7 +125,7 @@
                 </button>
                     <a
                        target="_blank"
-                       href="https://twitter.com/share?url={{route('showPost',['id'=>$post['post_id']])}}&text={{$post['detail']}}"
+                       href="https://twitter.com/share?url={{route('showPost',['id'=>$post['post_id']])}}&text={{\Illuminate\Support\Str::limit($post['detail'] , $limit = 280-2-strlen(route('showPost',['id'=>$post['post_id']]))-1, $end = '..')}}"
                        class="twitter-share-button btnShare btn_share btn_twitter"
                        data-show-count="false">
                         <i class='la la-twitter' ></i> {{config('lang.lbl_teweet')[empty(session('lang'))?0:session('lang')]}}
@@ -221,7 +234,7 @@
 
 													@if(Auth::check() && ($comment['user']['id']==Auth::user()->id || $post['par']==Auth::user()->id || Auth::user()->user_type==0))
 
-														<b class='btn_delcmnt' onclick="deleteComment({{$post['post_id']}}, {{$comment['id']}});" >delete</b>
+														<b class='btn_delcmnt' onclick="deleteComment({{$post['post_id']}}, {{$comment['id']}});" >{{config('lang.lbl_delete')[empty(session('lang'))?0:session('lang')]}}</b>
 
 													@endif
 

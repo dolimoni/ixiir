@@ -6,7 +6,7 @@
             <input type="hidden" id="updatePostId" name="txt_updpost_id">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit post</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{config('lang.lbl_edit_post')[empty(session('lang'))?0:session('lang')]}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{config('lang.lbl_close')[empty(session('lang'))?0:session('lang')]}}</button>
                     <button type="submit" class="dv_btn active submitPostModal">
                         <i class="fa fa-paper-plane"></i>
                     </button>

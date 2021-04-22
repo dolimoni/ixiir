@@ -1,10 +1,10 @@
 <div class="topHotTopics col-md-12">
-    <span class="trending"><i class="fa fa-fire"></i>Top trending hot topics</span>
+    <span class="trending"><i class="fa fa-fire"></i>{{config('lang.lbl_top_trending_topics')[empty(session('lang'))?0:session('lang')]}}</span>
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">Hot topic</th>
-          <th scope="col" class="wordCol">Word/Comment</th>
+          <th scope="col">{{config('lang.lbl_hot_topic')[empty(session('lang'))?0:session('lang')]}}</th>
+          <th scope="col" class="wordCol">{{config('lang.lbl_word_comment')[empty(session('lang'))?0:session('lang')]}}</th>
         </tr>
       </thead>
       <tbody>

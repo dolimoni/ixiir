@@ -1,10 +1,10 @@
-@extends('header-meta2')    
+@extends('header-meta2')
 @section('body')
 <div class="wrapper">
        @include('header-menu')
 		<?php
 		/*$isreload=false; $str_msg_err="";
-		
+
 		if(rqstprm("txt_nom")!="" && rqstprm("txt_email")!="" && rqstprm("user")=="")
 		{
 			if(rqstprm("txt_password")!=rqstprm("txt_repeat_password")){$str_msg_err=get_label('lbl_passconfwrng');}
@@ -43,7 +43,7 @@
 			}
 			$isreload=true;
 		}
-		require("header-menu.php"); 
+		require("header-menu.php");
 		$str_partactive=0;
 		if(rqstprm("s")=="message"){$str_partactive=1;}
 		if(rqstprm("s")=="newmsg"){$str_partactive=3;}
@@ -64,7 +64,7 @@
 			else{$str_msg_err=get_label('lbl_passincorect');$str_partactive=2;}
 			$isreload=true;
 		}
-		
+
 		$str_pk=$_SESSION["userpk"];
 		$str_img=$_SESSION["user_image"];
 		$str_nompr=$_SESSION["prenom"] . " " . $_SESSION["nom"];
@@ -79,12 +79,12 @@
 		{
 			$req = "SELECT * FROM user u WHERE u.id=".injsql(rqstprm("user"),$pdo);
 			$dt_result=bddfetch($req,$pdo);
-			
+
 			if(isset($dt_result[0]))
 			{
 				$nbr_vue=0;
 				$user=$dt_result[0];
-				$req="SELECT DATE_ADD(max(uv.date_ajout), INTERVAL 1 HOUR) AS DTMAX, COUNT(*) AS NBRTOT FROM user_vue uv 
+				$req="SELECT DATE_ADD(max(uv.date_ajout), INTERVAL 1 HOUR) AS DTMAX, COUNT(*) AS NBRTOT FROM user_vue uv
 						WHERE uv.user_id=".injsql(rqstprm("user"),$pdo)." AND uv.user_vue=".injsql($_SESSION["userpk"],$pdo)." AND uv.date_ajout>=DATE_SUB(NOW(), INTERVAL 7 DAY)";
 				$dt_nbrvue=bddfetch($req,$pdo);
 				if(isset($dt_nbrvue[0]["NBRTOT"])){$nbr_vue=$dt_nbrvue[0]["NBRTOT"];}
@@ -152,19 +152,19 @@
 							<div class="main-left-sidebar no-margin">
 
                             	<div class="user-data full-width">
-                            
+
                             		<div class="user-profile">
-                            
+
                             			<div class="username-dt">
-                            
+
                             				<div class="usr-pic" style="background-image:url({{asset(!empty($user['image'])?$user['image']:'/images/deaultuser.jpg')}});" ></div>
-                            
+
                             			</div><!--username-dt end-->
-                            
+
                             			<div class="user-specs">
-                            
+
                             				<h3 title="{{$user->prenom}} {{$user->nom}}"> {{\Illuminate\Support\Str::limit($user->prenom.' '. $user->nom , $limit = 250, $end = '..')}}</h3>
-                                            
+
                             				<span>
                                               <hr>
                                               {{config('lang.lbl_nbrvisit_page')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ $user->userVue()->count() }}</b>
@@ -176,30 +176,30 @@
                                               <br>{{config('lang.lbl_ratepageworld')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{$user->getWordRank($user->id) }}</b>
                                               <br>{{config('lang.lbl_income')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\Post::sumTrophy($user)}} $</b>
                             				</span>
-                            
+
                             			</div>
-                            
+
                             		</div><!--user-profile end-->
-                            
+
                             		<ul class="user-fw-status">
-                            
+
                             			<li>
-                            
+
                             				<a href="{{route('getProfil',['user_id'=>$user->id])}}" title="">{{config('lang.lbl_mon_profil')[empty(session('lang'))?0:session('lang')]}}</a>
-                            
+
                             			</li>
-                            
+
                             		</ul>
-                            
+
                             	</div>
-                            
+
                             </div>
 							<div class="acc-leftbar full-width">
 								<div class="nav nav-tabs" id="nav-tab" role="tablist">
 									<a class="nav-item nav-link active" id="nav-mespst-tab" data-toggle="tab" href="#nav-mespst" role="tab" aria-controls="nav-mespst" aria-selected="true"><i class="la la-file"></i>
-                                    @if(Auth::user()->id!=$user['id']) 
+                                    @if(Auth::user()->id!=$user['id'])
                                     {{config('lang.lbl_les_posts')[empty(session('lang'))?0:session('lang')]}}
-                                    @else 
+                                    @else
                                     {{config('lang.lbl_maPage')[empty(session('lang'))?0:session('lang')]}}
                                     @endif
                                     </a>
@@ -337,7 +337,7 @@
 							  		<div class="acc-setting">
 							  			<h3>
 											{{config('lang.lbl_mes_messages')[empty(session('lang'))?0:session('lang')]}}
-											<a href="" class='dv_btn dv_btn_new_msg' ><i class='fa fa-envelope' ></i> Send message</a>
+											<a href="" class='dv_btn dv_btn_new_msg' ><i class='fa fa-envelope' ></i> {{config('lang.lbl_envoyermessage')[empty(session('lang'))?0:session('lang')]}}</a>
 										</h3>
 							  			<div class="notifications-list row">
 							  			    @if(count($messages)==0)
@@ -455,10 +455,10 @@
 										  <div class='col-md-3' style="padding:0px;" >
 												  <div id='dv_msgprofile_aaa'
 													   class='notfication-details' style='cursor:pointer;' onclick='' >
-													  <div class='usr-pic-profil' style="aa" ></div>
-													  <div class='notification-info' style='position:relative;' >
-														  <h3>A corriger</h3>
-														  <a href="a" class='dv_btn dv_btn_profil_msg' ><i class='fa fa-user' ></i> {{config('lang.lbl_profil')[empty(session('lang'))?0:session('lang')]}}</a>
+													  <div class='usr-pic-profil' style="float:none;margin:auto;background-image: url({{asset(!empty($message->user->image)?$message->user->image:'/images/deaultuser.jpg')}});" ></div>
+													  <div class='notification-info' style='position:relative;float: none;text-align: center;' >
+														  <h3>{{$message->user->prenom }} {{$message->user->nom }}</h3>
+														  <a href="{{route('getProfil',['user_id'=>$message->user->id])}}" class='dv_btn dv_btn_profil_msg' ><i class='fa fa-user' ></i> {{config('lang.lbl_profil')[empty(session('lang'))?0:session('lang')]}}</a>
 
 													  </div>
 												  </div>
@@ -466,10 +466,10 @@
 										  </div>
 											<div class='col-md-9' style="padding:0px;" >
 
-											      <div  style="max-width:80%;border-radius:3px;margin-bottom:10px;padding:10px;@if(Auth::user()->id==$message['msg_du'])background:#a349a4;@endif" >
+											      <div  style="max-width:80%;border-radius:3px;margin-bottom:10px;padding:10px;@if(Auth::user()->id==$message['msg_du'])@endif" >
 													<span style="font-size:8pt;" >{{$message["date_ajout"]}}</span>
 													<br />
-													<b>{{$message["message"]}}</b>
+													<div dir="rtl">{{$message["message"]}}</div>
 												  </div>
 											</div>
 										  @endforeach
@@ -527,7 +527,7 @@
 											</div>
 											<div class="save-stngs pd3">
 												<ul>
-													<li><button type="submit">Send message</button></li>
+													<li><button type="submit">{{config('lang.lbl_envoyermessage')[empty(session('lang'))?0:session('lang')]}}</button></li>
 												</ul>
 											</div><!--save-stngs end-->
 										</form>

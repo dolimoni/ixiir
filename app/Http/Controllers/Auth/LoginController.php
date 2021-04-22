@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\User;
 use Socialite;
 use Log;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class LoginController extends Controller
 {
@@ -40,19 +41,20 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function redirect($provider)
     {
-       //dd(config('services.facebook')); 
+       //dd(config('services.facebook'));
        Log::info(config('services.facebook'));
        return Socialite::driver($provider)->redirect();
     }
-    
+
     public function callback($provider){
             $userSocial =   Socialite::driver($provider)->stateless()->user();
             $user       =   User::where(['login' => $userSocial->getEmail()])->first();
             if($user){
                 $this->guard()->login($user);
+                session::put('user_id', $user->id);
             }else{
                 $user = User::create([
                     'nom'          => $userSocial->getName(),

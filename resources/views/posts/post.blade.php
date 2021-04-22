@@ -201,7 +201,7 @@
 
 													@if(Auth::check() && ($comment['user']['id']==Auth::user()->id || $post['par']==Auth::user()->id || Auth::user()->user_type==0))
 
-														<b class='btn_delcmnt' onclick="deleteComment({{$post['post_id']}}, {{$comment['id']}});" >delete</b>
+														<b class='btn_delcmnt' onclick="deleteComment({{$post['post_id']}}, {{$comment['id']}});" >{{config('lang.lbl_delete')[empty(session('lang'))?0:session('lang')]}}</b>
 
 													@endif
 

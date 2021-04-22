@@ -97,6 +97,11 @@ class PostController extends Controller
         if(is_null($post)){
             return false;
         }
+
+        if(!$this->isAdmin() && $post->par !==Auth::user()->id){
+            return redirect('/');
+        }
+
         $post->detail=$request->detail;
         $post->youtube=$request->txt_youtube;
         if(!empty($request->image)){
@@ -120,6 +125,16 @@ class PostController extends Controller
         $post->save();
         return redirect('/');
     }
+
+
+    function isAdmin(){
+        $isAdmin = false;
+        if(Auth::user()->id === 1822 || Auth::user()->id === 1){
+            $isAdmin = true;
+        }
+        return $isAdmin;
+    }
+
 
 
 }

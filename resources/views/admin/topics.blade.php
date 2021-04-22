@@ -114,6 +114,7 @@
             if ($("#datatable-reparation").length) {
                 $("#datatable-reparation").DataTable({
                     aaSorting: [[0, 'desc']],
+                    lengthMenu: [[100, 500, 1000, -1], [100, 500, 1000, 'Tout']],
                     responsive: true,
                     "language": {
                         "url": "{{asset("adminAsset/vendors/datatables.net/French.json")}}"

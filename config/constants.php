@@ -6,5 +6,10 @@ return [
     'VISIBLE' => array(
         1=>'Oui',
         0=>'Non',
+    ),
+    'LANG'=>array(
+        0=>'en',
+        1=>'ar',
+        2=>'fr',
     )
 ];

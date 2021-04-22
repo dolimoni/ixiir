@@ -394,7 +394,7 @@ nav {
 nav ul li {
 	display: inline-block;
 	text-align: center;
-	padding: 13px 13px;
+	padding: 13px 9px;
 	position: relative;
 }
 .nav_menu ul li:hover{background:#a855a9;}
@@ -704,7 +704,7 @@ nav > ul > li > a:hover {
 main {
 	float: left;
 	width: 100%;
-	padding: 60px 0;
+	padding: 10px 0;
 }
 .main-section {
 	float: left;
@@ -969,6 +969,7 @@ main {
 	float: left;
 	width: 100%;
 	padding: 23px 20px;
+	padding-bottom: 0;
 	background-color: #fff;
 	border-top: 4px solid #a349a4;
 	border-left: 1px solid #e4e4e4;
@@ -1486,7 +1487,7 @@ main {
 	/*border-left: 1px solid #e4e4e4;
 	border-right: 1px solid #e4e4e4;*/
 	border: 1px solid #e4e4e4;
-	margin-bottom:20px;
+	margin-bottom:4px;
 	overflow: hidden;
 }
 .posty .job-status-bar {
@@ -2126,7 +2127,7 @@ select {
 	width: 100%;
 	text-align: right;
 	padding-right: 50px;
-	margin-bottom: 70px;
+	margin-bottom: 20px;
 }
 .sign-control li {
 	display: inline-block;
@@ -5565,12 +5566,16 @@ a:hover {
     float:left;
     margin-top:15px;
     margin-bottom:5px;
+	padding-right: 0px;
+	padding-left: 0px;
 }
 
 .topHotTopics{
     overflow:hidden;
     background:#fff;
     padding:15px 5% 20px;
+	border: 1px solid #e4e4e4;
+	padding-bottom: 5px;
 }
 
 .topHotTopics th,
@@ -5616,7 +5621,7 @@ a:hover {
 	}
 
 	#dv_formlogin{
-		border-bottom: whitesmoke solid 40px;
+		border-bottom: whitesmoke solid 10px;
 	}
 }
 

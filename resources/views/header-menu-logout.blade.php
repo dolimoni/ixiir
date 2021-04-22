@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="header-data">
 			<div class="logo">
-				<a href="https://www.ixiir.com/" title=""><img src="/images/logo.png" alt=""></a>
+				<a href="https://www.ixiir.com/" title=""><img style="height: 32px;" src="{{asset('images/logoV1.png')}}" alt=""></a>
 			</div><!--logo end-->
 			
 			<div class="menu-btn">

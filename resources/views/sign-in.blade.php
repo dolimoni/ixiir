@@ -6,7 +6,7 @@
 
   <div class="sign-in-page" style="padding:0px;" >
 
-   <div class="signin-popup" style="width:100%;" >
+   <div class="" style="width:96%;margin: auto;" >
 
 	<div class="signin-pop">
 
@@ -75,20 +75,24 @@
 
 				@include('hotTopicsTemplate')
 				<div class='company-title row p-0' >
-				    <div class='col-md-6 no-padding-colmd posts-div no-padding-left'>
-					   @foreach($postsTopFive_even as $key=>$post)
-					     @include('templatePost')
-					   @endforeach
-					</div>
-					<div class='col-md-6 no-padding-colmd posts-div no-padding-right'>
-					   @foreach($postsTopFive_odd as $key=>$post)
-					     @include('templatePost')
-					   @endforeach
-					</div>
+					@if(count($postsTopFive_even))
+						<div class='col-md-6 no-padding-colmd posts-div no-padding-left'>
+						   @foreach($postsTopFive_even as $key=>$post)
+							 @include('templatePost')
+						   @endforeach
+						</div>
+					@endif
+					@if(count($postsTopFive_odd))
+						<div class='col-md-6 no-padding-colmd posts-div no-padding-right'>
+						   @foreach($postsTopFive_odd as $key=>$post)
+							 @include('templatePost')
+						   @endforeach
+						</div>
+					@endif
 					
 				</div>
 				<div class="clearfix"></div>
-				<div class='mb-4 p-2' style='font-size:18pt;background:#eee;' ><i class="la la-clock-o"></i>{{config('lang.lbl_lastpost')[empty(session('lang'))?0:session('lang')]}}</div>
+				<div class='mb-4 p-2 post-topbar' style='font-size:18pt;background:white;margin-bottom: 0 !important;' ><i class="la la-clock-o"></i>{{config('lang.lbl_lastpost')[empty(session('lang'))?0:session('lang')]}}</div>
 				<div class="pd-right-none no-pd">
 				   <div class="main-ws-sec">
                        <div class="posts-section">
@@ -109,12 +113,12 @@
                 <div class='mb-4 p-2 text-center' style='font-size:15pt;background:#fd8222;color:#fff;' >{{config('lang.lbl_connectToView')[empty(session('lang'))?0:session('lang')]}}</div>
 			</div>
 			<div class="col-lg-4 order-lg-last order-md-first order-first"  id="dv_formlogin" >
-	          @include('includes.login');
+	          @include('includes.login')
 			</div>
 		</div>
 	 </div>
 	 </div>
 	</div>					
 </div>
-@include('includes.modalLogin');
+@include('includes.modalLogin')
 @endsection

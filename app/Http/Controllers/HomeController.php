@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserVue;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Carbon\Carbon;
@@ -16,10 +17,12 @@ use App\Models\Message;
 use App\Models\UserAbonne;
 use App\Models\Tag;
 use App\Models\Topic;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class HomeController extends Controller
 {
@@ -73,12 +76,21 @@ class HomeController extends Controller
         Post::updatePosition();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))
             ->where('tags.created_at','>=',Carbon::now()->subDays(10))
+            ->where('tags.visible',1)
             ->join('posts','tags.id','=','posts.tag_id')
             ->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
         return view('index',compact('user','topTopics','topics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','params'));
     }
 
+
     public function addPost(Request $request){
+
+        if(isset($request->txt_youtube)){
+            $request->txt_youtube.='&';
+            $parsed = $this->get_string_between($request->txt_youtube, '?v=', '&');
+            $request->txt_youtube = "https://www.youtube.com/embed/".$parsed;
+        }
+
         $firstPost=Post::where('par',$request->user()->id)->orderByDesc('date_ajout')->first();
         $hours = 12;
         if(!empty($request->txt_updpost_id)){
@@ -146,10 +158,10 @@ class HomeController extends Controller
 
      function aimerPost(Request $request){
 		if($request->txt_jaimeornot>0){
-            PostsJaime::where('user_id',$request->user()->id)->where('post_id',$request->txt_idposjaime)->delete();
+            PostsJaime::where('user_id',Auth::user()->id)->where('post_id',$request->txt_idposjaime)->delete();
         }else {
             $postsJaime=new PostsJaime();
-            $postsJaime->user_id=$request->user()->id;
+            $postsJaime->user_id=Auth::user()->id;
             $postsJaime->post_id=$request->txt_idposjaime;
             $postsJaime->save();
         }
@@ -172,76 +184,44 @@ class HomeController extends Controller
         return response(array('postsComment'=> $postsComment,'user'=> $user), 200);
     }
 
-    function deleteCommentPost(Request $request){
-		if(PostsComment::find($request->txt_idcomntdelete)->delete()){
-            return true;
+    function isAdmin(){
+        $isAdmin = false;
+        if(Auth::user()->id === 1822 || Auth::user()->id === 1){
+            $isAdmin = true;
         }
-        return false;
+        return $isAdmin;
     }
 
-    function room(){
-        require_once base_path().'/ixiir/inclus/facebook/src/Facebook/autoload.php';
+    function deleteCommentPost(Request $request){
 
+		if($this->isAdmin()){
+            $postComment = PostsComment::find($request->txt_idcomntdelete);
+        }else{
+            $postComment = PostsComment::where('id',$request->txt_idcomntdelete)->where('user_id',Auth::user()->id);
+        }
 
+		if(!empty($postComment) && $postComment->delete()){
+            return true;
+        }
 
-
-        $fb = new \Facebook\Facebook([
-
-            'app_id' => "289587106105936",
-
-            'app_secret' => "9bbe33f2ec5dc2bf7cd6c39c3a99a6f1",
-
-            'default_graph_version' => 'v2.2',
-
-        ]);
-
-
-        $permissions = $permissions = [];
-        $helper = $fb->getRedirectLoginHelper();
-
-        $loginUrl = $helper->getLoginUrl('https://rec.ixiir.com/fb-callback.php', $permissions);
-
-
-        $str_urlface=htmlspecialchars($loginUrl);
-        $strurlsite="https://" . $_SERVER["HTTP_HOST"] . "/";
-        $str_urlshare=$strurlsite."post/show/3081";
-
-
-        ?>
-        <a href="<?php echo $str_urlface; ?>" title="" class="fb"><i class="fa fa-facebook"></i>login</a>
-
-
-        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $str_urlshare; ?>" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="btnShare btn_share btn_facebook" >
-
-            <i class='fa fa-facebook' ></i>Partager
-
-        </a>
-
-
-        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $str_urlshare; ?>" target="_blank">
-            Share on Facebook
-        </a>
-
-        <?php
-
-        die();
+        return false;
     }
 
      function followPost($oper,$user_vue,$user_id){
 		if($oper=="delflw")
 		{
-            UserAbonne::where('user_vue',$user_vue)->where('user_id',$user_id)->update(['abonne_del'=>1]);
+            UserAbonne::where('user_vue',$user_vue)->where('user_id',Auth::user()->id)->update(['abonne_del'=>1]);
 		}else {
-            $nbr_abon=UserAbonne::where('user_vue',$user_vue)->where('user_id',$user_id)->count();
+            $nbr_abon=UserAbonne::where('user_vue',$user_vue)->where('user_id',Auth::user()->id)->count();
             if($nbr_abon>0)
             {
-                UserAbonne::where('user_vue',$user_vue)->where('user_id',$user_id)->update(['abonne_del'=>0]);
+                UserAbonne::where('user_vue',$user_vue)->where('user_id',Auth::user()->id)->update(['abonne_del'=>0]);
             }
             else
             {
                 $userAbonne=new UserAbonne();
                 $userAbonne->user_vue=$user_vue;
-                $userAbonne->user_id=$user_id;
+                $userAbonne->user_id=Auth::user()->id;
                 $userAbonne->abonne_del=0;
                 $userAbonne->add_auto=0;
                 $userAbonne->save();
@@ -252,6 +232,18 @@ class HomeController extends Controller
     public function getProfil($user_id,Request $request){
         $pays=Pays::get();
         $metiers=Metier::get();
+
+
+        $userVue = new UserVue();
+
+
+
+        if(!isset($_COOKIE['pfllstsn_'.$user_id])){
+            setcookie('pfllstsn_'.$user_id,$user_id,time()+300);
+            $userVue->user_id=$user_id;
+            $userVue->user_vue=Auth::user()->id;
+            $userVue->save();
+        }
 
         $lang = $request->session()->get('lang');
         $langCode = $this->getLangCode($lang);
@@ -286,12 +278,6 @@ class HomeController extends Controller
             $messages=Message::with('user')->where('msg_du',$user_id)->orWhere('msg_au',$user_id)->get()->sortBy('date_ajout');
         }
 
-        echo "<pre>";
-        //print_r($messages[0]->user());
-        echo "</pre>";
-
-        //die();
-
 
         $profiles=Message::with('user')->select('msg_du')->where('msg_au',$request->user()->id)->distinct('msg_du')->get()->sortBy('date_ajout,lu DESC');
 
@@ -299,12 +285,12 @@ class HomeController extends Controller
     }
 
     public function updateProfil(Request $request){
-        $user=User::with('country','city','metierSpecialite')->find($request->user_id);
+        $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
         if(!empty($user)){
             $user->fill($request->post());
             $user->password=Hash::make($request->password);
             if(!empty($request->image)){
-                $filename = "ixiir-user-".$request->user()->id."-".time().'.'.$request->image->getClientOriginalExtension();
+                $filename = "ixiir-user-".Auth::user()->id."-".time().'.'.$request->image->getClientOriginalExtension();
                 $request->image->move('upload/user', $filename);
                 $user->image='/upload/user/'.$filename;
             }
@@ -407,7 +393,13 @@ class HomeController extends Controller
     }
 
     public function deletePost($id){
-        $post=Post::find($id);
+        if($this->isAdmin()){
+            $post=Post::find($id);
+        }else{
+            $post=Post::where('post_id',$id)
+                ->where('par',Auth::user()->id);
+        }
+
         if(!empty($post)){
             $post->delete();
         }
@@ -514,7 +506,48 @@ class HomeController extends Controller
 
     public function hotTopics(){
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
-        $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word');
+        $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))
+            ->where('tags.created_at','>=',Carbon::now()->subDays(10))
+            ->where('tags.visible',1)
+            ->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word');
         return view('topTopics',['topTopics'=>$topTopics,'user'=>$user]);
     }
+
+    public function search(Request $request){
+
+        $pays=Pays::get();
+        $villes=Pays::with('villes')->find(1)->villes;
+        $metiers=Metier::get();
+
+        $searchWord = $request->txt_search;
+
+        $specialites=MetierSpecialite::orderBy('nom_en', 'ASC')->get();
+
+
+        $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
+        $posts=Post::searchPosts($searchWord);
+        $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
+            ->get();
+        $params = array(
+            'showComments' => false,
+            'isHotTopic' => false
+        );
+
+        $users = User::where('nom','like','%'.$searchWord.'%')->orWhere('prenom','like','%'.$searchWord.'%')->get();
+
+        $posts_odd=$posts;
+        $posts_even=$posts;
+        return view('search',compact('user','topics','pays','villes','metiers','specialites','posts_odd','posts_even','params','searchWord','users'));
+    }
+
+    function get_string_between($string, $start, $end){
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) return '';
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+    }
 }
+
+?>

@@ -45,6 +45,7 @@ Route::get('/getTopics', 'App\Http\Controllers\HomeController@getTopics')->name(
 Route::get('/hashPass', 'App\Http\Controllers\GlobalController@hashPass')->name('hashPass');
 Route::get('/room', [App\Http\Controllers\HomeController::class, 'room']);
 Route::get('/post/show/{id}', [App\Http\Controllers\PostController::class, 'show'])->name('showPost');
+Route::get('/search', 'App\Http\Controllers\HomeController@search')->name('search');
 
 Route::get('/admin', 'App\Http\Controllers\Admin\HomeController@index');
 Route::get('/admin/topics', 'App\Http\Controllers\Admin\HomeController@topics')->name('admin.topics');

@@ -341,5 +341,27 @@ return [
 
     "lbl_word_world"=>array("<span class='word'>Word to</span> World  ǁ  Country  ǁ  City  ǁ  Coworkers", " <span class='word'>  كلمة  </span >للأمة || للوطن || للمدينة || للزملاء", "<span class='word'>Mot au</span> Monde  ǁ  Pays  ǁ  Ville  ǁ  Collègues"),
     
-    "lbl_topic_select"=>array("Choose a hot topic", "اختر موضوع الساعة"," Choisissez un sujet brûlant")
+    "lbl_topic_select"=>array("Choose a hot topic", "اختر موضوع الساعة"," Choisissez un sujet brûlant"),
+
+    "lbl_top_trending_topics"=>array("Top trending hot topics", "الموضوعات الساخنة الأكثر شيوعًا","Sujets d'actualité les plus populaires"),
+
+
+    "lbl_word_comment"=>array("Word/Comment", "كلمة/تعليق","Mot/Commentaire"),
+
+    "lbl_edit_post"=>array("Edit post", "تعديل المنشور","Modifier le message"),
+
+    "lbl_close"=>array("Close", "أغلق","Fermer"),
+
+    "lbl_delete"=>array("Delete", "حذف","Supprimer"),
+
+
+    "lbl_search"=>array("Search", "بحث","Rechercher"),
+
+    "lbl_hot_topic"=>array("Hot topic", "موضوع ساخن","Sujet brûlant"),
+
+    "lbl_best_result"=>array("Best results found for", "احسن النتائج اللتي وجدت لاجل","Meilleurs résultats trouvé pour"),
+
+    "lbl_persons"=>array("Persons", "الأشخاص","Les personnes"),
+
+    "lbl_posts"=>array("Posts", "المنشورات","Les publications")
 ];

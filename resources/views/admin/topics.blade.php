@@ -21,6 +21,9 @@
 <!-- Content Wrapper. Contains page content -->
 
 
+
+
+
 <div   class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -36,7 +39,8 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section ng-controller="IndexTopicController" class="content">
+
         <div class="container-fluid">
             <div class="row table-responsive">
                 <table id="datatable-reparation" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -58,23 +62,24 @@
                         <th>Action</th>
                     </tr>
                     </tfoot>
+
                     <tbody>
-                    @foreach($topics as $topic)
-                        <tr >
-                            <td>{{$topic->id}}</td>
-                            <td>{{$topic->tag}}</td>
-                            <td>{{Config::get('constants.VISIBLE')[$topic->visible]}}</td>
-                            <td>{{$topic->created_at}}</td>
+                        <tr ng-repeat="topic in topics">
+                            <td>@{{topic.id}}</td>
+                            <td>@{{topic.tag}}</td>
+                            <td>@{{topic.visible | oneOrZero}}</td>
+                            <td>@{{topic.created_at}}</td>
                             <td>
-                                <button class="btn btn-danger">Supprimer</button>
-                                @if(!$topic->visible)
-                                    <a  href="{{route('admin.topic.show',['topicId'=>$topic->id])}}" class="btn btn-success">Montrer</a>
-                                @else
-                                    <a href="{{route('admin.topic.hide',['topicId'=>$topic->id])}}" class="btn btn-primary">Cacher</a>
-                                @endif
+                                <button ng-disabled="topic.loading" ng-click="deleteTopic(topic)" class="btn btn-danger">
+                                    <span ng-if="topic.loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span ng-if="topic.loading" class="sr-only">Loading...</span>
+                                    Supprimer
+                                </button>
+
+                                <a ng-if="topic.visible === '1'"  href="{{route('admin.topic.hide',['topicId'=>""])}}@{{topic.id}}" class="btn btn-primary">Cacher</a>
+                                <a ng-if="topic.visible !== '1'" href="{{route('admin.topic.show',['topicId'=>""])}}@{{topic.id}}" class="btn btn-success">Montrer</a>
                             </td>
                         </tr>
-                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -100,6 +105,13 @@
 
 
 
+<script>
+    js_topics =<?php echo json_encode($topics);?>;
+</script>
+
+
+<script src="{{asset('adminAsset/dist/app/controllers/topic/indexTopicController.js') }}"></script>
+<script src="{{asset('adminAsset/dist/app/services/topicService.js') }}"></script>
 
 
 

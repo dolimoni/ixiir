@@ -15,7 +15,7 @@
                     </div>
                 </a>
                 <div class='usy-name'>
-                    <h3 style='font-size:11pt;padding:0px;' >
+                    <div style='font-size:11pt;padding:0px; font-weight: bold;' >
                         @if(Auth::check())
                             <a href="{{route('getProfil',['user_id'=>$post['par']])}}">{{isset($post['userDetails'])?$post['userDetails']['prenom']:''}} {{isset($post['userDetails'])?$post['userDetails']['nom']:''}}</a>
                         @else
@@ -23,16 +23,15 @@
                                 {{isset($post['userDetails'])?$post['userDetails']['prenom']:''}} {{isset($post['userDetails'])?$post['userDetails']['nom']:''}}
                             </a>
                         @endif
-                    </h3>
-                    <span>
-                        <?php
-                        $lang = 'en';
-                        if(isset(Config::get('constants.LANG')[session('lang')])){
-                            $lang = \Carbon\Carbon::setLocale(Config::get('constants.LANG')[session('lang')]);
-                        }
-                        echo \Carbon\Carbon::createFromTimeStamp(strtotime($post['date_ajout']))->diffForHumans()
-                        ?>
-                    </span>
+                            <span dir="rtl">
+                            <?php
+                            $lang = 'en';
+                            if(isset(Config::get('constants.LANG')[session('lang')])){
+                                $lang = \Carbon\Carbon::setLocale(Config::get('constants.LANG')[session('lang')]);
+                            }
+                            echo \Carbon\Carbon::createFromTimeStamp(strtotime($post['date_ajout']))->diffForHumans().' - ';
+                            ?>
+                    </div>
                     <div>
                       @if(!empty($post['userDetails']['city']))
                             <?php
@@ -224,11 +223,14 @@
 
 													<h3>
 
-														<a>{{$comment['user']['prenom'].' '.$comment['user']['nom']}}</a>
+														<a href="{{route('getProfil',['user_id'=>$comment['user']['id']])}}">{{$comment['user']['prenom'].' '.$comment['user']['nom']}}</a>
 
 													</h3>
 
-													<span><img src='images/clock.png' alt=''> {{$comment['date_ajout']}}</span>
+													<span><img src='images/clock.png' alt=''>
+
+                                                       <?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($comment['date_ajout']))->diffForHumans();?>
+                                                    </span>
 
 													<p>{{$comment['detail']}}</p>
 

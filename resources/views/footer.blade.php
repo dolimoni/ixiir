@@ -305,7 +305,7 @@
 				
 				function loadPosts(num)
 				{
-					show_loading();
+					//show_loading();
 					try{xhrjaime=new XMLHttpRequest();} catch(e){try{xhrjaime=new ActiveXObject("Microsoft.XMLHTTP");} catch(e1){try{xhrjaime=new ActiveXObject("Msxml2.XMLHTTP");} catch(e2){}}}
 					xhrjaime.onreadystatechange=function()
 					{
@@ -316,7 +316,9 @@
 							}
 							
 						}
-						else{show_loading();}
+						else{
+
+						}
 					}
 					xhrjaime.open("GET", "?numPosts="+num, true);
 					xhrjaime.send("null");
@@ -401,6 +403,20 @@
                     }
                 });
 		</script>
+
+		<script>
+	$( document ).ready(function() {
+		$(window).on('scroll', function() {
+			if ($(window).scrollTop() >= $("#loadMore").offset().top + $("#loadMore").
+			outerHeight() - window.innerHeight) {
+				$('.morePosts').fadeIn();
+				$('#btn_loadplus').fadeOut();
+			}
+		});
+	});
+
+
+</script>
 	</body>
 	<!--
 	<script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpsh'},{'server':'a2plcpnl0235'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.

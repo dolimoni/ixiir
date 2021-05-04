@@ -94,6 +94,11 @@
                                                 @foreach($posts_even as $key=>$post)
                                                     @include('templatePost')
                                                 @endforeach
+												<div class="hidden morePosts">
+												@foreach($posts_even_plus as $key=>$post)
+                                                    @include('templatePost')
+                                                @endforeach
+												</div>
                                             </div>
 											@endif
 											@if(count($posts_odd))
@@ -101,6 +106,11 @@
                                                     @foreach($posts_odd as $key=>$post)
                                                         @include('templatePost')
                                                     @endforeach
+												<div class="hidden morePosts">
+													@foreach($posts_odd_plus as $key=>$post)
+                                                        @include('templatePost')
+                                                    @endforeach
+												</div>
                                             </div>
 											@endif
                                         </div>
@@ -122,7 +132,7 @@
                                         </div>
 										<div id="btn_loadplus" >
 
-                        					<div class='dv_cntnbtnplus' onclick="loadPosts(2)">{{config('lang.lbl_chargerplus')[empty(session('lang'))?0:session('lang')]}}</div>
+                        					<div id="loadMore" class='dv_cntnbtnplus' onclick="loadPosts(2)">{{config('lang.lbl_chargerplus')[empty(session('lang'))?0:session('lang')]}}</div>
 
                         				</div>
 
@@ -148,4 +158,6 @@
 	</div><!--theme-layout end-->
 	@include('includes.modalUpdatePost');
     @endsection
+
+
 

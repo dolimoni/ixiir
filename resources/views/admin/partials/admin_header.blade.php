@@ -26,6 +26,8 @@
 	<link rel="stylesheet" href="{{asset('adminAsset/plugins/daterangepicker/daterangepicker.css')}}">
 	<!-- summernote -->
 	<link rel="stylesheet" href="{{asset('adminAsset/plugins/summernote/summernote-bs4.css')}}">
+
+	<link href="{{asset("adminAsset/vendors/sweetalert/sweetalert.css")}}" rel="stylesheet">
 	<!-- Google Font: Source Sans Pro -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -33,9 +35,15 @@
 
 	<link rel="stylesheet" href="{{asset('adminAsset/css/style.css')}}">
 
+	<style>
+		[ng\:cloak], [ng-cloak], .ng-cloak {
+			display: none !important;
+		}
+
+	</style>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body ng-cloak ng-app="besys" class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
 	<!-- Navbar -->

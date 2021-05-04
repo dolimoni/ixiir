@@ -98,7 +98,7 @@ class PostController extends Controller
             return false;
         }
 
-        if(!$this->isAdmin() && $post->par !==Auth::user()->id){
+        if(!$this->isAdmin() && $post->par !=Auth::user()->id){
             return redirect('/');
         }
 

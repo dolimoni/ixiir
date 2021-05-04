@@ -164,7 +164,7 @@ class Post extends Model
 
     public static function showPosts($login,$user_id=null,$attr=null,$value=null){
         $posts=self::with('tag','postsComment','postsJaime')
-            ->limit(50)
+            ->limit(60)
             ->orderBy('date_ajout','desc')
             ->get();
 
@@ -216,9 +216,11 @@ class Post extends Model
         }
         $postsInteractive=null;
         if(!$login){
-            $postsInteractive=$postsLast->sortByDesc('postsInter')->take(26*(!empty($request->numPosts)?$request->numPosts:1));
+            $postsInteractive=$postsLast->sortByDesc('postsInter')->take(26);
         }
-        $posts=$posts->sortByDesc('date_ajout')->take(26*(!empty($request->numPosts)?$request->numPosts:1));
+        $postsPlus = $posts->sortByDesc('date_ajout')->take(52);
+        $posts=$posts->sortByDesc('date_ajout')->take(26);
+
 
         if(!empty($user_id)){
             self::setViews($posts,$user_id);
@@ -229,7 +231,17 @@ class Post extends Model
         $posts_even=collect(array_filter(array_values($posts->toArray()), function($k) {
             return $k%2 == 0;
         }, ARRAY_FILTER_USE_KEY));
-        //most interactive
+
+
+
+        $posts_odd_plus=collect(array_filter(array_values($postsPlus->toArray()), function($k) {
+            return $k%2 != 0 && $k>25;
+        }, ARRAY_FILTER_USE_KEY));
+        $posts_even_plus=collect(array_filter(array_values($postsPlus->toArray()), function($k) {
+            return $k%2 == 0 && $k>25;
+        }, ARRAY_FILTER_USE_KEY));
+
+            //most interactive
         $postsInteractive_odd=!empty($postsInteractive)?collect(array_filter(array_values($postsInteractive->toArray()), function($k) {
             return $k%2 != 0;
         }, ARRAY_FILTER_USE_KEY)):null;
@@ -243,7 +255,18 @@ class Post extends Model
             return $k%2 == 0;
         }, ARRAY_FILTER_USE_KEY);
 
-        return array('posts_odd'=>$posts_odd,'posts_even'=>$posts_even,'postsInteractive_odd'=>$postsInteractive_odd,'postsInteractive_even'=>$postsInteractive_even,'postsTopFive_odd'=>$postsTopTwo_odd,'postsTopFive_even'=>$postsTopTwo_even);
+        $result = array(
+            'posts_odd'=>$posts_odd,
+            'posts_even'=>$posts_even,
+            'postsInteractive_odd'=>$postsInteractive_odd,
+            'postsInteractive_even'=>$postsInteractive_even,
+            'postsTopFive_odd'=>$postsTopTwo_odd,
+            'postsTopFive_even'=>$postsTopTwo_even,
+            'posts_odd_plus'=>$posts_odd_plus,
+            'posts_even_plus'=>$posts_even_plus,
+        );
+
+        return $result;
     }
 
     public static function sumTrophy($user){

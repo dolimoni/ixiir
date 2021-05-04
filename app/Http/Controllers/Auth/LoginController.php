@@ -54,7 +54,6 @@ class LoginController extends Controller
             $user       =   User::where(['login' => $userSocial->getEmail()])->first();
             if($user){
                 $this->guard()->login($user);
-                session::put('user_id', $user->id);
             }else{
                 $user = User::create([
                     'nom'          => $userSocial->getName(),

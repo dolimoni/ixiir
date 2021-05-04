@@ -23,8 +23,8 @@
                                     Auth::user()->metierSpecialite->nom_fr)):
                     config('lang.lbl_mon_domaine')[empty(session('lang'))?0:session('lang')];
 
-                if(strlen($metierSpecialite)>13){
-                    $str_pour_special="<span title='".$metierSpecialite."' >".substr($metierSpecialite, 0, 13)."..</span>";
+                if(strlen($metierSpecialite)>11){
+                    $str_pour_special="<span title='".$metierSpecialite."' >".substr($metierSpecialite, 0, 11)."..</span>";
                 }else{
                     $str_pour_special = $metierSpecialite;
                 }
@@ -36,7 +36,7 @@
             <a href="{{route('postsCity',!empty(Auth::user()->city['id'])?Auth::user()->city['id']:0)}}">
                 <span><i class='la la-map-marker' ></i></span>
                 <span title="{{!empty(Auth::user()->city)?Auth::user()->city->nom_en:''}}">
-								{{ !empty(Auth::user()->city)?\Illuminate\Support\Str::limit(Auth::user()->city->nom_en , $limit = 13, $end = '..'):config('lang.lbl_ma_ville')[empty(session('lang'))?0:session('lang')] }}
+								{{ !empty(Auth::user()->city)?\Illuminate\Support\Str::limit(Auth::user()->city->nom_en , $limit = 11, $end = '..'):config('lang.lbl_ma_ville')[empty(session('lang'))?0:session('lang')] }}
 							</span>
             </a>
         </li>
@@ -44,7 +44,7 @@
             <a href="{{route('postsCountry',!empty(Auth::user()->country->id)?Auth::user()->country->id:0)}}">
                 <span><i class='la la-flag' ></i></span>
                 <span title="{{!empty(Auth::user()->country)?Auth::user()->country->nom_en:''}}">
-								{{ !empty(Auth::user()->country)?\Illuminate\Support\Str::limit(Auth::user()->country->nom_en , $limit = 13, $end = '..'):config('lang.lbl_mon_pays')[empty(session('lang'))?0:session('lang')] }}
+								{{ !empty(Auth::user()->country)?\Illuminate\Support\Str::limit(Auth::user()->country->nom_en , $limit = 11, $end = '..'):config('lang.lbl_mon_pays')[empty(session('lang'))?0:session('lang')] }}
 							</span>
             </a>
         </li>

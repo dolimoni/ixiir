@@ -51,6 +51,7 @@ Route::get('/admin', 'App\Http\Controllers\Admin\HomeController@index');
 Route::get('/admin/topics', 'App\Http\Controllers\Admin\HomeController@topics')->name('admin.topics');
 Route::get('/admin/showTopic', 'App\Http\Controllers\Admin\HomeController@showTopic')->name('admin.topic.show');
 Route::get('/admin/hideTopic', 'App\Http\Controllers\Admin\HomeController@hideTopic')->name('admin.topic.hide');
+Route::get('/admin/api/topicController/delete/{id}', 'App\Http\Controllers\Admin\Api\TopicController@delete')->name('admin.topic.api.delete');
 /*authentication*/
 Auth::routes();
 Route::get('/forgetPass', 'App\Http\Controllers\SignInController@forgetPass')->name('forgetPass');

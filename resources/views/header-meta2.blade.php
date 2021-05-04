@@ -70,6 +70,9 @@
 	
 	<script type="text/javascript" src="{{asset('js/bcrypt.js')}}"></script>
 
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1116471731334183"
+			crossorigin="anonymous"></script>
+
 	<!--<script type="text/javascript" src="js/disabled.js"></script>-->
 
 	

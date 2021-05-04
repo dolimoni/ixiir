@@ -43,6 +43,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+
         $pays=Pays::get();
         $villes=Pays::with('villes')->find(1)->villes;
         $metiers=Metier::get();
@@ -69,9 +70,12 @@ class HomeController extends Controller
 
         $posts_odd=$posts['posts_odd'];
         $posts_even=$posts['posts_even'];
+        $posts_odd_plus=$posts['posts_odd_plus'];
+        $posts_even_plus=$posts['posts_even_plus'];
         $postsInteractive_odd=$posts['postsInteractive_odd'];
         $postsInteractive_even=$posts['postsInteractive_even'];
         $postsTopFive_odd=$posts['postsTopFive_odd'];
+        $postsTopFive_even=$posts['postsTopFive_even'];
         $postsTopFive_even=$posts['postsTopFive_even'];
         Post::updatePosition();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))
@@ -79,7 +83,7 @@ class HomeController extends Controller
             ->where('tags.visible',1)
             ->join('posts','tags.id','=','posts.tag_id')
             ->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('user','topTopics','topics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','params'));
+        return view('index',compact('user','topTopics','topics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','params','posts_even_plus','posts_odd_plus'));
     }
 
 
@@ -210,18 +214,18 @@ class HomeController extends Controller
      function followPost($oper,$user_vue,$user_id){
 		if($oper=="delflw")
 		{
-            UserAbonne::where('user_vue',$user_vue)->where('user_id',Auth::user()->id)->update(['abonne_del'=>1]);
+            UserAbonne::where('user_vue',$user_vue)->where('user_id',$user_id)->update(['abonne_del'=>1]);
 		}else {
-            $nbr_abon=UserAbonne::where('user_vue',$user_vue)->where('user_id',Auth::user()->id)->count();
+            $nbr_abon=UserAbonne::where('user_vue',$user_vue)->where('user_id',$user_id)->count();
             if($nbr_abon>0)
             {
-                UserAbonne::where('user_vue',$user_vue)->where('user_id',Auth::user()->id)->update(['abonne_del'=>0]);
+                UserAbonne::where('user_vue',$user_vue)->where('user_id',$user_id)->update(['abonne_del'=>0]);
             }
             else
             {
                 $userAbonne=new UserAbonne();
                 $userAbonne->user_vue=$user_vue;
-                $userAbonne->user_id=Auth::user()->id;
+                $userAbonne->user_id=$user_id;
                 $userAbonne->abonne_del=0;
                 $userAbonne->add_auto=0;
                 $userAbonne->save();

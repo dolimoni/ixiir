@@ -219,7 +219,7 @@
 									@if(Auth::user()->id!=$user['id'])
 									<a class="nav-item nav-link" id="nav-newmsg-tab" data-toggle="tab" href="#nav-newmsg" role="tab" aria-controls="nav-newmsg" aria-selected="true"><i class="la la-envelope"></i>{{config('lang.lbl_envoyermessage')[empty(session('lang'))?0:session('lang')]}}</a>
 									@else
-								    <a class="nav-item nav-link" id="nav-messages-tab" data-toggle="tab" href="#nav-messages" role="tab" aria-controls="nav-messages" aria-selected="true"><i class="fa fa-envelope"></i>{{config('lang.lbl_mes_messages')[empty(session('lang'))?0:session('lang')]}}</a>
+								    <a class="nav-item nav-link nav-messages-action" id="nav-messages-tab" data-toggle="tab" href="#nav-messages" role="tab" aria-controls="nav-messages" aria-selected="true"><i class="fa fa-envelope"></i>{{config('lang.lbl_mes_messages')[empty(session('lang'))?0:session('lang')]}}</a>
 									@endif
 									@if(Auth::user()->user_type==0)
 									<a class="nav-item nav-link" id="nav-deactivate-tab" data-toggle="tab" href="#nav-deactivate" role="tab" aria-controls="nav-deactivate" aria-selected="false"><i class="fa fa-random"></i>
@@ -233,7 +233,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-9">
+						<div class="col-lg-9" id="lef-side">
 							<div class="tab-content" id="nav-tabContent">
 								<div class="tab-pane fade" id="nav-acc" role="tabpanel" aria-labelledby="nav-acc-tab">
 									<?php
@@ -476,7 +476,7 @@
 												  </div>
 											  <div class='clearfix' ></div>
 										  </div>
-											<div class='col-md-9' style="padding:0px;" >
+											<div class='col-md-9' id="messages-box" style="padding:0px;" >
 
 											      <div  style="max-width:80%;border-radius:3px;margin-bottom:10px;padding:10px;@if(Auth::user()->id==$message['msg_du'])@endif" >
 													<span style="font-size:8pt;" >{{$message["date_ajout"]}}</span>
@@ -572,5 +572,25 @@
 				</div><!--account-tabs-setting end-->
 			</div>
 		</section>
+    <script>
+        $( document ).ready(function() {
+            $('.nav-messages-action').on('click',function(){
+                document.getElementById("lef-side").scrollIntoView();
+				var data = {
+					"_token": "{{ csrf_token() }}",
+				};
+				$.ajax({
+					url : "{{route('readMessages')}}",
+					data:data,
+					type : 'POST',
+					success : function(code_html, statut){ // success est toujours en place, bien sûr !
+					},
+					error : function(resultat, statut, erreur){
+					}
+
+				});
+            });
+        });
+    </script>
 	@include('includes.modalUpdatePost');
 @endsection

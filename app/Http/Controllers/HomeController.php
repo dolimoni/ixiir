@@ -77,13 +77,14 @@ class HomeController extends Controller
         $postsTopFive_odd=$posts['postsTopFive_odd'];
         $postsTopFive_even=$posts['postsTopFive_even'];
         $postsTopFive_even=$posts['postsTopFive_even'];
+        $unreadMessage = count(Message::where('msg_au',Auth::user()->id)->where('lu',"0")->get());
         Post::updatePosition();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))
             ->where('tags.created_at','>=',Carbon::now()->subDays(10))
             ->where('tags.visible',1)
             ->join('posts','tags.id','=','posts.tag_id')
             ->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('user','topTopics','topics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','params','posts_even_plus','posts_odd_plus'));
+        return view('index',compact('user','topTopics','topics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','params','posts_even_plus','posts_odd_plus','unreadMessage'));
     }
 
 
@@ -268,6 +269,7 @@ class HomeController extends Controller
         $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
             ->where('tags.visible',1)
             ->get();
+        $unreadMessage = count(Message::where('msg_au',Auth::user()->id)->where('lu',"0")->get());
 
         $posts_even=array_filter(array_values($posts->toArray()), function($k) {
             return $k%2 == 0;
@@ -283,9 +285,10 @@ class HomeController extends Controller
         }
 
 
+
         $profiles=Message::with('user')->select('msg_du')->where('msg_au',$request->user()->id)->distinct('msg_du')->get()->sortBy('date_ajout,lu DESC');
 
-        return view('profil',compact('user','pays','villes','metiers','specialites','user','posts_even','posts_odd','messages','messagesAu','messagesDu','profiles','params','topics'));
+        return view('profil',compact('user','pays','villes','metiers','specialites','user','posts_even','posts_odd','messages','messagesAu','messagesDu','profiles','params','topics','unreadMessage'));
     }
 
     public function updateProfil(Request $request){
@@ -314,11 +317,15 @@ class HomeController extends Controller
         $posts=Post::showPosts(false,$request->user()->id,'pays',$country);
         $posts_odd=$posts['posts_odd'];
         $posts_even=$posts['posts_even'];
+        $posts_even_plus=$posts['posts_even_plus'];
+        $posts_odd_plus=$posts['posts_odd_plus'];
+
         //most interactive
         $postsInteractive_odd=$posts['postsInteractive_odd'];
         $postsInteractive_even=$posts['postsInteractive_even'];
         $postsTopFive_odd=$posts['postsTopFive_odd'];
         $postsTopFive_even=$posts['postsTopFive_even'];
+        $unreadMessage = count(Message::where('msg_au',Auth::user()->id)->where('lu',"0")->get());
         $topics=Tag::get();
         $_SESSION['page']='country';
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
@@ -331,7 +338,12 @@ class HomeController extends Controller
             ->where('tags.visible',1)
             ->get();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity'));
+        return view('index'
+            ,compact('topTopics','pays','villes','metiers','specialites',
+            'topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even',
+            'user','params','topicEntity','posts_even_plus','posts_odd_plus','unreadMessage'
+            )
+        );
     }
 
     public function postsCity(Request $request,$city)
@@ -344,11 +356,14 @@ class HomeController extends Controller
         $posts=Post::showPosts(false,$request->user()->id,'ville',$city);
         $posts_odd=$posts['posts_odd'];
         $posts_even=$posts['posts_even'];
+        $posts_even_plus=$posts['posts_even_plus'];
+        $posts_odd_plus=$posts['posts_odd_plus'];
         //most interactive
         $postsInteractive_odd=$posts['postsInteractive_odd'];
         $postsInteractive_even=$posts['postsInteractive_even'];
         $postsTopFive_odd=$posts['postsTopFive_odd'];
         $postsTopFive_even=$posts['postsTopFive_even'];
+        $unreadMessage = count(Message::where('msg_au',Auth::user()->id)->where('lu',"0")->get());
         $topics=Tag::get();
         $_SESSION['page']='city';
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
@@ -361,7 +376,7 @@ class HomeController extends Controller
             ->where('tags.visible',1)
             ->get();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity'));
+        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity','posts_even_plus','posts_odd_plus','unreadMessage'));
     }
 
     public function postsMetier(Request $request,$metier)
@@ -377,11 +392,15 @@ class HomeController extends Controller
         $posts=Post::showPosts(false,$request->user()->id,'specialite',$metier);
         $posts_odd=$posts['posts_odd'];
         $posts_even=$posts['posts_even'];
+
+        $posts_even_plus=$posts['posts_even_plus'];
+        $posts_odd_plus=$posts['posts_odd_plus'];
         //most interactive
         $postsInteractive_odd=$posts['postsInteractive_odd'];
         $postsInteractive_even=$posts['postsInteractive_even'];
         $postsTopFive_odd=$posts['postsTopFive_odd'];
         $postsTopFive_even=$posts['postsTopFive_even'];
+        $unreadMessage = count(Message::where('msg_au',Auth::user()->id)->where('lu',"0")->get());
         $_SESSION['page']='metier';
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
         $params = array(
@@ -393,7 +412,8 @@ class HomeController extends Controller
             ->where('tags.visible',1)
             ->get();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity'));
+        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even',
+            'postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity','posts_odd_plus','posts_even_plus','unreadMessage'));
     }
 
     public function deletePost($id){
@@ -472,6 +492,7 @@ class HomeController extends Controller
         $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
             ->where('tags.visible',1)
             ->get();
+        $unreadMessage = count(Message::where('msg_au',Auth::user()->id)->where('lu',"0")->get());
         if(!empty($topicPosts)){
 
             $topicPosts=$topicPosts->posts->map(function($post){
@@ -500,7 +521,7 @@ class HomeController extends Controller
                         return $k%2 == 0;
             }, ARRAY_FILTER_USE_KEY));
         }
-        return view('topicPosts',['topicPosts_odd'=>$topicPosts_odd,'topicPosts_even'=>$topicPosts_even,'topic'=>$topic,'topics'=>$topics,'topicEntity'=>$topicEntity,'user'=>$user,'params'=>$params]);
+        return view('topicPosts',['topicPosts_odd'=>$topicPosts_odd,'topicPosts_even'=>$topicPosts_even,'topic'=>$topic,'topics'=>$topics,'topicEntity'=>$topicEntity,'user'=>$user,'params'=>$params,'unreadMessage'=>$unreadMessage]);
     }
 
     public function getTopics(){
@@ -517,6 +538,10 @@ class HomeController extends Controller
         return view('topTopics',['topTopics'=>$topTopics,'user'=>$user]);
     }
 
+    public function readMessages(){
+        Message::where('msg_au',Auth::user()->id)->update(['lu'=>1]);
+    }
+
     public function search(Request $request){
 
         $pays=Pays::get();
@@ -526,6 +551,8 @@ class HomeController extends Controller
         $searchWord = $request->txt_search;
 
         $specialites=MetierSpecialite::orderBy('nom_en', 'ASC')->get();
+
+        $unreadMessage = count(Message::where('msg_au',Auth::user()->id)->where('lu',"0")->get());
 
 
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
@@ -541,7 +568,7 @@ class HomeController extends Controller
 
         $posts_odd=$posts;
         $posts_even=$posts;
-        return view('search',compact('user','topics','pays','villes','metiers','specialites','posts_odd','posts_even','params','searchWord','users'));
+        return view('search',compact('user','topics','pays','villes','metiers','specialites','posts_odd','posts_even','params','searchWord','users','unreadMessage'));
     }
 
     function get_string_between($string, $start, $end){

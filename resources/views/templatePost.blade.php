@@ -23,16 +23,9 @@
                                 {{isset($post['userDetails'])?$post['userDetails']['prenom']:''}} {{isset($post['userDetails'])?$post['userDetails']['nom']:''}}
                             </a>
                         @endif
-                            <span dir="rtl">
-                            <?php
-                            $lang = 'en';
-                            if(isset(Config::get('constants.LANG')[session('lang')])){
-                                $lang = \Carbon\Carbon::setLocale(Config::get('constants.LANG')[session('lang')]);
-                            }
-                            echo \Carbon\Carbon::createFromTimeStamp(strtotime($post['date_ajout']))->diffForHumans().' - ';
-                            ?>
                     </div>
-                    <div>
+
+                    <div style="margin-top: 4px;">
                       @if(!empty($post['userDetails']['city']))
                             <?php
                             $city = $post['userDetails']['city'][empty(session('lang')) || session('lang')==0?'nom_en':(session('lang')==1?'nom_ar':'nom_fr')];
@@ -47,6 +40,16 @@
                       </span>
                       @endif
 					</div>
+
+                    <span style="margin-top: 4px; display: block;">
+                            <?php
+                        $lang = 'en';
+                        if(isset(Config::get('constants.LANG')[session('lang')])){
+                            $lang = \Carbon\Carbon::setLocale(Config::get('constants.LANG')[session('lang')]);
+                        }
+                        echo \Carbon\Carbon::createFromTimeStamp(strtotime($post['date_ajout']))->diffForHumans();
+                        ?>
+                    </span>
                 </div>
             </div>
             @if(Auth::check())

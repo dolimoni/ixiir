@@ -35,6 +35,7 @@ Route::get('/metier/{metier}', [App\Http\Controllers\HomeController::class, 'pos
 Route::get('/setLang/{lang}', [App\Http\Controllers\GlobalController::class, 'setLang'])->name('setLang');
 Route::post('/saveMessage', 'App\Http\Controllers\HomeController@saveMessage')->name('saveMessage');
 Route::post('/saveMessage', 'App\Http\Controllers\HomeController@sendMessage')->name('sendMessage');
+Route::post('/readMessages', 'App\Http\Controllers\HomeController@readMessages')->name('readMessages');
 Route::get('/hashPass', 'App\Http\Controllers\GlobalController@hashPass')->name('hashPass');
 Route::get('/deletePost/{id}', 'App\Http\Controllers\HomeController@deletePost')->name('deletePost');
 Route::post('/deactivateUser', 'App\Http\Controllers\HomeController@deactivateUser')->name('deactivateUser');

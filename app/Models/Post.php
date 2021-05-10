@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\PostsComment;
 use App\Models\PostsJaime;
 use App\Models\PostsVue;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -294,9 +295,14 @@ class Post extends Model
     }
 
     public static function setViewPost($post_id,$user_id){
-        $postsVue=new PostsVue();
-        $postsVue->user_id=$user_id;
-        $postsVue->post_id=$post_id;
-        $postsVue->save();
+
+        if(!isset($_COOKIE['pstlstsn_'.$post_id])){
+            setcookie('pstlstsn_'.$post_id,$post_id,time()+300);
+            $postsVue=new PostsVue();
+            $postsVue->user_id=$user_id;
+            $postsVue->post_id=$post_id;
+            $postsVue->save();
+        }
+
     }
 }

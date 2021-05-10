@@ -1,3 +1,27 @@
+<style>
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	.ixiir-notification {
+		position: relative;
+		display: inline-block;
+		border-radius: 2px;
+	}
+
+
+
+	.ixiir-notification .badge {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		padding: 5px 10px;
+		border-radius: 50%;
+		background-color: red;
+		color: white;
+	}
+</style>
+
 <header>
 	<div class="container">
 		<div class="header-data">
@@ -13,16 +37,25 @@
 			</div><!--search-bar end-->
 			<!--menu-btn end-->
 			@if(Auth::check())
-			<div class="user-account">
+			<div class="user-account @if(isset($unreadMessage) && $unreadMessage>0)ixiir-notification @endif">
+				@if(isset($unreadMessage) && $unreadMessage>0)
+					<span class="badge">{{$unreadMessage}}</span>
+				@endif
 				<div class="user-info">
 					<a href="#" title="" class="a_imgprofil" style="background-image:url({{asset(!empty(Auth::user()->image)?Auth::user()->image:'/images/deaultuser.jpg')}});" ></a>
 					<i class="fa fa-caret-down" style="right: 5px;"></i>
 				</div>
 				<div class="user-account-settingss">
+
 					<ul class="us-links">
 						<li><a href="{{route('getProfil',['user_id'=>Auth::user()->id])}}" title="">{{config('lang.lbl_maPage')[empty(session('lang'))?0:session('lang')]}}</a></li>
 						<li>
-							<a href="{{route('getProfil',['user_id'=>Auth::user()->id])}}" title="">{{config('lang.lbl_mes_messages')[empty(session('lang'))?0:session('lang')]}}</a></li>
+							<a href="{{route('getProfil',['user_id'=>Auth::user()->id])}}" title="">{{config('lang.lbl_mes_messages')[empty(session('lang'))?0:session('lang')]}}
+								@if(isset($unreadMessage) && $unreadMessage>0)
+									({{$unreadMessage}})
+								@endif
+							</a>
+						</li>
 						<li><a href="{{route('getProfil',['user_id'=>Auth::user()->id])}}" title="">{{config('lang.lbl_modifier_mon_profil')[empty(session('lang'))?0:session('lang')]}}</a></li>
 					</ul>
 					<h3 class="tc">

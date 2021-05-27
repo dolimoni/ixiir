@@ -6,14 +6,8 @@
 <meta property="og:type"               content="article" />
 <meta id="ogtitle" property="og:title"              content="Article ixiir" />
 <meta id="ogdescription" property="og:description"        content="{{htmlspecialchars($post['detail'])}}" />
-@if(!empty($post['image']))
-    <meta id="ogimage" property="og:image" content="{{asset($post['image'])}}" />
-    <meta name="twitter:image" content="{{asset($post['image'])}}">
-@else
-    <meta id="ogimage" property="og:image" content="{{asset('images/ixiir_en.jpeg')}}" />
-    <meta name="twitter:image" content="{{asset('images/ixiir_en.jpeg')}}">
-@endif
-
+<meta id="ogimage" property="og:image" content="{{asset(!empty($post['userDetails']['image'])?$post['userDetails']['image']:'/images/deaultuser.jpg')}}" />
+<meta name="twitter:image" content="{{asset(!empty($post['userDetails']['image'])?$post['userDetails']['image']:'/images/deaultuser.jpg')}}">
 
 @section('body')
 

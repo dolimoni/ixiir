@@ -171,22 +171,14 @@
                                               <br>{{config('lang.lbl_abonne_fidele')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\User::countAbonnes($user->id) }}</b>
                                               <br>{{config('lang.lbl_les_posts')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\User::posts($user->id)->count() }}</b>
                                               <br>{{config('lang.lbl_nbrvueposts')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\User::posts($user->id)->sum('postsVue')}}</b>
-                                              <br>{{config('lang.lbl_ratepagecity')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >
-													@isset($user->city)
-													{{$user->getCityRank($user->id,$user->city->id) }}
-													@else
-														NA
-													@endisset
-
-												</b>
-                                              <br>{{config('lang.lbl_ratepagepays')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >
-													@isset($user->country)
-													{{$user->getCountryRank($user->id,$user->country->id) }}</b>
-													@else
-														NA
-													@endisset
-                                              <br>{{config('lang.lbl_ratepageworld')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{$user->getWordRank($user->id) }}</b>
-                                              <br>{{config('lang.lbl_income')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\Post::sumTrophy($user)}} $</b>
+                                              <hr style="margin-top: 5px;margin-bottom: 5px;">
+ 											  {{config('lang.lbl_best_word')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ $user['best_word_wins']}}</b>
+                                              <br>{{config('lang.lbl_writer_of_month')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ $user['best_author_wins']}}</b>
+											  <hr style="margin-top: 5px;margin-bottom: 5px;">
+                                              {{config('lang.lbl_ratepagecity')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{$user['cityRanking']}}</b>
+											  <br>{{config('lang.lbl_ratepagepays')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{$user['countryRanking']}}</b>
+											  <br>{{config('lang.lbl_ratepageworld')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{$user['wordRanking']}}</b>
+                                              <br>{{config('lang.lbl_income')[empty(session('lang'))?0:session('lang')]}}<br><b style='font-size:15pt;' >{{ App\Models\Post::sumTrophy($user) + $user['income']}} $</b>
                             				</span>
 
                             			</div>

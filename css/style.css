@@ -761,7 +761,7 @@ main {
 .user-specs {
 	float: left;
 	width: 100%;
-	padding: 63px 0 27px 0;
+	padding: 63px 0 10px 0;
 }
 .user-specs h3 {
 	color: #000000;
@@ -5670,4 +5670,20 @@ a:hover {
 }
 .autosize {
 	overflow: hidden;
+}
+
+.active-picto{
+	color: orange !important;
+}
+
+.top-writers-bloc{
+	color: #a349a4;
+	margin-top: 60px;
+	margin-bottom: 20px;
+}
+.read-separator{
+	margin: 0;
+	border: none;
+	height: 1px;
+	background: #a349a4;
 }

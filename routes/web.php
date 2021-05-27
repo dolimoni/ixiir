@@ -22,6 +22,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::post('addPost', 'App\Http\Controllers\HomeController@addPost')->name('addPost');
 Route::post('updatePost', 'App\Http\Controllers\PostController@updatePost')->name('updatePost');
 Route::get('aimerPost', [App\Http\Controllers\HomeController::class, 'aimerPost']);
+Route::post('dislikePost', 'App\Http\Controllers\PostController@dislikePost')->name('dislikePost');
 Route::get('vuePost', [App\Http\Controllers\HomeController::class, 'vuePost']);
 Route::get('commentPost', [App\Http\Controllers\HomeController::class, 'commentPost']);
 Route::get('deleteCommentPost', [App\Http\Controllers\HomeController::class, 'deleteCommentPost']);
@@ -52,6 +53,8 @@ Route::get('/admin', 'App\Http\Controllers\Admin\HomeController@index');
 Route::get('/admin/topics', 'App\Http\Controllers\Admin\HomeController@topics')->name('admin.topics');
 Route::get('/admin/showTopic', 'App\Http\Controllers\Admin\HomeController@showTopic')->name('admin.topic.show');
 Route::get('/admin/hideTopic', 'App\Http\Controllers\Admin\HomeController@hideTopic')->name('admin.topic.hide');
+Route::get('/admin/updateAllRanking', 'App\Http\Controllers\Admin\HomeController@updateAllRanking')->name('admin.topic.updateAllRanking');
+Route::get('/admin/mail', 'App\Http\Controllers\Admin\HomeController@mail')->name('mail');
 Route::get('/admin/api/topicController/delete/{id}', 'App\Http\Controllers\Admin\Api\TopicController@delete')->name('admin.topic.api.delete');
 /*authentication*/
 Auth::routes();

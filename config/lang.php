@@ -1,6 +1,6 @@
 <?php
 
-define(ARABIC_WHO_WE_ARE,'
+/*define(ARABIC_WHO_WE_ARE,'
 نحن موقع يسعى أولا وقبل كل شيء، وبغض النظر عن الطموحات الشخصية الضيقة، أو حتى الأحلام الحضارية الفضفاضة، وبغض النظر عن الاختلافات والانتماءات والحدود، يسعى إلى خدمة الإنسان والإنسانية جمعاء. كيف ذلك؟ نحن نعتقد أن الانسان في النهاية كائن عاقل، وأن الاحتكام لجانب العقل فيه، وحده كفيل برأب التصدعات والصراعات الناشبة بين الشعوب والدول والجماعات، وأشكال التلاسن والتراشق والتنابز بين الإخوة على منصات التواصل الحديثة. وحده العقل قادر على إصلاح البشرية وقيادة العالم إلى السلم والتعايش والتسامح، والتعاون فيما فيه خير ومصلحة الجميع، بدل الاحتراب والتناحر والتطاحن، واقعيا كان ذلك أو على مستوى العالم الافتراضي. وبالتالي فالنقاش الجاد، النقاش العقلي الرصين والحر، المبني على الحجج العقلية المنطقية، أو الأدلة المادية المحسوسة، أو الوقائع اليومية المستجدة والتاريخية، لابد أن يدفع الانسان عاجلا أم آجلا، مهما كان عنيدا ومتحجرا ودوغمائيا، إلى مراجعة قناعاته ومسلماته ووثوقياته، متى كانت متحيزة ضد الانسان، باعتباره قيمة في ذاته، ومكرما في تعاليم الأديان، ومساويا لأخيه الانسان الآخر المخالف والمختلف.
 ولكننا نعلم بالمقابل أن الانسان، يقينا، محكوم كذلك برغبات ونزعات إلى الشر والتسلط والتحكم، ومتعصب للدين والوطن واللغة والهوية، ومؤدلج ومتحزب، ويميل جهلا أو اعتقادا أو لمصلحة معينة، إلى تقديس الافراد والحكام والزعماء، الأحياء منهم والأموات، وإلى الخنوع والانبطاح والتذلل والعبودية..
 فكيف السبيل إلى تحكيم العقل؟ خاصة أن العقل قادر أن ينتج الحجة والحجة المضادة. وكل يدعي حيازته الحق وأنه على صواب ويشيطن الآخر ويمعن في كرهه وتجريمه ولا يأل جهدا في تقتيله واستئصاله. فأين العقل؟ وأين الحقيقة؟ ومن يمتلكها؟ وما الدليل على ذلك؟ وما الدليل على قطعية وصحة أدلة كل مدّع للحقيقة؟ وهل الحقيقة أصلا واحدة؟ أم أنها متعددة؟ وهل هي هنا ام هناك؟ بل ما معنى الحقيقة أولا وقبل كل شيء؟
@@ -87,7 +87,7 @@ Politique de confidentialité
 •	Nous pouvons utiliser les propres informations utilisateur pour effectuer des statistiques pour former des idées et des données qui contribuent à évaluation et développement du site. Ou pour exécuter des obligations légales.
 •	Toutes les données envoyées, y compris les informations personnelles de l'utilisateur, sont à sa responsabilité seul. Nous ne pouvons pas garantir l'authenticité et véracité de ses informations.
 
-");
+");*/
 
 return [
     "lbl_descr_login"=>array("On IXIIR, meet only people like you, from the same specialty, or from the same city or even family. To communicate and exchange interests, experiences, and also emotions.", "مرحبا على IXIIR، هنا يجتمع فقط أشخاص من أمثالك، من نفس التخصص أو نفس المدينة أو حتى الأسرة. للتواصل وتقاسم التجارب والخبرات والمشاعر.","Sur IXIIR, ne rencontrer que des gens comme vous, du même spécialité, ou du même ville ou même famille encore. Pour communiquer et échanger des intérêts, des expériences, et aussi des émotions."),
@@ -110,7 +110,7 @@ return [
 
     "lbl_quisomenous"=>array("Who are we ?", "من نحن", "Qui-somme nous ?"),
 
-    "lbl_quisomenoudesc_p1"=>array("We are a website that seeks above all to serve the human being.",ARABIC_WHO_WE_ARE, "Nous sommes un site web qui cherche avant tout à servir l'être humain."),
+    "lbl_quisomenoudesc_p1"=>array("We are a website that seeks above all to serve the human being.","ixiir", "Nous sommes un site web qui cherche avant tout à servir l'être humain."),
 
     "lbl_quisomenoudesc_p2"=>array("By allowing people from every specialty, profession, city or family ... to come together and meet.", "من خلال تمكين أهل كل تخصص أو مهنة أو مدينة أو حتى عائلة.. من التجمع والتلاقي", "En permettant les gens de chaque spécialité, profession, ville ou encore famille… de se rassemblent et réunissent."),
 
@@ -267,7 +267,7 @@ return [
 
     "lbl_your_word"=>array("What’s your word on this topic?","ما هي كلمتك في هذا الموضوع؟","Quel est votre mot sur ce sujet?"),
 
-    "lbl_exprimez_vous"=>array("Only one post every 12 hours","منشور واحد فقط كل 12 ساعة","Un seul poste toutes les 12 heures"),
+    "lbl_exprimez_vous"=>array("Only one post every 24 hours","منشور واحد فقط كل 24 ساعة","Un seul poste toutes les 24 heures"),
 
     "lbl_mot_cle"=>array("Word", "كلمة البحت", "Mot clé"),
 
@@ -291,9 +291,9 @@ return [
 
     "lbl_famille"=>array("Family", "عائلة", "Famille"),
 
-    "lbl_lastpost"=>array("Latest publications", "اخر المنشورات", "Dernières publications"),
+    "lbl_lastpost"=>array("Latest", "الأحدث", "Récent"),
 
-    "lbl_mostineractive"=>array("Most interactive", "الأكثر تفاعلا", "Les plus interactifs"),    
+    "lbl_mostineractive"=>array("BestPost", "الأفضل", "TopPost"),
 
     "lbl_nbrvisit_page"=>array("Page visits", "زيارات الصفحة", "Visites de page"),
 
@@ -363,5 +363,14 @@ return [
 
     "lbl_persons"=>array("Persons", "الأشخاص","Les personnes"),
 
-    "lbl_posts"=>array("Posts", "المنشورات","Les publications")
+    "lbl_posts"=>array("Posts", "المنشورات","Les publications"),
+
+
+    "lbl_writer_of_month"=>array("Writer of month", "كاتب الشهر","Écrivain du mois"),
+    "lbl_best_word"=>array("Best Word", "أفضل كلمة","Meilleur Mot"),
+
+    "lbl_best_authors"=>array("Firsts", "الأوائل","Les25s"),
+
+    "lbl_most_read_writers"=>array("Most Read Writers This Month (Top25)", "الكتّاب الأكثر مقروئية هذا الشهر (أعلى 25)","Les écrivains les plus lus ce mois-ci (Top25)"),
+    "lbl_read"=>array("Read", "قراءة","Lus")
 ];

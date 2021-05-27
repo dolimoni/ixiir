@@ -81,9 +81,11 @@
 
 										<div class='company-title row' style='background:#fff;padding:0px; margin-bottom: 0; margin-top: 10px;' >
 
-											<div class='col-md-6 dv_btnfilter btn_latest dv_filteractive' onclick="show('latest');hide('interactive');activePosts('btn_latest');"><i class="la la-clock-o"></i> {{config('lang.lbl_lastpost')[empty(session('lang'))?0:session('lang')]}}</div>
+											<div class='col-4 col-md-4 dv_btnfilter btn_latest dv_filteractive' onclick="show('latest');hide('interactive');hide('authors');activePosts('btn_latest');"><i class="la la-clock-o"></i> {{config('lang.lbl_lastpost')[empty(session('lang'))?0:session('lang')]}}</div>
 
-											<div class='col-md-6 dv_btnfilter btn_interactive' onclick="hide('latest');show('interactive');activePosts('btn_interactive');"><i class="fa fa-fire"></i> {{config('lang.lbl_mostineractive')[empty(session('lang'))?0:session('lang')]}}</div>
+											<div class='col-4 col-md-4 dv_btnfilter btn_interactive' onclick="hide('latest');show('interactive');hide('authors');activePosts('btn_interactive');"><i class="fa fa-fire"></i> {{config('lang.lbl_mostineractive')[empty(session('lang'))?0:session('lang')]}}</div>
+
+											<div class='col-4 col-md-4 dv_btnfilter btn_latest dv_filteractive' onclick="show('authors');hide('interactive');hide('latest');activePosts('btn_latest');"><i class="la la-clock-o"></i> {{config('lang.lbl_best_authors')[empty(session('lang'))?0:session('lang')]}}</div>
 
 											<div class='clearfix' ></div>
 
@@ -113,6 +115,18 @@
 												</div>
                                             </div>
 											@endif
+                                        </div>
+
+										<div id="authors" style="display: none;">
+
+											<div class="top-writers-bloc">
+												{{config('lang.lbl_most_read_writers')[empty(session('lang'))?0:session('lang')]}}
+											</div>
+											@foreach($bestAuthors as $key => $author)
+												@include('author')<span style="visibility: hidden">;</span>
+
+											@endforeach
+
                                         </div>
                                         <div id="interactive" style="display:none;">
 											@if(count($postsInteractive_even))
@@ -156,8 +170,72 @@
 
 
 	</div><!--theme-layout end-->
+
+
+	<script>
+		$( document ).ready(function() {
+
+			var timer2 = $('.countdown').attr('data-time-left');
+
+			console.log('times2',timer2);
+			//intercal for seconds
+			var interval = setInterval(function() {
+				//timer will be [hour, minute, second]
+				var timer = timer2.split(':');
+				var hours = parseInt(timer[0], 10);
+				var minutes = parseInt(timer[1], 10);
+				var seconds = parseInt(timer[2], 10);
+				//reduce second by one
+				--seconds;
+				//calculate new minute and hours
+				minutes = (seconds < 0) ? --minutes : minutes;
+				hours = minutes < 0 ? --hours : hours;
+
+				if (hours < 0) {
+					clearInterval(interval);
+					return;
+				}
+
+				seconds = (seconds < 0) ? 59 : seconds;
+				seconds = (seconds < 10) ? '0' + seconds : seconds;
+				minutes = (minutes < 0) ? 59 : minutes;
+				minutes = (minutes < 10) ? '0' + minutes : minutes;
+
+				timer2 = hours + ':' + minutes + ':' + seconds;
+				$('.countdown').html(timer2);
+
+			}, 1000);
+
+			$('.dislike').on('click',function (){
+				jQuery(this).find('.la-thumbs-down').toggleClass('active-picto');
+				var dislikeCountElement = jQuery(this).find('b');
+				var values = {
+					'id':$(this).attr('data-post-id'),
+					"_token": "{{ csrf_token() }}"
+				};
+				$.ajax({
+					url : "{{route('dislikePost')}}",
+					type : 'POST',
+					dataType:'json',
+					data:values,
+					success : function(response){ // success est toujours en place, bien sûr !
+						dislikeCountElement.text(response.disliksCount);
+					},
+
+					error : function(resultat, statut, erreur){
+						alert('Erreur de traitement');
+					}
+
+				});
+			})
+
+		});
+	</script>
+
+
 	@include('includes.modalUpdatePost');
     @endsection
+
 
 
 

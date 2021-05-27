@@ -9,12 +9,21 @@ use App\Models\PostsComment;
 use App\Models\PostsJaime;
 use App\Models\PostsVue;
 use Illuminate\Support\Facades\Auth;
+use App\Services\PostService;
 
 class Post extends Model
 {
     protected $fillable=['detail','image','par','pour','date_ajout','youtube','position','pred_position','pred_debut_position','pred_fin_position','debut_position','fin_position','trophy'];
     public $timestamps=false;
     protected $primaryKey='post_id';
+    protected  $postService;
+
+    function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->postService = new PostService();
+
+    }
 
     public function user(){
         return $this->belongsTo('App\Models\User');
@@ -111,9 +120,8 @@ class Post extends Model
             if($trophy==0){
                 $trophy=$t;
             }
-        }else if(!empty($posts[4]['post_id'])) {
-            Post::where('post_id',$posts[4]['post_id'])->update(['position'=>5,'debut_position'=>Carbon::now(),'fin_position'=>null,'pred_position'=>$posts[4]['position'],'pred_debut_position'=>$posts[4]['debut_position'],'pred_fin_position'=>$posts[4]['fin_position']]);
         }
+
         return $trophy;
     }
 
@@ -173,11 +181,15 @@ class Post extends Model
 
 
         $posts->map(function($post){
+            $postService = new PostService();
             $post['userDetails']=$post->userDetails($post->par);
             $post['all']=true;
             $post['postsComment']=count($post->postsComment);
             $post['postsJaime']=count($post->postsJaime);
             $post['postsVue']=self::countPostVues($post->post_id);
+
+            $post['alreadyDisliked'] = $postService->alreadyDisliked($post->post_id);
+            $post['dislikeCount'] = $postService->getDisliksCount($post->post_id);
 
 
 
@@ -209,6 +221,8 @@ class Post extends Model
             return $post;
         });
 
+
+
         $postsTopTwo=collect(array_values($postsTopTwo->toArray()));
         if(!empty($attr) && !empty($value)){
             $posts=collect(array_filter(array_values($posts->toArray()), function($v) use($attr,$value){
@@ -219,12 +233,17 @@ class Post extends Model
         if(!$login){
             $postsInteractive=$postsLast->sortByDesc('postsInter')->take(26);
         }
+
+        if(!empty($user_id)){
+            self::setViews($postsInteractive,$user_id);
+        }
+
         $postsPlus = $posts->sortByDesc('date_ajout')->take(52);
         $posts=$posts->sortByDesc('date_ajout')->take(26);
 
 
         if(!empty($user_id)){
-            self::setViews($posts,$user_id);
+            //self::setViews($posts,$user_id);
         }
         $posts_odd=collect(array_filter(array_values($posts->toArray()), function($k) {
             return $k%2 != 0;

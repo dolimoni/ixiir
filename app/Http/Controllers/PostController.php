@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Carbon\Carbon;
@@ -28,8 +29,12 @@ class PostController extends Controller
      *
      * @return void
      */
+
+    protected $postService;
+
     public function __construct()
     {
+        $this->postService = new PostService();
 
     }
 
@@ -83,10 +88,25 @@ class PostController extends Controller
         $metiers=Metier::get();
         $specialites=MetierSpecialite::get();
         $post=Post::find($id);
+        $user_id = -1;
+        if(isset(Auth::user()->id)){
+            $user_id = Auth::user()->id;
+        }
+
+        $this->postService->setViewPost($post['post_id'],$user_id);
         if(!empty($post)){
             $post['userDetails']=$post->userDetails($post->par);
             return view('templatePostShared',compact('pays','villes','metiers','specialites','post'));
         }
+
+    }
+
+    public function dislikePost(Request $request){
+
+        $postId = $request->id;
+        $this->postService->dislikePost($postId);
+        $disliksCount = $this->postService->getDisliksCount($postId);
+        return json_encode(array('disliksCount'=>$disliksCount));
 
     }
 

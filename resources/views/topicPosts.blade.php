@@ -107,5 +107,37 @@
 
 
 	</div><!--theme-layout end-->
+
+	<script>
+		$( document ).ready(function() {
+
+
+			$('.dislike').on('click',function (){
+				jQuery(this).find('.la-thumbs-down').toggleClass('active-picto');
+				var dislikeCountElement = jQuery(this).find('b');
+				var values = {
+					'id':$(this).attr('data-post-id'),
+					"_token": "{{ csrf_token() }}"
+				};
+				$.ajax({
+					url : "{{route('dislikePost')}}",
+					type : 'POST',
+					dataType:'json',
+					data:values,
+					success : function(response){ // success est toujours en place, bien sûr !
+						dislikeCountElement.text(response.disliksCount);
+					},
+
+					error : function(resultat, statut, erreur){
+						alert('Erreur de traitement');
+					}
+
+				});
+			})
+
+		});
+	</script>
+
+
 	@include('includes.modalUpdatePost');
     @endsection

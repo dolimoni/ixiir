@@ -74,16 +74,8 @@
                 @endif
 			</div>
 			@endif
-            @if(($key == 0 && (isset($post['all']) && !$post['all']) && !isset($post['profil'])) || (isset($post['profil']) && $post['trophy']==1))
-            <a href='https://www.ixiir.com/concurrence' target="_blank"><img src="{{asset('images/me1.png')}}" width='35' height='45' style='float: right;'></a>
-            @elseif(($key == 1 && (isset($post['all']) && !$post['all']) && !isset($post['profil'])) || (isset($post['profil']) && $post['trophy']==2))
-            <a href='https://www.ixiir.com/concurrence' target="_blank"><img src="{{asset('images/me2.png')}}" width='32' height='40' style='float: right;'></a>
-            @elseif(($key == 2 && (isset($post['all']) && !$post['all']) && !isset($post['profil'])) || (isset($post['profil']) && $post['trophy']==3))
-            <a href='https://www.ixiir.com/concurrence' target="_blank"><img src="{{asset('images/me3.png')}}" width='32' height='40' style='float: right;'></a>
-            @elseif(($key == 3 && (isset($post['all']) && !$post['all']) && !isset($post['profil'])) || (isset($post['profil']) && $post['trophy']==4))
-            <a href='https://www.ixiir.com/concurrence' target="_blank"><img src="{{asset('images/me4.jpg')}}" width='32' height='40' style='float: right;'></a>
-            @elseif(($key == 4 && (isset($post['all']) && !$post['all']) && !isset($post['profil'])) || (isset($post['profil']) && $post['trophy']==5))
-            <a href='https://www.ixiir.com/concurrence' target="_blank"><img src="{{asset('images/me5.jpg')}}" width='32' height='40' style='float: right;'></a>
+            @if($post['winner']==="true")
+            <a href='https://www.ixiir.com/concurrence' target="_blank"><img src="{{asset('images/best_word_award.png')}}" width='35' height='45' style='float: right;'></a>
             @endif
         </div>
         <div dir="rtl" lang="ar" class='job_descp' style="text-align: right;">
@@ -117,9 +109,7 @@
                 <button data-link= "{{$shareLink}}"
                         data-post= "{{route('showPost',['id'=>$post['post_id']])}}"
                         data-content="{{$post['detail']}}"
-                        @if(!empty($post['image'])) data-img="{{asset($post['image'])}}"
-                        @else data-img="{{asset('images/ixiir_en.jpeg')}}" data-img="{{asset($post['image'])}}"
-                        @endif
+                        data-img="{{asset(!empty(Auth::user()->image)?Auth::user()->image:'/images/deaultuser.jpg')}}"
                         class="btnShare btn_share btn_facebook shareFb" >
 
                     <i class='fa fa-facebook' ></i> {{config('lang.lbl_partager')[empty(session('lang'))?0:session('lang')]}}
@@ -140,11 +130,14 @@
 			<ul class='like-com'>
 
 				<li class='sp_cmntlik' onclick="@if(Auth::check() && $post['userDetails']['id']!=Auth::user()->id)set_jaime({{$post['post_id']}}, 0);@endif" >
-
-					<i class='la la-heart' id="i_icojaime_{{$post['post_id']}}" style="cursor:pointer;@if(App\Models\Post::postsJaimeUser($post['post_id'],Auth::user()['id'])>0)color:orange;@endif"></i>
+					<i class='la la-thumbs-up' id="i_icojaime_{{$post['post_id']}}" style="cursor:pointer;@if(App\Models\Post::postsJaimeUser($post['post_id'],Auth::user()['id'])>0)color:orange;@endif"></i>
                     <b id="b_nbrjaime_{{$post['post_id']}}" >{{App\Models\Post::countPostJaime($post['post_id'])}}</b>
                     <input type='hidden' id="txt_isuserjaime_{{$post['post_id']}}" value="{{App\Models\Post::postsJaimeUser($post['post_id'],Auth::user()['id'])>0?1:0}}" />
+				</li>
 
+                <li class='sp_cmntlik dislike' data-post-id="{{$post['post_id']}}" >
+					<i class='la la-thumbs-down @if($post['alreadyDisliked'])active-picto @endif' style="cursor:pointer;"></i>
+                    <b>{{$post['dislikeCount']}}</b>
 				</li>
 
                 <li class='sp_cmntlik comment-link' onclick="show('cacher_comment_{{$post['post_id']}}');show('comments_label_{{$post['post_id']}}');" style="cursor:pointer;@if(Auth::check() && App\Models\Post::countPostComment($post['post_id'])>0)color:orange;@endif">

@@ -360,6 +360,10 @@ class HomeController extends Controller
         $topics=Tag::get();
         $_SESSION['page']='country';
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
+        $uid = Auth::user()->id;
+        $user['cityRanking'] = $this->userService->cityRanking($uid,$user->ville);
+        $user['countryRanking'] = $this->userService->countryRanking($uid,$user->pays);
+        $user['wordRanking'] = $this->userService->wordRanking($uid);
         $params = array(
             'showComments' => true,
             'isHotTopic' => false
@@ -399,6 +403,10 @@ class HomeController extends Controller
         $topics=Tag::get();
         $_SESSION['page']='city';
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
+        $uid = Auth::user()->id;
+        $user['cityRanking'] = $this->userService->cityRanking($uid,$user->ville);
+        $user['countryRanking'] = $this->userService->countryRanking($uid,$user->pays);
+        $user['wordRanking'] = $this->userService->wordRanking($uid);
         $params = array(
             'showComments' => true,
             'isHotTopic' => false
@@ -436,6 +444,10 @@ class HomeController extends Controller
         $unreadMessage = count(Message::where('msg_au',Auth::user()->id)->where('lu',"0")->get());
         $_SESSION['page']='metier';
         $user=User::with('country','city','metierSpecialite')->find(Auth::user()->id);
+        $uid = Auth::user()->id;
+        $user['cityRanking'] = $this->userService->cityRanking($uid,$user->ville);
+        $user['countryRanking'] = $this->userService->countryRanking($uid,$user->pays);
+        $user['wordRanking'] = $this->userService->wordRanking($uid);
         $params = array(
             'showComments' => true,
             'isHotTopic' => false

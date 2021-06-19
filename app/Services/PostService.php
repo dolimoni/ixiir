@@ -68,7 +68,7 @@ class PostService extends BaseService{
     public function bestPost(){
         try {
             $posts=Post::with('postsVue','postsJaime','postsComment')
-                ->where('date_ajout','>=',Carbon::now()->subDays(3))
+                ->where('date_ajout','>=',Carbon::now()->addHour()->subDays(3))
                 ->get();
             $posts->map(function($post){
                 $post->postsVue=count($post->postsVue);

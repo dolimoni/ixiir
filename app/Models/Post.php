@@ -73,7 +73,7 @@ class Post extends Model
 
     public static function updatePosition() {
         $posts=Post::with('postsVue','postsJaime','postsComment')
-            ->where('date_ajout','>=',Carbon::now()->subDays(3))
+            ->where('date_ajout','>=',Carbon::now()->addHour()->subDays(3))
             ->get();
         $posts->map(function($post){
             $post->postsVue=count($post->postsVue);
@@ -173,7 +173,7 @@ class Post extends Model
 
     public static function showPosts($login,$user_id=null,$attr=null,$value=null){
         $posts=self::with('tag','postsComment','postsJaime')
-            ->limit(60)
+            ->limit(120)
             ->orderBy('date_ajout','desc')
             ->get();
 
@@ -210,7 +210,7 @@ class Post extends Model
 
 
 
-        $postsLast=$posts->where('date_ajout','>=',Carbon::now()->subDays(3));
+        $postsLast=$posts->where('date_ajout','>=',Carbon::now()->addHour()->subDays(3));
         $postsLast->map(function($post){
             $post['postsInter']=$post['postsVue']+($post['postsJaime']*2)+($post['postsComment']*3);
             return $post;
@@ -243,7 +243,7 @@ class Post extends Model
 
 
         if(!empty($user_id)){
-            //self::setViews($posts,$user_id);
+            self::setViews($posts,$user_id);
         }
         $posts_odd=collect(array_filter(array_values($posts->toArray()), function($k) {
             return $k%2 != 0;

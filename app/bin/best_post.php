@@ -21,7 +21,7 @@ $bestPost = $postService->bestPost();
 
 
 if($bestPost->winner==="true"){
-    die('Fin traitement best post => we already have a winner');
+    die('Fin traitement best post => we already have a winner, post_id => '.$bestPost->post_id);
 }
 
 

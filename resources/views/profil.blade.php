@@ -354,7 +354,8 @@
 							  			    @foreach($messagesAu as $message)
 							  			      <div id='dv_msgdetail_0' style='padding:20px;background:#f5f5f5;min-height:100%;display:none;' >
 							  			          <div style='color:#fff;max-width:80%;border-radius:3px;margin-bottom:10px;padding:10px;background:#ff7f27;float:left;' >
-    													<span style='font-size:8pt;' >{{formatdate($message["date_ajout"], "d/m/Y H:i")}}</span>
+
+    													<span style='font-size:8pt;' >{{\Carbon\Carbon::createFromTimeStamp(strtotime($message['date_ajout']))->diffForHumans()}}</span>
     													<br />
     													<b>{{$message["message"]}}</b>
     											  </div>
@@ -471,7 +472,7 @@
 											<div class='col-md-9' id="messages-box" style="padding:0px;" >
 
 											      <div  style="max-width:80%;border-radius:3px;margin-bottom:10px;padding:10px;@if(Auth::user()->id==$message['msg_du'])@endif" >
-													<span style="font-size:8pt;" >{{$message["date_ajout"]}}</span>
+													<span style="font-size:8pt;" >{{\Carbon\Carbon::createFromTimeStamp(strtotime($message['date_ajout']))->diffForHumans()}}</span>
 													<br />
 													<div dir="rtl">{{$message["message"]}}</div>
 												  </div>

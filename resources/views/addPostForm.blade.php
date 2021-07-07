@@ -25,15 +25,37 @@
 
             <i class='la la-picture-o i_btnpicture' id='i_pictpost' onclick="frm_post.image.click();" ></i>
 
-            <i class='la la-youtube i_btnpicture' id='i_btnyoutube' onclick="show('dv_txtyoutube');hide('i_btnyoutube');"></i>
+            <i class='la la-youtube i_btnpicture' id='i_btnyoutube'></i>
+
+            <i class='la la-facebook-official i_btnpicture' id='facebook_logo' onclick="show('facebook_bloc');hide('facebook_bloc');"></i>
+
+            <i class='la la-twitter i_btnpicture' id='twitter_logo' onclick="show('twitter_bloc');hide('twitter_bloc');"></i>
 
             <div id='dv_txtyoutube' >
 
                 <input type='text' name='txt_youtube' id='txt_youtube' class='filed_put' placeholder="https://www.youtube.com/embed/xxxxx" />
 
-                <i class='la la-times i_btnpicture i_btncancelpost'style='background:red;' onclick="hide('dv_txtyoutube');show('i_btnyoutube');"></i>
+                <i class='la la-times i_btnpicture i_btncancelpost'style='background:red;'></i>
 
             </div>
+
+            <div id='facebook_bloc'>
+
+                <input type='text' name='facebook_link' id='facebook_link' class='filed_put' placeholder='<iframe src="https://www.facebook.com/plugins/video.php?...' />
+
+                <i class='la la-times i_btnpicture i_btncancelpost'style='background:red;'></i>
+
+            </div>
+
+            <div id='twitter_bloc'>
+
+                <input type='text' name='twitter_link' id='twitter_link' class='filed_put' placeholder='<blockquote class="twitter-tweet"><p lang="en" dir="ltr">...' />
+
+                <i class='la la-times i_btnpicture i_btncancelpost'style='background:red;'></i>
+
+            </div>
+
+
             <div id='dv_hashtag' >
 
                 <input type='text' name='txt_hash' id='txt_hash' class='txt_hash form-control' placeholder="{{config('lang.lbl_hottopic')[empty(session('lang'))?0:session('lang')]}}" />
@@ -90,3 +112,58 @@
     </div>
 
 </form>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#txt_post").emojioneArea({
+            pickerPosition:"bottom",
+            search: false
+        });
+
+        function hideFacebook(){
+            $("#facebook_bloc").hide();
+            $("#facebook_logo").show();
+        }
+
+        function hideTwitter(){
+            $("#twitter_bloc").hide();
+            $("#twitter_logo").show();
+        }
+
+        function hideYoutube(){
+            $("#dv_txtyoutube").hide();
+            $("#i_btnyoutube").show();
+        }
+
+        function hideAllVideos(){
+            hideFacebook();
+            hideTwitter();
+            hideYoutube();
+        }
+
+
+        $('#i_btnyoutube').on('click',function (){
+            hideAllVideos();
+            $('#dv_txtyoutube').show();
+            $(this).hide();
+        });
+
+        $('#facebook_logo').on('click',function (){
+            hideAllVideos();
+            $('#facebook_bloc').show();
+            $(this).hide();
+        });
+
+
+        $('#twitter_logo').on('click',function (){
+            hideAllVideos();
+            $('#twitter_bloc').show();
+            $(this).hide();
+        });
+
+        $('#i_btnyoutube i').on('click',hideYoutube());
+        $('#facebook_bloc i').on('click',hideFacebook());
+        $('#twitter_bloc i').on('click',hideTwitter());
+    });
+</script>

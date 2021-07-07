@@ -44,9 +44,9 @@
 
 	
 
-	$str_facebook_appid="328716634500168";
+	$str_facebook_appid="1750128558505457";
 
-	$str_facebook_secret="134046da28276967ab4429ce95c97f90";
+	$str_facebook_secret="ebbcc7f65833c2d6fd7578a501c8e75c";
 
 	$str_google_appid="1031254644942-3hr9m40uhgcko82p0ufo27fg3islqr16.apps.googleusercontent.com";
 

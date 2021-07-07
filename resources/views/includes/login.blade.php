@@ -1,4 +1,5 @@
 <div class="login-sec" id="homeLogin">
+
     <ul class="sign-control">
 
         <li data-tab="tab-1" class="current"><a href="#" title="">{{config('lang.lbl_login')[empty(session('lang'))?0:session('lang')]}}</a></li>
@@ -34,4 +35,21 @@
             @include('formInscription')
         </div>
     </div>
+
+
+    <div id="authors">
+        <div style="color: #a349a4;margin-bottom: 10px;">
+            {{config('lang.lbl_most_read_writers_10')[empty(session('lang'))?0:session('lang')]}}
+        </div>
+        @foreach($bestAuthors as $key => $author)
+            @if ($key===10)
+                @break
+            @endif
+            @include('author_min')
+
+        @endforeach
+
+    </div>
+
+
 </div>

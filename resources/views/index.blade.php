@@ -20,6 +20,20 @@
 
 								<div class="right-sidebar">
 
+									<div>
+										<div style="color: #a349a4;margin-bottom: 10px;">
+											{{config('lang.lbl_most_read_writers_10')[empty(session('lang'))?0:session('lang')]}}
+										</div>
+										@foreach($bestAuthors as $key => $author)
+											@if ($key===10)
+												@break
+											@endif
+											@include('author_min')
+
+										@endforeach
+
+									</div>
+
 									<div class="widget widget-about">
 
 										<img src="images/cm-logo.png" alt="" style='margin:20px 0px;' />
@@ -101,6 +115,11 @@
                                                     @include('templatePost')
                                                 @endforeach
 												</div>
+												<div class="hidden morePosts2">
+												@foreach($posts_even_plus2 as $key=>$post)
+                                                    @include('templatePost')
+                                                @endforeach
+												</div>
                                             </div>
 											@endif
 											@if(count($posts_odd))
@@ -110,6 +129,11 @@
                                                     @endforeach
 												<div class="hidden morePosts">
 													@foreach($posts_odd_plus as $key=>$post)
+                                                        @include('templatePost')
+                                                    @endforeach
+												</div>
+												<div class="hidden morePosts2">
+													@foreach($posts_odd_plus2 as $key=>$post)
                                                         @include('templatePost')
                                                     @endforeach
 												</div>
@@ -177,7 +201,6 @@
 
 			var timer2 = $('.countdown').attr('data-time-left');
 
-			console.log('times2',timer2);
 			//intercal for seconds
 			var interval = setInterval(function() {
 				//timer will be [hour, minute, second]

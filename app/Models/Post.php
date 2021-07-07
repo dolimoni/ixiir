@@ -238,7 +238,7 @@ class Post extends Model
             self::setViews($postsInteractive,$user_id);
         }
 
-        $postsPlus = $posts->sortByDesc('date_ajout')->take(52);
+        $postsPlus = $posts->sortByDesc('date_ajout')->take(78);
         $posts=$posts->sortByDesc('date_ajout')->take(26);
 
 
@@ -255,10 +255,18 @@ class Post extends Model
 
 
         $posts_odd_plus=collect(array_filter(array_values($postsPlus->toArray()), function($k) {
-            return $k%2 != 0 && $k>25;
+            return $k%2 != 0 && ($k>25 && $k <= 50);
         }, ARRAY_FILTER_USE_KEY));
         $posts_even_plus=collect(array_filter(array_values($postsPlus->toArray()), function($k) {
-            return $k%2 == 0 && $k>25;
+            return $k%2 == 0 && ($k>25 && $k <= 50);
+        }, ARRAY_FILTER_USE_KEY));
+
+
+        $posts_odd_plus2=collect(array_filter(array_values($postsPlus->toArray()), function($k) {
+            return $k%2 != 0 && $k>50;
+        }, ARRAY_FILTER_USE_KEY));
+        $posts_even_plus2=collect(array_filter(array_values($postsPlus->toArray()), function($k) {
+            return $k%2 == 0 && $k>50;
         }, ARRAY_FILTER_USE_KEY));
 
             //most interactive
@@ -284,6 +292,8 @@ class Post extends Model
             'postsTopFive_even'=>$postsTopTwo_even,
             'posts_odd_plus'=>$posts_odd_plus,
             'posts_even_plus'=>$posts_even_plus,
+            'posts_even_plus2'=>$posts_even_plus2,
+            'posts_odd_plus2'=>$posts_odd_plus2,
         );
 
         return $result;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use App\Models\Pays;
 use App\Models\Metier;
@@ -13,9 +14,12 @@ use DB;
 
 class SignInController extends Controller
 {
+
+    protected $postService;
     public function __construct()
     {
         $this->middleware('guest');
+        $this->postService = new PostService();
     }
 
     public function index(Request $request){
@@ -31,6 +35,7 @@ class SignInController extends Controller
         $posts_even=$posts['posts_even'];
         $postsTopFive_odd=$posts['postsTopFive_odd'];
         $postsTopFive_even=$posts['postsTopFive_even'];
+        $bestAuthors = $this->postService->bestAuthors();
         $params = array(
             'showComments' => false,
             'isHotTopic' => false
@@ -39,7 +44,7 @@ class SignInController extends Controller
             ->where('tags.created_at','>=',Carbon::now()->subDays(10))
             ->where('tags.visible',1)
             ->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('sign-in',compact('topTopics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','params'));
+        return view('sign-in',compact('topTopics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','params','bestAuthors'));
     }
     
     public function forgetPass(){

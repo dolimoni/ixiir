@@ -457,18 +457,21 @@
 											<?php //} ?>
 
 										  @foreach($messages as $key => $message)
+													  <a href="{{route('getProfil',['user_id'=>$message->user->id])}}?element=newmsg">
 										  <div class='col-md-3' style="padding:0px;" >
 												  <div id='dv_msgprofile_aaa'
 													   class='notfication-details' style='cursor:pointer;' onclick='' >
 													  <div class='usr-pic-profil' style="float:none;margin:auto;background-image: url({{asset(!empty($message->user->image)?$message->user->image:'/images/deaultuser.jpg')}});" ></div>
 													  <div class='notification-info' style='position:relative;float: none;text-align: center;' >
 														  <h3>{{$message->user->prenom }} {{$message->user->nom }}</h3>
-														  <a href="{{route('getProfil',['user_id'=>$message->user->id])}}" class='dv_btn dv_btn_profil_msg' ><i class='fa fa-user' ></i> {{config('lang.lbl_profil')[empty(session('lang'))?0:session('lang')]}}</a>
+														  <a href="{{route('getProfil',['user_id'=>$message->user->id])}}?element=newmsg" class='dv_btn dv_btn_profil_msg' ><i class='fa fa-envelope' ></i> Reply</a>
 
 													  </div>
 												  </div>
+
 											  <div class='clearfix' ></div>
 										  </div>
+													  </a>
 											<div class='col-md-9' id="messages-box" style="padding:0px;" >
 
 											      <div  style="max-width:80%;border-radius:3px;margin-bottom:10px;padding:10px;@if(Auth::user()->id==$message['msg_du'])@endif" >
@@ -567,6 +570,33 @@
 		</section>
     <script>
         $( document ).ready(function() {
+
+			var getUrlParameter = function getUrlParameter(sParam) {
+				var sPageURL = window.location.search.substring(1),
+						sURLVariables = sPageURL.split('&'),
+						sParameterName,
+						i;
+
+				for (i = 0; i < sURLVariables.length; i++) {
+					sParameterName = sURLVariables[i].split('=');
+
+					if (sParameterName[0] === sParam) {
+						return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+					}
+				}
+				return false;
+			};
+
+			var element = getUrlParameter('element');
+
+			if(element==="messages"){
+				$('#nav-messages-tab').trigger('click');
+			}else if(element==="edit"){
+				$('#nav-acc-tab').trigger('click');
+			}else if(element==="newmsg"){
+				$('#nav-newmsg-tab').trigger('click');
+			}
+
             $('.nav-messages-action').on('click',function(){
                 document.getElementById("lef-side").scrollIntoView();
 				var data = {

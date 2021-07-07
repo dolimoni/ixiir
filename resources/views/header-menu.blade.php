@@ -50,13 +50,13 @@
 					<ul class="us-links">
 						<li><a href="{{route('getProfil',['user_id'=>Auth::user()->id])}}" title="">{{config('lang.lbl_maPage')[empty(session('lang'))?0:session('lang')]}}</a></li>
 						<li>
-							<a href="{{route('getProfil',['user_id'=>Auth::user()->id])}}" title="">{{config('lang.lbl_mes_messages')[empty(session('lang'))?0:session('lang')]}}
+							<a href="{{route('getProfil',['user_id'=>Auth::user()->id])}}?element=messages" title="">{{config('lang.lbl_mes_messages')[empty(session('lang'))?0:session('lang')]}}
 								@if(isset($unreadMessage) && $unreadMessage>0)
 									({{$unreadMessage}})
 								@endif
 							</a>
 						</li>
-						<li><a href="{{route('getProfil',['user_id'=>Auth::user()->id])}}" title="">{{config('lang.lbl_modifier_mon_profil')[empty(session('lang'))?0:session('lang')]}}</a></li>
+						<li><a href="{{route('getProfil',['user_id'=>Auth::user()->id])}}?element=edit" title="">{{config('lang.lbl_modifier_mon_profil')[empty(session('lang'))?0:session('lang')]}}</a></li>
 					</ul>
 					<h3 class="tc">
                         <a href="{{ route('logout') }}"

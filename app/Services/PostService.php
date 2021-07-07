@@ -59,7 +59,7 @@ class PostService extends BaseService{
             ->where('users.best_author_last_win','<',Carbon::now()->subDays(21))
             ->groupBy('users.id')
             ->orderBy(DB::raw('COUNT(pv.id)'), 'desc')
-            ->limit('25')
+            ->limit('100')
             ->get();
 
         return $authors;

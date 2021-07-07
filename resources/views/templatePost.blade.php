@@ -26,7 +26,7 @@
                     </div>
 
                     <div style="margin-top: 4px;">
-                      @if(!empty($post['userDetails']['city']))
+                      @if(!empty($post['userDetails']['city']) && $post['par']!=="1")
                             <?php
                             $city = $post['userDetails']['city'][empty(session('lang')) || session('lang')==0?'nom_en':(session('lang')==1?'nom_ar':'nom_fr')];
                             ?>
@@ -34,7 +34,7 @@
                           {{\Illuminate\Support\Str::limit($city , $limit = 13, $end = '..')}}
                       </b>
                       @endif
-                      @if(!empty($post['userDetails']['country']) && !empty($post['userDetails']['city']))
+                      @if(!empty($post['userDetails']['country']) && !empty($post['userDetails']['city']) && $post['par']!=="1")
                       <span>
                          <b style='color:#A3A3A3;font-size: 14px;' > - {{$post['userDetails']['country'][empty(session('lang')) || session('lang')==0?'nom_en':(session('lang')==1?'nom_ar':'nom_fr')]}}</b>
                       </span>
@@ -102,6 +102,17 @@
             @endif
             @if(!empty($post['youtube']))
             <iframe style='width:100%;height:400px;border:none;' src="{{$post['youtube']}}" name='iframe1' frameborder='0'  allow='autoplay; encrypted-media' allowfullscreen></iframe>
+            @endif
+            @if(!empty($post['facebook_video']))
+                <div>
+                    {!! html_entity_decode(nl2br(e($post['facebook_video']))) !!}
+                </div>
+            @endif
+
+            @if(!empty($post['twitter_video']))
+                <div>
+                    {!! html_entity_decode(nl2br(e($post['twitter_video']))) !!}
+                </div>
             @endif
             <div data-post-id="{{$post['post_id']}}" id="cacher_share_{{$post['post_id']}}" class="pull-right margin_top_30 social-media-share hidden">
 

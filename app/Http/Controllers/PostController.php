@@ -92,11 +92,12 @@ class PostController extends Controller
         if(isset(Auth::user()->id)){
             $user_id = Auth::user()->id;
         }
+        $bestAuthors = $this->postService->bestAuthors();
 
         $this->postService->setViewPost($post['post_id'],$user_id);
         if(!empty($post)){
             $post['userDetails']=$post->userDetails($post->par);
-            return view('templatePostShared',compact('pays','villes','metiers','specialites','post'));
+            return view('templatePostShared',compact('pays','villes','metiers','specialites','post','bestAuthors'));
         }
 
     }

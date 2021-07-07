@@ -54,6 +54,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+
         $uid = Auth::user()->id;
         $pays=Pays::get();
         $villes=Pays::with('villes')->find(1)->villes;
@@ -81,6 +82,7 @@ class HomeController extends Controller
         $user['wordRanking'] = $this->userService->wordRanking($uid);
 
         $posts=Post::showPosts(false,$request->user()->id);
+
         $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
             ->where('tags.visible',1)
             ->get();
@@ -90,10 +92,13 @@ class HomeController extends Controller
         );
 
 
+
         $posts_odd=$posts['posts_odd'];
         $posts_even=$posts['posts_even'];
         $posts_odd_plus=$posts['posts_odd_plus'];
+        $posts_odd_plus2=$posts['posts_odd_plus2'];
         $posts_even_plus=$posts['posts_even_plus'];
+        $posts_even_plus2=$posts['posts_even_plus2'];
         $postsInteractive_odd=$posts['postsInteractive_odd'];
         $postsInteractive_even=$posts['postsInteractive_even'];
         $postsTopFive_odd=$posts['postsTopFive_odd'];
@@ -107,20 +112,37 @@ class HomeController extends Controller
             ->where('tags.visible',1)
             ->join('posts','tags.id','=','posts.tag_id')
             ->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('user','topTopics','topics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','params','posts_even_plus','posts_odd_plus','unreadMessage','bestAuthors'));
+        return view('index',compact('user','topTopics','topics','pays','villes','metiers','specialites','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','params','posts_even_plus','posts_odd_plus','unreadMessage','bestAuthors','posts_even_plus2','posts_odd_plus2'));
     }
 
 
     public function addPost(Request $request){
+
 
         if(isset($request->txt_youtube)){
             $request->txt_youtube.='&';
             $parsed = $this->get_string_between($request->txt_youtube, '?v=', '&');
             $request->txt_youtube = "https://www.youtube.com/embed/".$parsed;
         }
+        if(isset($request->facebook_link)){
+            $search = '/width="(.*?)(")/';
+            $replace = 'width="430"';
+            $string = "$request->facebook_link";
+            $request->facebook_link = preg_replace($search,$replace,$string);
+
+            $search = '/height="(.*?)(")/';
+            $replace = 'height="250"';
+            $string = "$request->facebook_link";
+            $request->facebook_link = preg_replace($search,$replace,$string);
+        }
+
+        if(isset($request->twitter_link)){
+            //var_dump($request->twitter_link);
+        }
+
 
         $firstPost=Post::where('par',$request->user()->id)->orderByDesc('date_ajout')->first();
-        $hours = 12;
+        $hours = 24;
         if(!empty($request->txt_updpost_id)){
             $post=Post::find($request->txt_updpost_id);
             $post->detail=$request->detail;
@@ -150,13 +172,21 @@ class HomeController extends Controller
                 $current=Carbon::now();
                 $hours = $date_ajout->diffInHours($current);
             }
-            if($hours>=12){
+            if($hours>=24){
                 $post=new Post();
                 $post->detail=$request->detail;
                 $post->par=$request->user()->id;
                 $post->pour=0;
                 $post->date_ajout=Carbon::now();
-                $post->youtube=$request->txt_youtube;
+                if(isset($request->txt_youtube)){
+                    $post->youtube=$request->txt_youtube;
+
+                }else if(isset($request->facebook_link)){
+                    $post->facebook_video=$request->facebook_link;
+
+                }else if(isset($request->twitter_link)){
+                    $post->twitter_video=$request->twitter_link;
+                }
                 if(!empty($request->image)){
                     $filename = "ixiir-post-".$request->user()->id."-".time().'.'.$request->image->getClientOriginalExtension();
                     $request->image->move('upload/posts', $filename);
@@ -261,6 +291,9 @@ class HomeController extends Controller
         $pays=Pays::get();
         $metiers=Metier::get();
 
+        if($user_id=="1" && !$this->isAdmin()){
+            return redirect()->route('home');
+        }
 
         $userVue = new UserVue();
 
@@ -311,7 +344,7 @@ class HomeController extends Controller
         $messagesAu=[];
         $messages=[];
         if($request->user()->id==$user_id){
-            $messages=Message::with('user')->where('msg_du',$user_id)->orWhere('msg_au',$user_id)->get()->sortBy('date_ajout');
+            $messages=Message::with('user')->where('msg_du',$user_id)->orWhere('msg_au',$user_id)->get()->sortByDesc('date_ajout');
         }
 
 
@@ -350,6 +383,10 @@ class HomeController extends Controller
         $posts_even_plus=$posts['posts_even_plus'];
         $posts_odd_plus=$posts['posts_odd_plus'];
 
+        $posts_odd_plus2=$posts['posts_odd_plus2'];
+        $posts_even_plus2=$posts['posts_even_plus2'];
+
+
         //most interactive
         $postsInteractive_odd=$posts['postsInteractive_odd'];
         $postsInteractive_even=$posts['postsInteractive_even'];
@@ -376,7 +413,8 @@ class HomeController extends Controller
         return view('index'
             ,compact('topTopics','pays','villes','metiers','specialites',
             'topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even',
-            'user','params','topicEntity','posts_even_plus','posts_odd_plus','unreadMessage','bestAuthors'
+            'user','params','topicEntity','posts_even_plus','posts_odd_plus','unreadMessage','bestAuthors',
+                'posts_odd_plus2','posts_even_plus2'
             )
         );
     }
@@ -393,6 +431,10 @@ class HomeController extends Controller
         $posts_even=$posts['posts_even'];
         $posts_even_plus=$posts['posts_even_plus'];
         $posts_odd_plus=$posts['posts_odd_plus'];
+
+        $posts_odd_plus2=$posts['posts_odd_plus2'];
+        $posts_even_plus2=$posts['posts_even_plus2'];
+
         $bestAuthors = $this->postService->bestAuthors();
         //most interactive
         $postsInteractive_odd=$posts['postsInteractive_odd'];
@@ -416,7 +458,7 @@ class HomeController extends Controller
             ->where('tags.visible',1)
             ->get();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
-        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity','posts_even_plus','posts_odd_plus','unreadMessage','bestAuthors'));
+        return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even','postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity','posts_even_plus','posts_odd_plus','unreadMessage','bestAuthors','posts_odd_plus2','posts_even_plus2'));
     }
 
     public function postsMetier(Request $request,$metier)
@@ -435,6 +477,11 @@ class HomeController extends Controller
 
         $posts_even_plus=$posts['posts_even_plus'];
         $posts_odd_plus=$posts['posts_odd_plus'];
+
+
+        $posts_odd_plus2=$posts['posts_odd_plus2'];
+        $posts_even_plus2=$posts['posts_even_plus2'];
+
         //most interactive
         $postsInteractive_odd=$posts['postsInteractive_odd'];
         $postsInteractive_even=$posts['postsInteractive_even'];
@@ -458,7 +505,7 @@ class HomeController extends Controller
             ->get();
         $topTopics=DB::table('tags')->select('tags.tag',DB::raw('count(posts.post_id)+count(posts_comment.post_id) as word'))->where('tags.created_at','>=',Carbon::now()->subDays(10))->join('posts','tags.id','=','posts.tag_id')->leftJoin('posts_comment','posts.post_id','=','posts_comment.post_id')->groupBy('tags.tag')->get()->sortByDesc('word')->take(5);
         return view('index',compact('topTopics','pays','villes','metiers','specialites','topics','posts_odd','posts_even',
-            'postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity','posts_odd_plus','posts_even_plus','unreadMessage','bestAuthors'));
+            'postsTopFive_odd','postsTopFive_even','postsInteractive_odd','postsInteractive_even','user','params','topicEntity','posts_odd_plus','posts_even_plus','unreadMessage','bestAuthors','posts_odd_plus2','posts_even_plus2'));
     }
 
     public function deletePost($id){
@@ -522,7 +569,9 @@ class HomeController extends Controller
 
     public function hottopicDetail($topic){
 
-        $topicPosts=Tag::with('posts')->where('tag',$topic)->first();
+        $topicPosts=Tag::with(['posts' => function ($query){
+            $query->orderBy('date_ajout', 'desc');
+        }])->where('tag',$topic)->first();
         $topicEntity=Tag::where('tag',$topic)->first();
         $topicPosts_odd=[];
         $topicPosts_even=[];

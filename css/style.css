@@ -1045,7 +1045,7 @@ main {
 	float: left;
 	width: 100%;
 	position: relative;
-	padding: 20px 20px 5px 20px;
+	padding: 5px;
 }
 .usy-dt {
 	float: left;
@@ -1110,7 +1110,7 @@ main {
 }
 .usy-name {
 	float: left;
-	margin-left: 19px;
+	margin-left: 10px;
 }
 .usy-name h3 {
 	color: #000000;
@@ -1200,7 +1200,8 @@ main {
 .job_descp {
 	float: left;
 	width: 100%;
-	padding: 0 20px 20px 20px;
+	padding: 0 10px 10px 10px;
+
 	border-bottom: 1px solid #e5e5e5;
 }
 .job_descp h3 {
@@ -1238,7 +1239,7 @@ main {
 	font-weight: 600;
 }
 .job_descp > p {
-	color: #686868;
+	color: black;
 	font-size: 16px;
 	line-height: 24px;
 }
@@ -5464,7 +5465,7 @@ a:hover {
 }
 .i_btnpicture{padding: 15px;background: #fafafa;border-radius: 50%;color: #666;font-size: 16pt;cursor: pointer;display:inline-block;margin:5px;float: left;}
 .usr-pic, .usr-pic-profil, .a_imgprofil{width: 32px;height: 32px;border-radius: 50%;background-size: cover;background-position: center center;background-repeat: no-repeat;}
-.usr-pic-profil{width:50px; height:50px;float: left;}
+.usr-pic-profil{width:36px; height:36px;float: left;}
 
 .btn_delcmnt{color: red;border: 0px;background: none;font-size: 9pt;cursor: pointer;}
 .li_active{background:#f68121;}

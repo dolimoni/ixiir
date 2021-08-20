@@ -6,7 +6,7 @@
                 <a href="{{route('getProfil',['user_id'=>$post['par']])}}">
                     <div class='usr-pic-profil' style="background-image: url({{asset(!empty($post['userDetails']['image'])?$post['userDetails']['image']:'/images/deaultuser.jpg')}});" >
                        @if((in_array($key,array(0,1,2,3,4)) && (isset($post['all']) && !$post['all']) && !isset($post['profil'])) || (isset($post['profil']) && !empty($post['trophy'])))
-                        <img src="{{asset('images/trone.png')}}" height='70' width='70' style='float: right;position: relative;left: 10px;top:-5px;'>
+                        <img src="{{asset('images/trone.png')}}" height='60' width='60' style='float: right;position: relative;left: 10px;top:-5px;'>
                        @endif 
                     </div> 
                 </a>

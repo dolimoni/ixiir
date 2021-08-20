@@ -21,6 +21,7 @@ use App\Models\Tag;
 use App\Models\Topic;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use DB;
@@ -83,6 +84,8 @@ class HomeController extends Controller
 
         $posts=Post::showPosts(false,$request->user()->id);
 
+
+
         $topics=Tag::where('created_at','>=',Carbon::now()->subDays(10))
             ->where('tags.visible',1)
             ->get();
@@ -104,6 +107,7 @@ class HomeController extends Controller
         $postsTopFive_odd=$posts['postsTopFive_odd'];
         $postsTopFive_even=$posts['postsTopFive_even'];
         $postsTopFive_even=$posts['postsTopFive_even'];
+        //$allPosts=$posts['allPosts'];
         $unreadMessage = count(Message::where('msg_au',Auth::user()->id)->where('lu',"0")->get());
         Post::updatePosition();
 
@@ -141,8 +145,9 @@ class HomeController extends Controller
         }
 
 
-        $firstPost=Post::where('par',$request->user()->id)->orderByDesc('date_ajout')->first();
-        $hours = 24;
+        $lastPost=Post::where('par',$request->user()->id)->orderByDesc('next_post_date')->first();
+
+        //mise à jour du poste
         if(!empty($request->txt_updpost_id)){
             $post=Post::find($request->txt_updpost_id);
             $post->detail=$request->detail;
@@ -167,17 +172,22 @@ class HomeController extends Controller
             }
             $post->save();
         }else{
-            if(!empty($firstPost))  {
-                $date_ajout = Carbon::createFromFormat('Y-m-d H:i:s', $firstPost->date_ajout);
+            if(!empty($lastPost))  {
+                $next_post_date = Carbon::createFromFormat('Y-m-d H:i:s', $lastPost->next_post_date);
                 $current=Carbon::now();
-                $hours = $date_ajout->diffInHours($current);
+                $hours = $next_post_date->diffInHours($current,false);
             }
-            if($hours>=24){
+            if($hours>=0){
                 $post=new Post();
                 $post->detail=$request->detail;
                 $post->par=$request->user()->id;
                 $post->pour=0;
                 $post->date_ajout=Carbon::now();
+                if($request->from_profile_page=="1"){
+                    $post->next_post_date = Carbon::now()->addHours(Config::get('constants.HOURS_BETWEEN_POSTS_PROFILE'));
+                }else{
+                    $post->next_post_date = Carbon::now()->addHours(Config::get('constants.HOURS_BETWEEN_POSTS'));
+                }
                 if(isset($request->txt_youtube)){
                     $post->youtube=$request->txt_youtube;
 

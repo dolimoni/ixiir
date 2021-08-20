@@ -6,6 +6,11 @@ $( document ).ready(function() {
         var dataTagId = $(this).attr('data-tag-id');
         $('#editPostContent').val(content);
         $('#modalUpdatePost a span').text(dataTagName);
+        if(content.length<=70){
+            $('#editPostContent').attr('maxlength','70');
+        }else{
+            $('#editPostContent').attr('maxlength','10000');
+        }
         $('#updatePostId').val(postId);
         if(dataTagId !== undefined){
             $("#txt_hash_selectModal").val(dataTagId);
@@ -56,3 +61,5 @@ $( document ).ready(function() {
 
     initPage();
 });
+
+

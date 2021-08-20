@@ -108,7 +108,7 @@
 											@if(count($posts_even))
                                              <div class='col-md-6 no-padding-colmd posts-div no-padding-left'>
                                                 @foreach($posts_even as $key=>$post)
-                                                    @include('templatePost')
+																@include('templatePost')
                                                 @endforeach
 												<div class="hidden morePosts">
 												@foreach($posts_even_plus as $key=>$post)
@@ -119,26 +119,26 @@
 												@foreach($posts_even_plus2 as $key=>$post)
                                                     @include('templatePost')
                                                 @endforeach
-												</div>
-                                            </div>
+															</div>
+														</div>
 											@endif
 											@if(count($posts_odd))
                                             <div class='col-md-6 no-padding-colmd posts-div no-padding-right'>
                                                     @foreach($posts_odd as $key=>$post)
                                                         @include('templatePost')
-                                                    @endforeach
+													@endforeach
 												<div class="hidden morePosts">
 													@foreach($posts_odd_plus as $key=>$post)
-                                                        @include('templatePost')
+																@include('templatePost')
                                                     @endforeach
-												</div>
+														</div>
 												<div class="hidden morePosts2">
 													@foreach($posts_odd_plus2 as $key=>$post)
-                                                        @include('templatePost')
+																@include('templatePost')
                                                     @endforeach
-												</div>
-                                            </div>
-											@endif
+															</div>
+														</div>
+												@endif
                                         </div>
 
 										<div id="authors" style="display: none;">
@@ -201,33 +201,33 @@
 
 			var timer2 = $('.countdown').attr('data-time-left');
 
-			//intercal for seconds
-			var interval = setInterval(function() {
-				//timer will be [hour, minute, second]
-				var timer = timer2.split(':');
-				var hours = parseInt(timer[0], 10);
-				var minutes = parseInt(timer[1], 10);
-				var seconds = parseInt(timer[2], 10);
-				//reduce second by one
-				--seconds;
-				//calculate new minute and hours
-				minutes = (seconds < 0) ? --minutes : minutes;
-				hours = minutes < 0 ? --hours : hours;
+				//intercal for seconds
+				var interval = setInterval(function() {
+					//timer will be [hour, minute, second]
+					var timer = timer2.split(':');
+					var hours = parseInt(timer[0], 10);
+					var minutes = parseInt(timer[1], 10);
+					var seconds = parseInt(timer[2], 10);
+					//reduce second by one
+					--seconds;
+					//calculate new minute and hours
+					minutes = (seconds < 0) ? --minutes : minutes;
+					hours = minutes < 0 ? --hours : hours;
 
-				if (hours < 0) {
-					clearInterval(interval);
-					return;
-				}
+					if (hours < 0) {
+						clearInterval(interval);
+						return;
+					}
 
-				seconds = (seconds < 0) ? 59 : seconds;
-				seconds = (seconds < 10) ? '0' + seconds : seconds;
-				minutes = (minutes < 0) ? 59 : minutes;
-				minutes = (minutes < 10) ? '0' + minutes : minutes;
+					seconds = (seconds < 0) ? 59 : seconds;
+					seconds = (seconds < 10) ? '0' + seconds : seconds;
+					minutes = (minutes < 0) ? 59 : minutes;
+					minutes = (minutes < 10) ? '0' + minutes : minutes;
 
-				timer2 = hours + ':' + minutes + ':' + seconds;
-				$('.countdown').html(timer2);
+					timer2 = hours + ':' + minutes + ':' + seconds;
+					$('.countdown').html(timer2);
 
-			}, 1000);
+				}, 1000);
 
 			$('.dislike').on('click',function (){
 				jQuery(this).find('.la-thumbs-down').toggleClass('active-picto');
@@ -254,7 +254,6 @@
 
 		});
 	</script>
-
 
 	@include('includes.modalUpdatePost');
     @endsection

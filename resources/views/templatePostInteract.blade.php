@@ -6,7 +6,7 @@
                     <a href="{{route('getProfil',['user_id'=>$post['par']])}}">
                         <div class='usr-pic-profil' style="background-image: url({{asset(!empty($post['userDetails']['image'])?$post['userDetails']['image']:'/images/deaultuser.jpg')}});" >
                             @if(in_array($key,array(0,1,2,3,4)))
-                                <img src="{{asset('images/trone.png')}}" height='70' width='70' style='float: right;position: relative;left: 10px;top:-5px;'>
+                                <img src="{{asset('images/trone.png')}}" height='60' width='60' style='float: right;position: relative;left: 10px;top:-5px;'>
                             @endif
                         </div>
                     </a>
@@ -50,7 +50,7 @@
                     @if($post['winner']==="true")
                         <a href='https://www.ixiir.com/concurrence' target="_blank"><img src="{{asset('images/best_word_award.png')}}" width='32' height='40' style='float: right;'></a>
                     @elseif($post['current_winner']==="true")
-                    <span data-time-left="{{(new \Carbon\Carbon($post['start_winner_date']))->addHours(9)->diff(\Carbon\Carbon::now())->format('%H:%I:%S')}}" class="countdown" style='float: right;'></span>
+                    <span data-time-left="{{(new \Carbon\Carbon($post['start_winner_date']))->addHours(Config::get('constants.BEST_POST_COUNT_HOURS'))->diff(\Carbon\Carbon::now())->format('%H:%I:%S')}}" class="countdown" style='float: right;'></span>
                     @endif
                 @endif
             </div>
@@ -69,7 +69,7 @@
                     </p>
                 @endif
                 @if(!empty($post['image']))
-                    <img src="{{asset($post['image'])}}" style="max-width:100%;margin-bottom:20px;" alt="">
+                    <img src="{{asset($post['image'])}}" style="max-width:100%;margin-bottom:0px;" alt="">
                 @endif
                 @if(!empty($post['youtube']))
                     <iframe style='width:100%;height:400px;border:none;' src="{{$post['youtube']}}" name='iframe1' frameborder='0'  allow='autoplay; encrypted-media' allowfullscreen></iframe>

@@ -27,7 +27,7 @@ if($bestPost->winner==="true"){
 
 
 if($bestPost->current_winner==="true"){
-    if($bestPost->start_winner_date<=Carbon::now()->subHours(9) && $bestPost->winner==="false"){
+    if($bestPost->start_winner_date<=Carbon::now()->subHours(Config::get('constants.BEST_POST_COUNT_HOURS')) && $bestPost->winner==="false"){
         $user = User::find($bestPost->par);
         $data = array(
             'income' => $user->income+Config::get('constants.BEST_POST_WIN'),

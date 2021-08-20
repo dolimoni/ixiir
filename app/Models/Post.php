@@ -210,6 +210,8 @@ class Post extends Model
 
 
 
+
+
         $postsLast=$posts->where('date_ajout','>=',Carbon::now()->addHour()->subDays(3));
         $postsLast->map(function($post){
             $post['postsInter']=$post['postsVue']+($post['postsJaime']*2)+($post['postsComment']*3);
@@ -229,6 +231,8 @@ class Post extends Model
                 return $v['userDetails']->$attr==$value;
             }));
         }
+
+
         $postsInteractive=null;
         if(!$login){
             $postsInteractive=$postsLast->sortByDesc('postsInter')->take(26);
@@ -282,6 +286,9 @@ class Post extends Model
         $postsTopTwo_even=array_filter(array_values($postsTopTwo->toArray()), function($k) {
             return $k%2 == 0;
         }, ARRAY_FILTER_USE_KEY);
+
+
+
 
         $result = array(
             'posts_odd'=>$posts_odd,

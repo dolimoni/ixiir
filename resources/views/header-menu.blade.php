@@ -1,7 +1,4 @@
 <style>
-	body {
-		font-family: Arial, Helvetica, sans-serif;
-	}
 
 	.ixiir-notification {
 		position: relative;

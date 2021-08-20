@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Services\PostService;
+use Illuminate\Support\Facades\Config;
 
 
 require __DIR__.'/../../vendor/autoload.php';
@@ -27,7 +28,7 @@ $best_author_points++;
 User::where('id','!=',$bestAuthor->usr_id)->update(array('best_author_points'=>0));
 User::where('id',$bestAuthor->usr_id)->update(array('best_author_points'=>$best_author_points));
 
-if($best_author_points=="9"){
+if($best_author_points==Config::get('constants.BEST_AUTHOR_COUNT_DAYS')){
     $best_author_wins = $bestAuthor->best_author_wins;
     $income = $bestAuthor->income;
     $best_author_wins++;

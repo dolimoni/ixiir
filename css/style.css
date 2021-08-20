@@ -1061,6 +1061,7 @@ main {
 	float: right;
 	position: relative;
 	top: 7px;
+	right: 6px;
 	z-index:8;
 }
 .ed-opts > a {
@@ -1279,7 +1280,7 @@ main {
 .job-status-bar {
 	float: left;
 	width: 100%;
-	padding: 5px 20px 10px;
+	padding: 3px 20px 3px;
 }
 .like-com {
 	float: left;
@@ -1292,7 +1293,7 @@ main {
 	color: #b2b2b2;
 	font-size: 11pt;
 	float: left;
-	margin-top: 6px;
+	margin-top: 3px;
 	margin-right: 10px;
 	cursor:pointer;
 }
@@ -5697,4 +5698,9 @@ a:hover {
 	background: #a349a4;
 	color: white;
 	font-weight: bold;
+}
+
+.card-columns{
+	-webkit-column-count: 2;
+	column-count : 2;
 }

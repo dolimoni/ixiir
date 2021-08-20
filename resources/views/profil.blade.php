@@ -226,6 +226,7 @@
 							</div>
 						</div>
 						<div class="col-lg-9" id="lef-side">
+							@include('addPostForm')
 							<div class="tab-content" id="nav-tabContent">
 								<div class="tab-pane fade" id="nav-acc" role="tabpanel" aria-labelledby="nav-acc-tab">
 									<?php

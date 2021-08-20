@@ -54,7 +54,7 @@
 				@if($key===0)
 				<div class="col-md-1 best_author_counter d-table">
 					<div class="d-table-cell align-middle text-center">
-						{{9-$author->best_author_points}} {{config('lang.lbl_day')[empty(session('lang'))?0:session('lang')]}}
+						{{Config::get('constants.BEST_AUTHOR_COUNT_DAYS')-$author->best_author_points}} {{config('lang.lbl_day')[empty(session('lang'))?0:session('lang')]}}
 					</div>
 				</div>
 				@endif

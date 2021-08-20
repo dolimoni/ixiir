@@ -1,3 +1,19 @@
+<style>
+    @if(!Request::is('profil/*'))
+
+
+    @endif
+    .emojionearea .emojionearea-editor{
+        padding: 6px 40px 6px 12px !important;
+    }
+    .emojionearea-editor{
+        text-align: right;
+        direction: RTL;
+    }
+
+
+</style>
+
 <form action="{{route('addPost')}}" method="POST" enctype="multipart/form-data" name="frm_post" >
     @csrf
     <div class="post-topbar">
@@ -5,14 +21,23 @@
         <?php
             if($params['isHotTopic']){
                 $txtPostPlaceHolder = config('lang.lbl_your_word')[empty(session('lang'))?0:session('lang')];
+            }else if(!Request::is('profil/*')){
+                $txtPostPlaceHolder = "قل كلمتك في الموضوع الساخن، أقل من 70 حرفا بعد كل 7 ساعات";
             }else{
                 $txtPostPlaceHolder = config('lang.lbl_exprimez_vous')[empty(session('lang'))?0:session('lang')];
             }
         ?>
 
-        <textarea name="detail" id="txt_post" class='put_post' placeholder="<?php echo $txtPostPlaceHolder ?>" required ></textarea>
+        <div style="position: relative;">
+            @if(!Request::is('profil/*'))
+                <span id="topicLength" style="position: absolute;bottom: 5px;left: 7px;z-index: 10;color: #888;">70</span>
+            @endif
+            <textarea  maxlength="70" name="detail" id="txt_post" class='put_post' placeholder="<?php echo $txtPostPlaceHolder ?>" required ></textarea>
+        </div>
+
 
         <input type='hidden' name="txt_updpost_id" id="txt_updpost_id" />
+        <input type='hidden' id="from_profile_page" name="from_profile_page" value="{{Request::is('profil/*')}}" />
 
         <div class="user-picy" >
             @if(isset($topicEntity))
@@ -114,12 +139,60 @@
 </form>
 
 
+
+
 <script type="text/javascript">
     $(document).ready(function() {
         $("#txt_post").emojioneArea({
             pickerPosition:"bottom",
-            search: false
+            search: false,
+            events: {
+                emojibtn_click: function (button, event) {
+                    controlInput(this,event);
+                },keyup: function (editor, event) {
+                    controlInput(this,event);
+                },keydown: function (editor, event) {
+                    controlInput(this,event);
+                },paste: function (editor, text,html,event) {
+                    @if(!Request::is('profil/*'))
+                    var len = this.getText().length;
+                    if(len>70)
+                    {
+                        $(".emojionearea-editor").text($(".emojionearea-editor").text().slice(0,70));
+                    }
+                    @endif
+                },
+            }
         });
+
+        function controlInput(element,event){
+
+            @if(!Request::is('profil/*'))
+            var cntMaxLength = 70;
+            //ne pas controller la longeur du poste dans la page du profile
+            if($("#from_profile_page").val()!="1"){
+                $('#topicLength').html( cntMaxLength - element.getText().length);
+
+                if (element.getText().length >= cntMaxLength && event.keyCode != 8 &&
+                    event.keyCode != 37 && event.keyCode != 38 && event.keyCode != 39 &&
+                    event.keyCode != 40) {
+
+                    event.preventDefault();
+
+                    element.setText(function(i, currentHtml) {
+                        console.log('currentHtml',currentHtml);
+                        return currentHtml.substring(0, cntMaxLength-1);
+                    });
+                }
+            }
+            @endif
+
+
+        }
+
+
+
+
 
         function hideFacebook(){
             $("#facebook_bloc").hide();
@@ -154,6 +227,8 @@
             $('#facebook_bloc').show();
             $(this).hide();
         });
+
+
 
 
         $('#twitter_logo').on('click',function (){

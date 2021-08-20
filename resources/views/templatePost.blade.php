@@ -1,4 +1,5 @@
-<div class='posty' id="dv_post_{{$post['post_id']}}" style="border: none;margin-bottom: 0;">
+<div class='col-md-12'>
+    <div class='posty' id="dv_post_{{$post['post_id']}}">
     <div class='post-bar no-margin'>
         <div class='post_topbar'>
             <div class='usy-dt'>
@@ -100,7 +101,7 @@
                 </p>
             @endif
             @if(!empty($post['image']))
-                <img src="{{asset($post['image'])}}" style="max-width:100%;margin-bottom:20px;" alt="">
+                <img src="{{asset($post['image'])}}" style="max-width:100%;margin-bottom:0px;" alt="">
             @endif
             @if(!empty($post['youtube']))
                 <iframe style='width:100%;height:400px;border:none;' src="{{$post['youtube']}}" name='iframe1' frameborder='0'  allow='autoplay; encrypted-media' allowfullscreen></iframe>
@@ -284,5 +285,6 @@
         </div>
 
     </div>
+</div>
 </div>
 

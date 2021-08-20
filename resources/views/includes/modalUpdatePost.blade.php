@@ -15,7 +15,7 @@
                     <div class="pull-right" style="margin-bottom: 10px;">
                         <a class="tag" href="#"><span>IXIIR</span><i class="fa fa-fire"></i></a>
                     </div>
-                   <textarea name="detail"  dir="rtl" style="min-height: 150px;" class="form-control autosize" id="editPostContent"></textarea>
+                   <textarea maxlength="70" name="detail"  dir="rtl" style="min-height: 150px;" class="form-control autosize" id="editPostContent"></textarea>
                     <div class="user-picy" >
                         @if(isset($topicEntity))
                             <i class="fa fa-fire i_btnpicture hidden" id='hashtagModal'></i>

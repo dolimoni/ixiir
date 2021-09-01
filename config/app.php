@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://ixiir.com/ixiirnewfresh'),
+    'url' => env('APP_URL', 'https://rec.ixiir.com/ixiirnewfresh'),
 
     'asset_url' => env('ASSET_URL', null),
 

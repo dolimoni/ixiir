@@ -171,14 +171,20 @@ class Post extends Model
         return $posts;
     }
 
-    public static function showPosts($login,$user_id=null,$attr=null,$value=null){
+    public static function getLastAdminPost(){
         $posts=self::with('tag','postsComment','postsJaime')
-            ->limit(120)
+            ->limit(1)
+            ->where('par',1)
             ->orderBy('date_ajout','desc')
             ->get();
 
+        self::addPostsAttributs($posts);
 
+        return $posts;
 
+    }
+
+    public static function addPostsAttributs(&$posts){
 
         $posts->map(function($post){
             $postService = new PostService();
@@ -207,6 +213,26 @@ class Post extends Model
             elseif(strpos($post->youtube, "m.youtu")>0){$post['youtube']=str_replace("m.youtu","youtube", $post->youtube);}
             return $post;
         });
+    }
+
+
+
+    public static function getPosts($limit){
+        $posts=self::with('tag','postsComment','postsJaime')
+            ->limit($limit)
+            ->orderBy('date_ajout','desc')
+            ->get();
+
+        self::addPostsAttributs($posts);
+
+        return $posts;
+    }
+
+    public static function showPosts($login,$user_id=null,$attr=null,$value=null){
+
+       $adminLastPosts = self::getLastAdminPost();
+
+        $posts = self::getPosts(120);
 
 
 
@@ -217,7 +243,10 @@ class Post extends Model
             $post['postsInter']=$post['postsVue']+($post['postsJaime']*2)+($post['postsComment']*3);
             return $post;
         });
+
         $postsTopTwo=$postsLast->sortByDesc('postsInter')->take(2);
+
+
         $postsTopTwo->map(function($post){
             $post['all']=false;
             return $post;
@@ -280,9 +309,13 @@ class Post extends Model
         $postsInteractive_even=!empty($postsInteractive)?collect(array_filter(array_values($postsInteractive->toArray()), function($k) {
             return $k%2 == 0;
         }, ARRAY_FILTER_USE_KEY)):null;
-        $postsTopTwo_odd=array_filter(array_values($postsTopTwo->toArray()), function($k) {
-            return $k%2 != 0;
-        }, ARRAY_FILTER_USE_KEY);
+
+
+
+        //admin post
+        $postsTopTwo_odd=collect(array_values($adminLastPosts->toArray()));
+
+
         $postsTopTwo_even=array_filter(array_values($postsTopTwo->toArray()), function($k) {
             return $k%2 == 0;
         }, ARRAY_FILTER_USE_KEY);

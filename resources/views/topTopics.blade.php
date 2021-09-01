@@ -4,7 +4,7 @@
 	<div class="wrapper">
         @include('header-menu')
        
-		<main>
+		<main ng-controller="TopicController">
 
 			<div class="main-section" id="dv_mainlistpost" >
 
@@ -59,6 +59,7 @@
 							<div class="col-lg-9 pd-right-none no-pd">
 
 								<div class="main-ws-sec">
+									@include('addTopicForm')
                                     @include('hotTopicsTemplate')
 								</div><!--main-ws-sec end-->
 
@@ -75,6 +76,7 @@
 		</main>
 
 
+		<script src="{{asset('publicAsset/dist/app/controllers/topicController.js') }}"></script>
 
 	</div><!--theme-layout end-->
     @endsection

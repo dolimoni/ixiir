@@ -20,6 +20,7 @@ Route::get('/concurrence', 'App\Http\Controllers\GlobalController@concurrence')-
 Route::get('/sign-in', 'App\Http\Controllers\SignInController@index')->name('sign-in');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('addPost', 'App\Http\Controllers\HomeController@addPost')->name('addPost');
+Route::post('addTopic', 'App\Http\Controllers\TopicController@create')->name('addTopic');
 Route::post('updatePost', 'App\Http\Controllers\PostController@updatePost')->name('updatePost');
 Route::get('aimerPost', [App\Http\Controllers\HomeController::class, 'aimerPost']);
 Route::post('dislikePost', 'App\Http\Controllers\PostController@dislikePost')->name('dislikePost');

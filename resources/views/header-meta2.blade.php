@@ -96,12 +96,24 @@
 	</script>
 
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+
+
+	<script>
+		var PHP_BASE_URL="{{route('home')}}";
+		var ADD_TOPIC_URL="{{route('addTopic')}}";
+	</script>
+	<script src="{{asset('publicAsset/js/angular.min.js')}}"></script>
+	<script src="{{asset('publicAsset/dist/app/dolimoni.js')}}"></script>
+	<script src="{{asset('publicAsset/dist/app/services/topicService.js')}}"></script>
+
+
+
 </head>
 
-<body class="sign-in" id="body_glob" style='' >
+<body ng-app="dolimoni" class="sign-in" id="body_glob" style='' >
 
 	<div id='dv_loading_glob' ><i class='fa fa-spinner fa fa-spin'></i></div>
     @yield('body')
